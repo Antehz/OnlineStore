@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>Training project</title>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="css/reset.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="css/style.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="css/slider.css">
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300'
+	rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+	<wicket:container wicket:id="headerPanel"></wicket:container>
+
+	<div class="main">
+		<section id="menu-vertical">
+			<wicket:container wicket:id="leftMenuPanel"></wicket:container>
+		</section>
+
+		<!-- CONTENT -->
+		<section id="content">
+			<div class="sub-page">
+					<div id="bd">
+						<wicket:child />
+				</div>
+			</div>
+		</section>
+		<wicket:container wicket:id="footerPanel"></wicket:container>
+	</div>
+</body>
+</html>
+>

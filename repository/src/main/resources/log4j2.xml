@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="CONSOLE" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+		</Console>
+		<RollingFile name="SERVER_LOGFILE" fileName="/logs/project.log"
+			filePattern="/logs/project-%d{MM-dd-yyyy}.log.gz">
+			<PatternLayout>
+				<Charset>UTF-8</Charset>
+				<Pattern>%d %-5p %-5c{3}:%L %x -> %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+
+		<Logger name="by.hrychanok.training.shop.repository" level="DEBUG"
+			additivity="false">
+			<AppenderRef ref="CONSOLE" />
+		</Logger>
+
+
+		<Logger name="by.hrychanok.training.shop.service" level="WARN"
+			additivity="false">
+			<AppenderRef ref="CONSOLE" />
+			<AppenderRef ref="SERVER_LOGFILE" />
+
+		</Logger>
+
+		<Logger name="by.hrychanok.training.shop.repository" level="WARN"
+			additivity="false">
+			<AppenderRef ref="SERVER_LOGFILE" />
+		</Logger>
+
+
+		<Root level="WARN">
+			<AppenderRef ref="CONSOLE" />
+			<AppenderRef ref="SERVER_LOGFILE" />
+		</Root>
+	</Loggers>
+</Configuration>
