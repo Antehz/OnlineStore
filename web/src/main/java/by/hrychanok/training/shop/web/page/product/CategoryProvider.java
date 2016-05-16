@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.tree.ITreeProvider;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -14,12 +15,13 @@ import by.hrychanok.training.shop.service.CustomerService;
 
 public class CategoryProvider implements ITreeProvider<Category>
 {
+	@SpringBean
 	CategoryService categoryService;
     private static final long serialVersionUID = 1L;
 
-    public CategoryProvider(CategoryService categoryService)
+    public CategoryProvider()
     {
-    	this.categoryService=categoryService;
+		Injector.get().inject(this);
     }
 
     @Override
@@ -53,7 +55,7 @@ public class CategoryProvider implements ITreeProvider<Category>
     @Override
     public IModel<Category> model(Category category)
     {
-        return new CategoryModel(category, categoryService);
+        return new CategoryModel(category);
     }
 
     /**
@@ -67,17 +69,16 @@ public class CategoryProvider implements ITreeProvider<Category>
     private class CategoryModel extends LoadableDetachableModel<Category>
     {
         private static final long serialVersionUID = 1L;
-       
+        @SpringBean
     	CategoryService categoryService;
     	
         private final Long id;
 
-        public CategoryModel(Category category, CategoryService categoryService)
+        public CategoryModel(Category category)
         {
             super(category);
-
+            Injector.get().inject(this); 
             id = category.getId();
-            this.categoryService=categoryService;
         }
 
         @Override

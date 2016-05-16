@@ -8,13 +8,15 @@ import by.hrychanok.training.shop.web.component.footer.FooterPanel;
 import by.hrychanok.training.shop.web.component.header.HeaderPanel;
 import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanel;
 import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanelForLoggedUser;
+import by.hrychanok.training.shop.web.component.leftMenu.PanelContent;
+import by.hrychanok.training.shop.web.component.leftMenu.ProductCategoryPanel;
 
 public abstract class AbstractPage extends WebPage {
 
 	private Component headerPanel;
 	private Component leftMenuPanel;
 	private Component footerPanel;
-
+	private Component panelContent;
 
 	public AbstractPage() {
 		super();
@@ -23,6 +25,8 @@ public abstract class AbstractPage extends WebPage {
 	public AbstractPage(PageParameters parameters) {
 		super(parameters);
 	}
+	
+
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
@@ -30,7 +34,7 @@ public abstract class AbstractPage extends WebPage {
 		add(headerPanel=new HeaderPanel("headerPanel"));
 		add(leftMenuPanel=new LeftMenuPanelForLoggedUser("leftMenuPanel"));
 		add(footerPanel=new FooterPanel("footerPanel"));
-
+		add(panelContent );
 	}
 
 }

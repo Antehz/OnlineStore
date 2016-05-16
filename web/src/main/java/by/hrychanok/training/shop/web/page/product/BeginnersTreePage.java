@@ -11,16 +11,11 @@ import by.hrychanok.training.shop.web.page.AbstractPage;
 
 public class BeginnersTreePage extends AbstractPage
 {
-	@SpringBean
-	CategoryService categoryService;
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Construct.
-     */
     public BeginnersTreePage()
     {
-        add(new DefaultNestedTree<Category>("tree", new CategoryProvider(categoryService))
+        add(new DefaultNestedTree<Category>("tree", new CategoryProvider())
         {
 
             /**

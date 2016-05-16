@@ -17,10 +17,8 @@
 		<module>model</module>
 		<module>service</module>
 		<module>repository</module>
+		<module>web</module> 
 
-		<!-- <module>webapp</module> -->
-
-		<module>web</module>
 	</modules>
 
 	<dependencyManagement>
