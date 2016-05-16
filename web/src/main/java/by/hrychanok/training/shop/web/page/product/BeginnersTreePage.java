@@ -7,6 +7,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import by.hrychanok.training.shop.model.Category;
 import by.hrychanok.training.shop.service.CategoryService;
+import by.hrychanok.training.shop.web.component.leftMenu.ProductCategoryPanel;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 
 public class BeginnersTreePage extends AbstractPage
@@ -25,7 +26,8 @@ public class BeginnersTreePage extends AbstractPage
             @Override
             protected Component newContentComponent(String id, IModel<Category> node)
             {
-                return super.newContentComponent(id, node);
+            	return new ProductCategoryPanel(id, node);
+            	/*return super.newContentComponent(id, node);*/
             }
         });
     }

@@ -10,6 +10,7 @@ import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanel;
 import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanelForLoggedUser;
 import by.hrychanok.training.shop.web.component.leftMenu.PanelContent;
 import by.hrychanok.training.shop.web.component.leftMenu.ProductCategoryPanel;
+import by.hrychanok.training.shop.web.page.product.BeginnersTreePage;
 
 public abstract class AbstractPage extends WebPage {
 
@@ -34,7 +35,6 @@ public abstract class AbstractPage extends WebPage {
 		add(headerPanel=new HeaderPanel("headerPanel"));
 		add(leftMenuPanel=new LeftMenuPanelForLoggedUser("leftMenuPanel"));
 		add(footerPanel=new FooterPanel("footerPanel"));
-		add(panelContent );
 	}
 
 }
