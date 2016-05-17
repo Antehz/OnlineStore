@@ -10,6 +10,9 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class AbstractModel implements Serializable {
 
+	/**
+	 * 
+	 */
 	private Long id;
 
 	@Id

@@ -7,28 +7,27 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import by.hrychanok.training.shop.model.Category;
 import by.hrychanok.training.shop.service.CategoryService;
+import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanel;
 import by.hrychanok.training.shop.web.component.leftMenu.ProductCategoryPanel;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 
-public class BeginnersTreePage extends AbstractPage
-{
-    private static final long serialVersionUID = 1L;
+public class BeginnersTreePage extends LeftMenuPanel {
+	private static final long serialVersionUID = 1L;
 
-    public BeginnersTreePage()
-    {
-        add(new DefaultNestedTree<Category>("tree", new CategoryProvider())
-        {
+	public BeginnersTreePage(String id) {
+		super(id);
+		add(new DefaultNestedTree<Category>("tree", new CategoryProvider()) {
 
-            /**
-             * To use a custom component for the representation of a node's content we would
-             * override this method.
-             */
-            @Override
-            protected Component newContentComponent(String id, IModel<Category> node)
-            {
-            	return new ProductCategoryPanel(id, node);
-            	/*return super.newContentComponent(id, node);*/
-            }
-        });
-    }
+			/**
+			 * To use a custom component for the representation of a node's
+			 * content we would override this method.
+			 */
+			@Override
+			protected Component newContentComponent(String id, IModel<Category> node) {
+				return new ProductCategoryPanel(id, node);
+
+				
+			}
+		});
+	}
 }

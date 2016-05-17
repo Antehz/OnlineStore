@@ -84,7 +84,6 @@ public class CategoryProvider implements ITreeProvider<Category>
         @Override
         protected Category load()
         {
-        	System.out.println("id ==> "+id);
             return categoryService.findOne(id);
         }
 

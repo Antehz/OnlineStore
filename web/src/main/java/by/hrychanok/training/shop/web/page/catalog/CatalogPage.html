@@ -1,4 +1,26 @@
-<wicket:extend>
-	<h2>Catalog of products ...</h2>
-</wicket:extend>
+<meta charset="utf-8" />
 
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+
+<span wicket:id="navigator">[dataview navigator]</span>
+<table cellspacing="0" class="dataview">
+    <tr>
+        <th colspan="2">Actions</th>
+        <th>ID</th>
+        <th>name</th>
+        <th wicket:id="orderByModel">Model</th>
+        <th wicket:id="orderByDescription">description</th>
+        <th>price</th>
+    </tr>
+    <tr wicket:id="oir">
+        <td><span wicket:id="actions">[actions]</span></td>
+        <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td>
+        <td><span wicket:id="productid">[productid]</span> </td>
+        <td><span wicket:id="name">[name]</span></td>
+        <td><span wicket:id="model">[model]</span></td>
+        <td><span wicket:id="description">[description]</span></td>
+        <td><span wicket:id="price">[price]</span></td>
+    </tr>
+</table>
+
+</wicket:extend>

@@ -8,8 +8,9 @@ import by.hrychanok.training.shop.web.page.home.HomePage;
 import by.hrychanok.training.shop.web.page.personalCabinet.CustomerOrderPage;
 import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPage;
 import by.hrychanok.training.shop.web.page.personalCabinet.PersonalDataPage;
+import by.hrychanok.training.shop.web.page.product.BeginnersTreePage;
 
-public class LeftMenuPanelForLoggedUser extends LeftMenuPanel {
+public class LeftMenuPanelForLoggedUser extends BeginnersTreePage {
 
 	public LeftMenuPanelForLoggedUser(String id) {
 		super(id);

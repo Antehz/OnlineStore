@@ -1,5 +1,6 @@
 package by.hrychanok.training.shop.web.page;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -8,10 +9,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
 import by.hrychanok.training.shop.model.AbstractModel;
+import by.hrychanok.training.shop.web.page.product.ProductPage;
 
 public class BasePageForTable<T extends AbstractModel> extends AbstractPage {
 
-	private T selected;
+	public T selected;
 
 	public BasePageForTable() {
 		add(new Label("selectedLabel", new PropertyModel<>(this, "selectedContactLabel")));
@@ -33,18 +35,18 @@ public class BasePageForTable<T extends AbstractModel> extends AbstractPage {
 	 * 
 	 */
 	public class ActionPanel extends Panel {
-		/**
-		 * @param id
-		 *            component id
-		 * @param model
-		 *            model for contact
-		 */
+	
+		public void goResponsePage(){
+		}
+
 		public ActionPanel(String id, IModel<T> model) {
 			super(id, model);
 			add(new Link("select") {
 				@Override
 				public void onClick() {
 					selected = (T) getParent().getDefaultModelObject();
+					goResponsePage();
+
 				}
 			});
 		}
