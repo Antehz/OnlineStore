@@ -1,8 +1,7 @@
-package by.hrychanok.training.shop.web.page.personalCabinet;
+package by.hrychanok.training.shop.web.page.catalog;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -12,25 +11,21 @@ import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import by.hrychanok.training.shop.model.Order;
+import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.service.OrderService;
+import by.hrychanok.training.shop.service.ProductService;
+import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
-import by.hrychanok.training.shop.web.page.BasePageForTable.ActionPanel;
-import by.hrychanok.training.shop.web.page.order.OrderPage;
+import by.hrychanok.training.shop.web.page.personalCabinet.SortableTypeDataProvider;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
-/**
- * 
- * @author Ante
- *  ADD ACTION PANEL!!!
- */
-public class OrderHistoryPage extends BasePageForTable {
+
+public class CatalogPanel extends BasePageForTable {
 
 	@SpringBean
-	OrderService orderService;
-	
+	ProductService productService;
 	private static final long serialVersionUID = 1L;
 
 	private static class HighlitableDataItem<T> extends Item<T> {
@@ -58,39 +53,37 @@ public class OrderHistoryPage extends BasePageForTable {
 		}
 	}
 
-	public OrderHistoryPage(String id) {
+	public CatalogPanel(String id) {
 		super(id);
-		SortableTypeDataProvider dp = new SortableTypeDataProvider();
+		SortableProductDataProvider dp = new SortableProductDataProvider();
 
-		final DataView<Order> dataView = new DataView<Order>("oir", dp) {
+		final DataView<Product> dataView = new DataView<Product>("productTable", dp) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(final Item<Order> item) {
-				Order order = item.getModelObject();
+			protected void populateItem(final Item<Product> item) {
+				Product product = item.getModelObject();
 				item.add(new ActionPanel("actions", item.getModel()) {
 					@Override
 					public void goResponsePage() {
-						setResponsePage(new OrderPage(selected.getId()));
+						setResponsePage(new ProductPage(selected.getId()));
 					};
 				}
-
 				);
-
-			/*	item.add(new Link<Void>("toggleHighlite") {
+/*
+				item.add(new Link<Void>("toggleHighlite") {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void onClick() {
-						HighlitableDataItem<Order> hitem = (HighlitableDataItem<Order>) item;
+						HighlitableDataItem<Product> hitem = (HighlitableDataItem<Product>) item;
 						hitem.toggleHighlite();
 					}
 				});*/
-				item.add(new Label("orderId", String.valueOf(order.getId())));
-				item.add(new Label("customerId", Model.of(order.getCustomer().getId())));
-                item.add(DateLabel.forDatePattern("created", Model.of(order.getStartDate()), "dd-MM-yyyy"));
-				item.add(new Label("status", order.getStatus()));
-				item.add(new Label("price", order.getTotalPrice()));
+				item.add(new Label("productId", String.valueOf(product.getId())));
+				item.add(new Label("manufacturer", product.getManufacturer()));
+				item.add(new Label("model", product.getModel()));
+				item.add(new Label("price", product.getPrice()));
 
 				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
 					private static final long serialVersionUID = 1L;
@@ -103,7 +96,7 @@ public class OrderHistoryPage extends BasePageForTable {
 			}
 
 			@Override
-			protected Item<Order> newItem(String id, int index, IModel<Order> model) {
+			protected Item<Product> newItem(String id, int index, IModel<Product> model) {
 				return new HighlitableDataItem<>(id, index, model);
 			}
 		};
@@ -119,8 +112,8 @@ public class OrderHistoryPage extends BasePageForTable {
 				dataView.setCurrentPage(0);
 			}
 		});
-		
-		add(new OrderByBorder("orderByCreated", "startDate", dp) {
+
+		add(new OrderByBorder("orderByManufacturer", "manufacturer", dp) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -129,7 +122,7 @@ public class OrderHistoryPage extends BasePageForTable {
 			}
 		});
 
-		add(new OrderByBorder("orderByStatus", "status", dp) {
+		add(new OrderByBorder("orderByModel", "model", dp) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -137,8 +130,7 @@ public class OrderHistoryPage extends BasePageForTable {
 				dataView.setCurrentPage(0);
 			}
 		});
-		
-		add(new OrderByBorder("orderByPrice", "totalPrice", dp) {
+		add(new OrderByBorder("orderByPrice", "price", dp) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -146,7 +138,6 @@ public class OrderHistoryPage extends BasePageForTable {
 				dataView.setCurrentPage(0);
 			}
 		});
-
 		add(dataView);
 		add(new PagingNavigator("navigator", dataView));
 	}

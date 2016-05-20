@@ -47,13 +47,6 @@ public abstract class AbstractPage extends WebPage {
 		add(leftMenuPanel=new LeftMenuPanelForLoggedUser("leftMenuPanel"));
 		add(footerPanel=new FooterPanel("footerPanel"));
 		
-		Form form = new Form("form"){
-		    @Override
-		    protected void onSubmit() {
-		    	System.out.println("Form submitted.");
-		    }
-		};
-		add(form);
 	}
 
 }

@@ -2,8 +2,8 @@
 <html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd" >
     <head>
  <style>
-div.foo-outer {
-  margin-bottom: 4px;
+/* div.foo-outer {
+  margin-bottom: 7px;
   border: 1px dotted black;
   padding-left: 18px;
   background-color: #BBBBBB;
@@ -12,18 +12,14 @@ div.foo-outer {
 div.foo-inner {
   padding: 2px;
   background-color: #FFFFFF;
-}
+} */
 </style>
     </head>
     <body>
     <wicket:panel>
     
         <wicket:extend>
-         <div class="foo-outer">
-                <div class="foo-inner">
             <div wicket:id="tree">[tree]</div>
-          </div>
-            </div> -->
             <wicket:child />
 
         </wicket:extend>

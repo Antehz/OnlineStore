@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order", schema = "public")
-public class Order extends AbstractModel implements Serializable {
+public class Order extends AbstractModel  {
 	private Customer customer;
 	private Date startDate;
 	private ShippingMethod shippingMethod;

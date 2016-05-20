@@ -53,13 +53,6 @@ public class BasicServiceImpl<T, REPOSITORY extends JpaRepository<T, ID>, ID ext
 
 	@Override
 	@Transactional
-	public List<T> findAll(Sort sort) {
-		LOGGER.debug("Find all use sort");
-		return repository.findAll(sort);
-	}
-
-	@Override
-	@Transactional
 	public long count() {
 		return repository.count();
 	}

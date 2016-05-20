@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Order;
@@ -13,7 +15,7 @@ import by.hrychanok.training.shop.model.ShippingMethod;
 import by.hrychanok.training.shop.model.StatusOrder;
 import by.hrychanok.training.shop.repository.filter.Filter;
 
-public interface OrderService  extends BasicService<Order, Long>  {
+public interface OrderService extends BasicService<Order, Long> {
 	Order createOrder(Long customerId, ShippingMethod shippingMethod, String additionalInfo);
 
 	List<Order> getOrdersByCustomer(Long id);
@@ -24,10 +26,15 @@ public interface OrderService  extends BasicService<Order, Long>  {
 
 	Order changeStatusOrder(Long id, StatusOrder statusOrder);
 
-	Page<Order> findAll(Filter filter, Pageable page);
-	
+	List<Order> findAll(Filter filter, Pageable page);
+
+	List<Order> findAll(Pageable page);
+
 	List<Order> findOrdersContainGivenProduct(Long productId);
-	
-	List<Order>  getByStatus(StatusOrder status);
-	
+
+	List<Order> getByStatus(StatusOrder status);
+
+	Long count(Filter filter);
+
+	Page<Order> findAllPage(Filter filter, Pageable page);
 }

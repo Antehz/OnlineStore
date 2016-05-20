@@ -8,11 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.hrychanok.training.shop.model.Category;
 import by.hrychanok.training.shop.model.Customer;
+import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.model.ProductComment;
 import by.hrychanok.training.shop.repository.CategoryRepository;
@@ -52,7 +54,11 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 
 	@Override
 	public List<Product> findAll(Filter filter, Pageable page) {
-		return repository.findAll(filter, page).getContent();
+		if (filter.existCondition()) {
+			return repository.findAll(filter, page).getContent();
+		} else {
+			return repository.findAll(page).getContent();
+		}
 	}
 
 	@Override
@@ -103,6 +109,19 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 	@Override
 	public List<Product> findProductByCategoryName(String name) {
 		return repository.getProductByCategoryName(name);
+	}
+
+	@Override
+	public List<Product> findAll(Pageable page) {
+		return repository.findAll(page).getContent();
+	}
+	@Override
+	public Long count(Filter filter) {
+		if (filter.existCondition()) {
+			return repository.count(filter);
+		} else {
+			return repository.count();
+		}
 	}
 
 }

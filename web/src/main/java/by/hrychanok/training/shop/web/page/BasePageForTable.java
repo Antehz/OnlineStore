@@ -11,13 +11,18 @@ import org.apache.wicket.model.PropertyModel;
 import by.hrychanok.training.shop.model.AbstractModel;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
 
-public class BasePageForTable<T extends AbstractModel> extends AbstractPage {
+public class BasePageForTable<T extends AbstractModel> extends Panel {
 
 	public T selected;
 
-	public BasePageForTable() {
-		add(new Label("selectedLabel", new PropertyModel<>(this, "selectedContactLabel")));
-		add(new FeedbackPanel("feedback"));
+	public BasePageForTable(String id) {
+		super(id);
+
+	}
+
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
 	}
 
 	/**
@@ -35,8 +40,8 @@ public class BasePageForTable<T extends AbstractModel> extends AbstractPage {
 	 * 
 	 */
 	public class ActionPanel extends Panel {
-	
-		public void goResponsePage(){
+
+		public void goResponsePage() {
 		}
 
 		public ActionPanel(String id, IModel<T> model) {

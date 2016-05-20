@@ -122,6 +122,9 @@ public class CustomerServiceTest {
 	public void findAllSort() {
 		Sort sort = new Sort(Sort.Direction.ASC, "firstName");
 		List<Customer> list = customerService.findAll(sort);
+		for (Customer customer : list) {
+			System.out.println(customer);
+		}
 		Assert.assertFalse(list.isEmpty());
 	}
 

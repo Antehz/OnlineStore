@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import by.hrychanok.training.shop.model.CartContent;
@@ -32,7 +33,8 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 
 	private static Logger LOGGER = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
-	@Autowired MailService mail;
+	@Autowired
+	MailService mail;
 	@Autowired
 	OrderContentRepository orderContentRepository;
 	@Autowired
@@ -61,7 +63,7 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 		priceTotal = shippingInfluenceOnPrice(priceTotal, shippingMethod);
 		order.setTotalPrice(priceTotal);
 		order.setStatus(StatusOrder.Pending);
-        List<OrderContent> orderContent = getOrderContentById(order.getId());
+		List<OrderContent> orderContent = getOrderContentById(order.getId());
 		mail.sendOrderConfirmationMail(order);
 		return repository.save(order);
 
@@ -141,11 +143,6 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 	}
 
 	@Override
-	public Page<Order> findAll(Filter filter, Pageable page) {
-		return repository.findAll(filter, page);
-	}
-
-	@Override
 	public List<Order> findOrdersContainGivenProduct(Long productId) {
 
 		return orderContentRepository.findByProductId(productId);
@@ -154,6 +151,38 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 	@Override
 	public List<Order> getByStatus(StatusOrder status) {
 		return repository.getByStatus(status);
+	}
+
+	@Override
+	public Long count(Filter filter) {
+		if (filter.existCondition()) {
+			return repository.count(filter);
+		} else {
+			return repository.count();
+		}
+	}
+
+	@Override
+	public List<Order> findAll(Filter filter, Pageable page) {
+		if (filter.existCondition()) {
+			return repository.findAll(filter, page).getContent();
+		} else {
+			return repository.findAll(page).getContent();
+		}
+	}
+
+	@Override
+	public List<Order> findAll(Pageable page) {
+		return repository.findAll(page).getContent();
+	}
+
+	@Override
+	public Page<Order> findAllPage(Filter filter, Pageable page) {
+		if (filter.existCondition()) {
+			return repository.findAll(filter, page);
+		} else {
+			return repository.findAll(page);
+		}
 	}
 
 }

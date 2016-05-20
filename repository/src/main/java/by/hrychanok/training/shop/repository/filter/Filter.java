@@ -1,5 +1,6 @@
 package by.hrychanok.training.shop.repository.filter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,16 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-public class Filter implements Specification {
+public class Filter implements Specification, Serializable {
 	List<Condition> conditions;
 
 	public Filter() {
 		conditions = new ArrayList<>();
 	}
 
+	public boolean existCondition(){
+		return conditions.isEmpty()?false:true;
+	}
 	public void addCondition(Condition condition) {
 		this.conditions.add(condition);
 	}
