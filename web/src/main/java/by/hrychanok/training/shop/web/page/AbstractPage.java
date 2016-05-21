@@ -6,10 +6,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import by.hrychanok.training.shop.model.Category;
@@ -36,17 +38,18 @@ public abstract class AbstractPage extends WebPage {
 	public AbstractPage(PageParameters parameters) {
 		super(parameters);
 	}
+
 	@SpringBean
-	CategoryService cat ;
+	CategoryService cat;
 
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-		
-		add(headerPanel=new HeaderPanel("headerPanel"));
-		add(leftMenuPanel=new LeftMenuPanelForLoggedUser("leftMenuPanel"));
-		add(footerPanel=new FooterPanel("footerPanel"));
-		
-	}
 
+		add(headerPanel = new HeaderPanel("headerPanel"));
+		add(leftMenuPanel = new LeftMenuPanelForLoggedUser("leftMenuPanel"));
+		add(footerPanel = new FooterPanel("footerPanel"));
+		
+
+	}
 }

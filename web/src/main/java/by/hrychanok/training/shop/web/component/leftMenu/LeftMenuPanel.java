@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 
 import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
+import by.hrychanok.training.shop.web.page.catalog.CatalogPanel;
 import by.hrychanok.training.shop.web.page.home.HomePage;
 import by.hrychanok.training.shop.web.page.product.BeginnersTreePage;
 
@@ -21,12 +22,6 @@ public class LeftMenuPanel extends Panel {
 	            @Override
 	            public void onClick() {
 	                setResponsePage(new HomePage());
-	            }
-	        });
-		 add(new Link("toProduct") {
-	            @Override
-	            public void onClick() {
-	                setResponsePage(new CatalogPage());
 	            }
 	        });
 		 add(new Link("toHome4") {

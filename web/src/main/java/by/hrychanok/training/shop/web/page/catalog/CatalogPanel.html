@@ -1,29 +1,51 @@
 <meta charset="utf-8" />
+<html>
+<head>
+<style type="text/css">
+TABLE {
+	width: 300px; /* Ширина таблицы */
+	border-bottom: 2px solid maroon; /* Линия внизу таблицы */
+	background: #fffacd; /* Цвет фона таблицы */
+}
 
-<wicket:panel>
-<wicket:extend>
+TH {
+	background: maroon; /* Цвет фона заголовка */
+	color: white; /* Цвет текста */
+	text-align: left; /* Выравнивание по левому краю */
+}
 
-<table cellspacing="0" class="dataview">
-<thead>
-    <tr>
-        <th colspan="1">Actions</th>
-        <th wicket:id="orderById">ID</th>
-        <th wicket:id="orderByManufacturer">Manufacturer</th>
-        <th wicket:id="orderByModel">Model</th>
-        <th wicket:id="orderByPrice">Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr wicket:id="productTable">
-        <td><span wicket:id="actions">[actions]</span></td>
-      <!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
-        <td><span wicket:id="productId">[orderId]</span> </td>
-        <td><span wicket:id="manufacturer">[created]</span></td>
-        <td><span wicket:id="model">[status]</span></td>
-        <td><span wicket:id="price">[price]</span></td>
-    </tr>
-    </tbody>
-</table>
-<span wicket:id="navigator">[dataview navigator]</span>
-</wicket:extend>
-</wicket:panel>
+TD, TH {
+	padding: 3px; /* Поля вокруг текста */
+}
+</style>
+</head>
+<body>
+		<wicket:extend>
+			<table cellspacing="0" class="dataview">
+				<thead>
+					<tr>
+					<th></th>
+						<th><a wicket:id="orderByManufacturer">Производитель</a></th>
+						<th><a wicket:id="orderByModel">Модель</a></th>
+						<th><a wicket:id="orderByPrice">Цена</a></th>
+						<th><a wicket:id="orderByRecomended">Рейтинг</a></th>
+						<th>Доступно</th>
+
+							</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="productTable">
+									<td><span wicket:id="action"></span></td>
+									<!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
+									<td><span wicket:id="manufacturer">[created]</span></td>
+									<td><span wicket:id="model">[status]</span></td>
+									<td><span wicket:id="price">[price] </span>руб.</td>
+									<td><span wicket:id="recomended"> </span></td>
+									<td><span wicket:id="available"> </span></td>
+								</tr>
+							</tbody>
+						</table>
+						<span wicket:id="navigator">[dataview navigator]</span>
+						</wicket:extend>
+</body>
+</html>

@@ -4,6 +4,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
@@ -11,6 +12,12 @@ import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.UrlUtils;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import by.hrychanok.training.shop.model.Order;
@@ -19,11 +26,13 @@ import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.service.ProductService;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
+import by.hrychanok.training.shop.web.page.StaticImage;
 import by.hrychanok.training.shop.web.page.personalCabinet.SortableTypeDataProvider;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
 
 public class CatalogPanel extends BasePageForTable {
 
+	
 	@SpringBean
 	ProductService productService;
 	private static final long serialVersionUID = 1L;
@@ -52,10 +61,10 @@ public class CatalogPanel extends BasePageForTable {
 			});
 		}
 	}
+	public CatalogPanel(PageParameters parametrs) {
+		Long categoryId = parametrs.get("id").toLong();
 
-	public CatalogPanel(String id) {
-		super(id);
-		SortableProductDataProvider dp = new SortableProductDataProvider();
+		SortableProductDataProvider dp = new SortableProductDataProvider(categoryId);
 
 		final DataView<Product> dataView = new DataView<Product>("productTable", dp) {
 			private static final long serialVersionUID = 1L;
@@ -63,27 +72,31 @@ public class CatalogPanel extends BasePageForTable {
 			@Override
 			protected void populateItem(final Item<Product> item) {
 				Product product = item.getModelObject();
-				item.add(new ActionPanel("actions", item.getModel()) {
+				item.add(new ActionPanel("action", item.getModel()) {
 					@Override
 					public void goResponsePage() {
 						setResponsePage(new ProductPage(selected.getId()));
 					};
-				}
-				);
-/*
-				item.add(new Link<Void>("toggleHighlite") {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void onClick() {
-						HighlitableDataItem<Product> hitem = (HighlitableDataItem<Product>) item;
-						hitem.toggleHighlite();
-					}
-				});*/
-				item.add(new Label("productId", String.valueOf(product.getId())));
+					
+				});
+				/*
+				 * item.add(new Link<Void>("toggleHighlite") { private static
+				 * final long serialVersionUID = 1L;
+				 * 
+				 * @Override public void onClick() {
+				 * HighlitableDataItem<Product> hitem =
+				 * (HighlitableDataItem<Product>) item; hitem.toggleHighlite();
+				 * } });
+				 */
+				String info =  product.getModel() +"/n " + product.getDescription();
 				item.add(new Label("manufacturer", product.getManufacturer()));
-				item.add(new Label("model", product.getModel()));
+				item.add(new Label("model", info));
 				item.add(new Label("price", product.getPrice()));
+				item.add(new Label("recomended", product.getCountRecommended()));
+				item.add(new Label("available", product.getAvailable()));
+
+
+
 
 				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
 					private static final long serialVersionUID = 1L;
@@ -104,14 +117,6 @@ public class CatalogPanel extends BasePageForTable {
 		dataView.setItemsPerPage(12L);
 		dataView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
 
-		add(new OrderByBorder("orderById", "id", dp) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSortChanged() {
-				dataView.setCurrentPage(0);
-			}
-		});
 
 		add(new OrderByBorder("orderByManufacturer", "manufacturer", dp) {
 			private static final long serialVersionUID = 1L;
@@ -131,6 +136,14 @@ public class CatalogPanel extends BasePageForTable {
 			}
 		});
 		add(new OrderByBorder("orderByPrice", "price", dp) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSortChanged() {
+				dataView.setCurrentPage(0);
+			}
+		});
+		add(new OrderByBorder("orderByRecomended", "available", dp) {
 			private static final long serialVersionUID = 1L;
 
 			@Override

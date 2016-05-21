@@ -19,6 +19,8 @@ import org.springframework.data.domain.Sort.Direction;
 
 import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.Product;
+import by.hrychanok.training.shop.repository.filter.Comparison;
+import by.hrychanok.training.shop.repository.filter.Condition;
 import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.service.ProductService;
@@ -31,19 +33,21 @@ public class SortableProductDataProvider extends SortableDataProvider<Product, S
 	ProductService productService;
 	
 	Filter filterState = new Filter();
-	
+	Long categoryId;
 	PageRequest page ;
 
-	public SortableProductDataProvider() {
+	public SortableProductDataProvider(Long categoryId) {
 		Injector.get().inject(this); 
 		setSort("id", SortOrder.DESCENDING);
+		this.categoryId=categoryId;
 	}
 
 	@Override
 	public Iterator<? extends Product> iterator(long first, long count) {
 		
          int numberPage = (int) (first / count);
-       
+         filterState.addCondition(
+ 				new Condition.Builder().setComparison(Comparison.eq).setField("category").setValue(categoryId).build());
 		 String property = getSort().getProperty();
          SortOrder propertySortOrder = getSortState().getPropertySortOrder(property);
 		

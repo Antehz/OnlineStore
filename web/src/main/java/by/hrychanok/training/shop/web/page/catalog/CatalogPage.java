@@ -12,12 +12,13 @@ public class CatalogPage extends AbstractPage {
 	}
 
 	public CatalogPage(PageParameters parameters) {
-		super(parameters);
+       
+		
 	}
 
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-		add(new CatalogPanel("catalogPanel"));
+		/*add(new CatalogPanel("catalogPanel") {});*/
 	}
 }

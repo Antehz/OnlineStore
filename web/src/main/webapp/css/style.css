@@ -37,7 +37,7 @@ body {
 }
 
 .main {
-	width: 1250px;
+	width: 1300px;
 	margin: 0 auto;
 }
 /***********************************************************************/
@@ -334,7 +334,7 @@ nav {
 
 ul.menu {
 	display: block;
-	width: 1250px;
+	width: 1300px;
 	margin: 0 auto;
 }
 
@@ -542,12 +542,12 @@ ul.menu li a:hover, ul.menu li.current a {
 
 .sub-page {
 	min-height:280px;
-	background: #e2e2e4;
+	background: #fafafa;
 	overflow: hidden;
 	border: #fff 1px solid;
 	border-bottom: none;
 	float: left;
-	width: 790px;
+	width: 840px;
 	padding: 29px 39px 20px 39px;
 }
 
@@ -619,7 +619,7 @@ ul.menu li a:hover, ul.menu li.current a {
 }
 
 table {
-	background: #fff;
+	background: #fafafa;
 	text-transform: uppercase;
 }
 
