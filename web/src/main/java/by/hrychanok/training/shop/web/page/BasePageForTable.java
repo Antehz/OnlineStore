@@ -15,7 +15,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import by.hrychanok.training.shop.model.AbstractModel;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.service.ProductService;
-import by.hrychanok.training.shop.web.page.catalog.CatalogPanel;
+import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
 
 public class BasePageForTable<T extends AbstractModel>  extends AbstractPage  {
@@ -54,25 +54,13 @@ public class BasePageForTable<T extends AbstractModel>  extends AbstractPage  {
 	 */
 	public class ActionPanel extends Panel {
 
-		public void goResponsePage() {
+		public void createLink(IModel<T> model) {
+			
 		}
 
 		public ActionPanel(String id, IModel<T> model) {
 			super(id, model);
-			Product selectedProduct = (Product) model.getObject();
-			Image image = new Image("imagetest",
-					new PackageResourceReference(CatalogPanel.class, selectedProduct.getImageURL()));
-
-			Link link = new Link("select") {
-				@Override
-				public void onClick() {
-					selected = (T) getParent().getDefaultModelObject();
-					goResponsePage();
-				}
-			};
-			
-			link.add(image);
-			add(link);
+			createLink(model);
 			
 		}
 	}

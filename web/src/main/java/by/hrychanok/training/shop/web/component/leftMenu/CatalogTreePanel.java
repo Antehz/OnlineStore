@@ -1,4 +1,4 @@
-package by.hrychanok.training.shop.web.page.product;
+package by.hrychanok.training.shop.web.component.leftMenu;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
@@ -6,6 +6,7 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.tree.DefaultNestedTree;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -13,18 +14,16 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import by.hrychanok.training.shop.model.Category;
 import by.hrychanok.training.shop.service.CategoryService;
-import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanel;
-import by.hrychanok.training.shop.web.component.leftMenu.ProductCategoryPanel;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.testPage;
 import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
-import by.hrychanok.training.shop.web.page.catalog.CatalogPanel;
+import by.hrychanok.training.shop.web.page.catalog.CategoryProvider;
 import by.hrychanok.training.shop.web.page.home.HomePage;
 
-public class BeginnersTreePage extends LeftMenuPanel {
+public class CatalogTreePanel extends Panel {
 	private static final long serialVersionUID = 1L;
 
-	public BeginnersTreePage(String id) {
+	public CatalogTreePanel(String id) {
 		super(id);
 
 		DefaultNestedTree<Category> tree = new DefaultNestedTree<Category>("tree", new CategoryProvider()) {
@@ -32,18 +31,14 @@ public class BeginnersTreePage extends LeftMenuPanel {
 			protected Component newContentComponent(String id, IModel<Category> node) {
 				Category category = node.getObject();
 				if (category.getChildren().isEmpty()) {
-					System.out.println(category.getName());
 					PageParameters parameters = new PageParameters();
 					parameters.add("id", category.getId());
-					BookmarkablePageLink bookLink = new BookmarkablePageLink<>(id, CatalogPanel.class,
+					BookmarkablePageLink bookLink = new BookmarkablePageLink<>(id, CatalogPage.class,
 							parameters);
 					bookLink.setBody(Model.of(category.getName()));
 					return bookLink;
 			}
-				
-					return new ProductCategoryPanel(id, node);
-				
-
+				return super.newContentComponent(id, node);
 			}
 		};
 		add(tree);

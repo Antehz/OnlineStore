@@ -18,11 +18,9 @@ import by.hrychanok.training.shop.model.Category;
 import by.hrychanok.training.shop.service.CategoryService;
 import by.hrychanok.training.shop.web.component.footer.FooterPanel;
 import by.hrychanok.training.shop.web.component.header.HeaderPanel;
-import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanel;
-import by.hrychanok.training.shop.web.component.leftMenu.LeftMenuPanelForLoggedUser;
-import by.hrychanok.training.shop.web.component.leftMenu.PanelContent;
-import by.hrychanok.training.shop.web.component.leftMenu.ProductCategoryPanel;
-import by.hrychanok.training.shop.web.page.product.BeginnersTreePage;
+import by.hrychanok.training.shop.web.component.leftMenu.CatalogTreePanel;
+import by.hrychanok.training.shop.web.component.leftMenu.InfoPanel;
+import by.hrychanok.training.shop.web.component.leftMenu.PersonalCabinetPanel;
 
 public abstract class AbstractPage extends WebPage {
 
@@ -47,7 +45,7 @@ public abstract class AbstractPage extends WebPage {
 		super.onInitialize();
 
 		add(headerPanel = new HeaderPanel("headerPanel"));
-		add(leftMenuPanel = new LeftMenuPanelForLoggedUser("leftMenuPanel"));
+		add(leftMenuPanel = new PersonalCabinetPanel("leftMenuPanel"));
 		add(footerPanel = new FooterPanel("footerPanel"));
 		
 

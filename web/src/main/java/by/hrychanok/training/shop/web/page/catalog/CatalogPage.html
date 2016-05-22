@@ -1,5 +1,51 @@
 <meta charset="utf-8" />
+<html>
+<head>
+<style type="text/css">
+TABLE {
+	width: 300px; /* Ширина таблицы */
+	border-bottom: 2px solid maroon; /* Линия внизу таблицы */
+	background: #fffacd; /* Цвет фона таблицы */
+}
 
-<wicket:extend>
-<div wicket:id="catalogPanel"></div>
-</wicket:extend>
+TH {
+	background: maroon; /* Цвет фона заголовка */
+	color: white; /* Цвет текста */
+	text-align: left; /* Выравнивание по левому краю */
+}
+
+TD, TH {
+	padding: 3px; /* Поля вокруг текста */
+}
+</style>
+</head>
+<body>
+		<wicket:extend>
+			<table cellspacing="0" class="dataview">
+				<thead>
+					<tr>
+					<th></th>
+						<th><a wicket:id="orderByManufacturer">Производитель</a></th>
+						<th><a wicket:id="orderByModel">Модель</a></th>
+						<th><a wicket:id="orderByPrice">Цена</a></th>
+						<th><a wicket:id="orderByRecomended">Рейтинг</a></th>
+						<th>Доступно</th>
+
+							</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="productTable">
+									<td><span wicket:id="action"></span></td>
+									<!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
+									<td><span wicket:id="manufacturer">[created]</span></td>
+									<td><span wicket:id="model">[status]</span></td>
+									<td><span wicket:id="price">[price] </span>руб.</td>
+									<td><span wicket:id="recomended"> </span></td>
+									<td><span wicket:id="available"> </span></td>
+								</tr>
+							</tbody>
+						</table>
+						<span wicket:id="navigator">[dataview navigator]</span>
+						</wicket:extend>
+</body>
+</html>

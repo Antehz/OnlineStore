@@ -1,4 +1,4 @@
-package by.hrychanok.training.shop.web.page.product;
+package by.hrychanok.training.shop.web.page.catalog;
 
 import java.util.Iterator;
 import java.util.List;

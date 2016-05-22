@@ -21,6 +21,6 @@ public class CustomerOrderPage extends AbstractPage{
      @Override
     protected void onInitialize() {
     	super.onInitialize();
-    	 add(new OrderHistoryPage("order-panel"));
+    	 add(new OrderHistoryPage());
     }
 }

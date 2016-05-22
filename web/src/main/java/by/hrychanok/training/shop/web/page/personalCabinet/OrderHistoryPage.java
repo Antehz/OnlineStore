@@ -5,6 +5,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
@@ -13,18 +14,20 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import by.hrychanok.training.shop.model.AbstractModel;
 import by.hrychanok.training.shop.model.Order;
+import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
-import by.hrychanok.training.shop.web.page.BasePageForTable.ActionPanel;
+import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
 import by.hrychanok.training.shop.web.page.order.OrderPage;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
 /**
  * 
  * @author Ante
- *  ADD ACTION PANEL!!!
  */
 public class OrderHistoryPage extends BasePageForTable {
 
@@ -58,20 +61,30 @@ public class OrderHistoryPage extends BasePageForTable {
 		}
 	}
 
-	public OrderHistoryPage(String id) {
-		super(id);
+	public OrderHistoryPage() {
+		super();
 		SortableTypeDataProvider dp = new SortableTypeDataProvider();
 
 		final DataView<Order> dataView = new DataView<Order>("oir", dp) {
 			private static final long serialVersionUID = 1L;
 
+			@SuppressWarnings("unchecked")
 			@Override
 			protected void populateItem(final Item<Order> item) {
 				Order order = item.getModelObject();
 				item.add(new ActionPanel("actions", item.getModel()) {
-					@Override
-					public void goResponsePage() {
-						setResponsePage(new OrderPage(selected.getId()));
+					public void createLink(IModel model) {
+						Order selectedOrder = (Order) model.getObject();
+						Link link = new Link("select") {
+							@Override
+							public void onClick() {
+								selected = (Order) getParent().getDefaultModelObject();
+								setResponsePage(new OrderPage(selected.getId()));
+							}
+						};
+						link.setBody(Model.of(order.getId()));
+						add(link);
+								
 					};
 				}
 
@@ -86,7 +99,6 @@ public class OrderHistoryPage extends BasePageForTable {
 						hitem.toggleHighlite();
 					}
 				});*/
-				item.add(new Label("orderId", String.valueOf(order.getId())));
 				item.add(new Label("customerId", Model.of(order.getCustomer().getId())));
                 item.add(DateLabel.forDatePattern("created", Model.of(order.getStartDate()), "dd-MM-yyyy"));
 				item.add(new Label("status", order.getStatus()));

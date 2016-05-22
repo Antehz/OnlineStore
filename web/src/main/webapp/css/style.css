@@ -128,7 +128,6 @@ a:hover {
 	text-transform: uppercase;
 }
 
-
 h2 {
 	font-size: 35px;
 	line-height: 42px;
@@ -383,45 +382,161 @@ ul.menu li a:hover, ul.menu li.current a {
 	text-shadow: #68dcf6 0 0 5px;
 }
 /********************************menu**********************************/
-#menu-vertical
-{
+#menu-vertical {
 	position: relative;
-	float:left;
-	display:block;
-	overflow:hidden;
-	background:#1c1c1c;
+	float: left;
+	display: block;
+	overflow: hidden;
+	background: #1c1c1c;
 	margin: 0 0 20px 0;
 	padding: 20px 10px;
-	width:180px;
+	width: 180px;
 	font: 700 14px "Open Sans";
-	color:#9f9fa6;
+	color: #9f9fa6;
 }
 
-
 .menu-vertical ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: #f1f1f1;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
 }
 
 .menu-vertical li a {
-    display: block;
-    color: #f1f1f1;
-    padding: 8px 0 8px 16px;
-    text-decoration: none;
+	display: block;
+	color: #f1f1f1;
+	padding: 8px 0 8px 16px;
+	text-decoration: none;
 }
 
 .menu-vertical li a.active {
-    background-color: #12c0fa;
-    color: white;
+	background-color: #12c0fa;
+	color: white;
 }
 
-.menu-vertical li a:hover:not(.active) {
-    background-color: #12c0fa;
-    color: white;
+.menu-vertical li a:hover:not (.active ) {
+	background-color: #12c0fa;
+	color: white;
 }
+/************************************tree**************************************/
+.tree-label{
+	display: block;
+	color : #e2e2e4;
+	width: 5px;
+	font-size: 14px;
+}
+.tree-theme-windows div.tree-subtree {
+	margin: 0px 0px 0px 18px;
+	padding: 0px;
+}
+
+.tree-theme-windows div.tree-branch {
+	margin: 0px;
+	padding: 0px;
+}
+
+.tree-theme-windows div.tree-branch-mid {
+	background-image: url(tree.gif);
+	background-position: -54px center;
+	background-repeat: repeat-y;
+}
+
+.tree-theme-windows div.tree-branch-last {
+	
+}
+
+/* node */
+.tree-theme-windows .tree-junction {
+	display: block;
+	float: left;
+	width: 18px;
+	background-image: url(tree.gif);
+	background-position: -36px center;
+	background-repeat: no-repeat;
+}
+
+.tree-theme-windows .tree-junction-expanded {
+	display: block;
+	float: left;
+	width: 10px;
+	background-image: url(tree.gif);
+	background-position: -18px center;
+	background-repeat: no-repeat;
+	text-decoration: none;
+}
+
+.tree-theme-windows .tree-junction-collapsed {
+	display: block;
+	float: left;
+	width: 10px;
+	background-image: url(tree.gif);
+	background-position: 0px center;
+	background-repeat: no-repeat;
+	text-decoration: none;
+}
+
+.tree-theme-windows span.tree-content {
+	color: #e2e2e4;
+	display: block;
+	width:3px;
+	margin-left: 18px;
+}
+
+/* tabletree */
+.tree-theme-windows table {
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+.tree-theme-windows tr.selected {
+	background-color: #0000ee;
+	color: #FFFFFF;
+}
+
+.tree-theme-windows td {
+	/* allow tree divs to fill complete td (regretfully height 100% on divs does not work) */
+	margin: 0px;
+	padding: 0px;
+}
+
+
+/* content */
+.tree-theme-windows span.tree-content a {
+	color: #e2e2e4;
+	text-decoration: none;
+}
+
+.tree-theme-windows span.tree-content a:hover {
+	text-decoration: underline;
+}
+
+.tree-theme-windows span.tree-content .selected span.tree-label {
+	background-color: #0000ee;
+	color: #FFFFFF;
+}
+
+.tree-theme-windows .tree-folder-closed {
+	padding-left: 10px;
+	background-image: url(folder-closed.gif);
+	background-position: 0px 50%;
+	background-repeat: no-repeat;
+}
+
+.tree-theme-windows .tree-folder-open {
+	padding-left: 10px;
+	background-image: url(folder-open.gif);
+	background-position: 0px 50%;
+	background-repeat: no-repeat;
+}
+
+.tree-theme-windows .tree-folder-other {
+	padding-left: 10px;
+	background-image: url(folder-other.gif);
+	background-position: 0px 50%;
+	background-repeat: no-repeat;
+}
+
 /*********************************content*************************************/
 #content {
 	width: 900px;
@@ -429,13 +544,14 @@ ul.menu li a:hover, ul.menu li.current a {
 	position: relative;
 }
 
-#bd{
-	position:relative;
-	top:10px;
-	left:10px;
-	bottom:10px;
+#bd {
+	position: relative;
+	top: 10px;
+	left: 10px;
+	bottom: 10px;
 	padding: 0px 0px 0px 0px;
 }
+
 .block-1 {
 	background: #e2e2e4;
 	border: #fff 1px solid;
@@ -541,7 +657,7 @@ ul.menu li a:hover, ul.menu li.current a {
 }
 
 .sub-page {
-	min-height:280px;
+	min-height: 280px;
 	background: #fafafa;
 	overflow: hidden;
 	border: #fff 1px solid;
@@ -550,7 +666,6 @@ ul.menu li a:hover, ul.menu li.current a {
 	width: 840px;
 	padding: 29px 39px 20px 39px;
 }
-
 
 .box-4 {
 	overflow: hidden;
@@ -646,8 +761,8 @@ table td:first-child {
 /****************************footer************************/
 footer {
 	height: 20px;
-	position:relative;
-	top:10px;
+	position: relative;
+	top: 10px;
 	width: 1250px;
 	overflow: hidden;
 	margin: 0 auto;
