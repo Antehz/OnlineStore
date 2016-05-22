@@ -70,24 +70,27 @@
 			<artifactId>spring-web</artifactId>
 		</dependency>
 
-	</dependencies>
-	
+		<dependency>
+    <groupId>com.googlecode.wicket-jquery-ui</groupId>
+    <artifactId>wicket-jquery-ui</artifactId>
+</dependency>
+</dependencies>
 	<build>
-    <resources>
-        <resource>
-            <filtering>false</filtering>
-            <directory>src/main/resources</directory>
-        </resource>
-        <resource>
-            <filtering>false</filtering>
-            <directory>src/main/java</directory>
-            <includes>
-                <include>**</include>
-            </includes>
-            <excludes>
-                <exclude>**/*.java</exclude>
-            </excludes>
-        </resource>
-    </resources>
-</build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
 </project>

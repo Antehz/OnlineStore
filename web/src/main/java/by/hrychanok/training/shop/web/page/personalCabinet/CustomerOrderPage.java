@@ -21,6 +21,12 @@ public class CustomerOrderPage extends AbstractPage{
      @Override
     protected void onInitialize() {
     	super.onInitialize();
-    	 add(new OrderHistoryPage());
+    	 add(new Link("toOrderHistory"){
+    		 @Override
+    		public void onClick() {
+    			setResponsePage(new OrderHistoryPage());  //Сделать для конкретного пользователя
+    			
+    		}
+    	 });
     }
 }

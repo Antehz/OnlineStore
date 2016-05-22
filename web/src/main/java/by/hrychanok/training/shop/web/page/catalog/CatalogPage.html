@@ -1,23 +1,6 @@
 <meta charset="utf-8" />
 <html>
 <head>
-<style type="text/css">
-TABLE {
-	width: 300px; /* Ширина таблицы */
-	border-bottom: 2px solid maroon; /* Линия внизу таблицы */
-	background: #fffacd; /* Цвет фона таблицы */
-}
-
-TH {
-	background: maroon; /* Цвет фона заголовка */
-	color: white; /* Цвет текста */
-	text-align: left; /* Выравнивание по левому краю */
-}
-
-TD, TH {
-	padding: 3px; /* Поля вокруг текста */
-}
-</style>
 </head>
 <body>
 		<wicket:extend>
@@ -30,6 +13,7 @@ TD, TH {
 						<th><a wicket:id="orderByPrice">Цена</a></th>
 						<th><a wicket:id="orderByRecomended">Рейтинг</a></th>
 						<th>Доступно</th>
+						<th></th>
 
 							</tr>
 							</thead>
@@ -39,9 +23,10 @@ TD, TH {
 									<!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
 									<td><span wicket:id="manufacturer">[created]</span></td>
 									<td><span wicket:id="model">[status]</span></td>
-									<td><span wicket:id="price">[price] </span>руб.</td>
+									<td><span wicket:id="price">[price] </span> руб.</td>
 									<td><span wicket:id="recomended"> </span></td>
 									<td><span wicket:id="available"> </span></td>
+									<td><a wicket:id="addToCart">Добавить в корзину</a></td>
 								</tr>
 							</tbody>
 						</table>

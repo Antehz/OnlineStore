@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.repository.CartContentRepository;
 import by.hrychanok.training.shop.repository.CustomerRepository;
+import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.ProductService;
@@ -38,7 +40,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public CartContent addProductToCart(Long productId, Long customerId, Integer amount) {
+	public CartContent addProductToCart(Long productId, Long customerId) {
 
 		List<CartContent> contentCartCustomer = getCustomerCartContent(customerId);
 		CartContent cartContent = new CartContent();
@@ -50,16 +52,16 @@ public class CartServiceImpl implements CartService {
 		}
 		cartContent.setProduct(product);
 		cartContent.setCustomer(customer);
-		cartContent.setAmount(amount);
+		cartContent.setAmount(1);
 		cartContent.setDateAdd(new Date());
-		cartContent.setPrice(product.getPrice() * amount);
+		cartContent.setPrice(product.getPrice() * 1);
 
 		for (CartContent temp : contentCartCustomer) {
 			boolean existItem = temp.getProduct().getId().equals(cartContent.getProduct().getId());
 			if (existItem) {
-				temp.setAmount(amount);
+				temp.setAmount(temp.getAmount()+1);
 				temp.setDateAdd(new Date());
-				temp.setPrice(temp.getPrice() * amount);
+				temp.setPrice(temp.getPrice() * temp.getAmount());
 				cartContent = repository.save(temp);
 				LOGGER.info("Amount of items {} was changed for customer {} cart", product.getId(), customer.getId());
 			}
@@ -69,10 +71,6 @@ public class CartServiceImpl implements CartService {
 		return cartContent;
 	}
 	@Override
-	public List<CartContent> getCustomerCartContent(Long id) {
-		return repository.getCartContentById(id);
-	}
-	@Override
 	public void deleteProductFromCart(Long id) {
 		repository.delete(id);
 	}
@@ -80,4 +78,38 @@ public class CartServiceImpl implements CartService {
 	public CartContent findById(Long id) {
 		return repository.findOne(id);
 	}
+	
+	
+	@Override
+	public List<CartContent> findAll(Filter filter, Pageable page) {
+		if (filter.existCondition()) {
+			return repository.findAll(filter, page).getContent();
+		} else {
+			return repository.findAll(page).getContent();
+		}
+	}
+	
+	@Override
+	public Long count(Filter filter) {
+		if (filter.existCondition()) {
+			return repository.count(filter);
+		} else {
+			return repository.count();
+		}
+	}
+
+	@Override
+	public List<CartContent> getCustomerCartContent(Long customerId) {
+		
+		return repository.getCartContentByCustomerId(customerId);
+	}
+
+	@Override
+	public void save(CartContent cart) {
+		repository.saveAndFlush(cart);
+		
+	}
+
 }
+
+

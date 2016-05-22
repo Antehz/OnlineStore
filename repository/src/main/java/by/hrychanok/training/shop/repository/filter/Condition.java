@@ -1,6 +1,8 @@
 package by.hrychanok.training.shop.repository.filter;
 
-public class Condition {
+import java.io.Serializable;
+
+public class Condition implements Serializable{
 	public Type type;
 	public Comparison comparison;
 

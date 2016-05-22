@@ -121,7 +121,7 @@ public class CustomerServiceTest {
 	@Test
 	public void findAllSort() {
 		Sort sort = new Sort(Sort.Direction.ASC, "firstName");
-		List<Customer> list = customerService.findAll(sort);
+		List<Customer> list = customerService.findAll();
 		for (Customer customer : list) {
 			System.out.println(customer);
 		}

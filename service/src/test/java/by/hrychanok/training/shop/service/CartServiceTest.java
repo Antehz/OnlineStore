@@ -118,6 +118,9 @@ public class CartServiceTest {
 		Long customerId = cartContent.getCustomer().getId();
 		List<CartContent> list = cartService.getCustomerCartContent(customerId);
 		Assert.assertNotNull(list);
+		for (CartContent cartContent2 : list) {
+			System.out.println(cartContent2);
+		}
 		cartService.clearCustomerCartContent(customerId);
 		list = cartService.getCustomerCartContent(customerId);
 		Assert.assertTrue(list.isEmpty());

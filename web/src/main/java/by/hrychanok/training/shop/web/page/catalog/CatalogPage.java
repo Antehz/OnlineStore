@@ -23,6 +23,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import by.hrychanok.training.shop.model.AbstractModel;
 import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.Product;
+import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.service.ProductService;
 import by.hrychanok.training.shop.web.page.AbstractPage;
@@ -35,6 +36,9 @@ public class CatalogPage extends BasePageForTable {
 
 	@SpringBean
 	ProductService productService;
+	
+	@SpringBean
+	CartService cartService;
 	private static final long serialVersionUID = 1L;
 
 	private static class HighlitableDataItem<T> extends Item<T> {
@@ -109,7 +113,16 @@ public class CatalogPage extends BasePageForTable {
 				item.add(new Label("price", product.getPrice()));
 				item.add(new Label("recomended", product.getCountRecommended()));
 				item.add(new Label("available", product.getAvailable()));
+                item.add(new Link("addToCart"){
 
+					@Override
+					public void onClick() {
+						cartService.addProductToCart(product.getId(), 1580L);
+						
+					}
+                	
+                	
+                });
 				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
 					private static final long serialVersionUID = 1L;
 

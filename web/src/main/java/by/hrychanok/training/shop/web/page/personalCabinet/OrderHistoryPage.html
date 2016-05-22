@@ -1,31 +1,29 @@
 <meta charset="utf-8" />
 
 <wicket:panel>
-<wicket:extend>
+	<wicket:extend>
 
-<table cellspacing="0" class="dataview">
-<thead>
-    <tr>
-        <th colspan="1">Actions</th>
-        <th wicket:id="orderById">ID</th>
-        <th>Customer ID</th>
-        <th wicket:id="orderByCreated">Date</th>
-        <th wicket:id="orderByStatus">Status</th>
-        <th wicket:id="orderByPrice">Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr wicket:id="oir">
-        <td><span wicket:id="actions">[actions]</span></td>
-      <!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
-        <td><span wicket:id="orderId">[orderId]</span> </td>
-        <td><span wicket:id="customerId">[customerId]</span></td>
-        <td><span wicket:id="created">[created]</span></td>
-        <td><span wicket:id="status">[status]</span></td>
-        <td><span wicket:id="price">[price]</span></td>
-    </tr>
-    </tbody>
-</table>
-<span wicket:id="navigator">[dataview navigator]</span>
-</wicket:extend>
+		<table cellspacing="0" class="dataview">
+			<thead>
+				<tr>
+					 <th wicket:id="orderById">Order ID</th>
+					<th>Customer ID</th>
+					<th wicket:id="orderByCreated">Date</th>
+					<th wicket:id="orderByStatus">Status</th>
+					<th wicket:id="orderByPrice">Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr wicket:id="oir">
+					<!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
+					<td><a wicket:id="linkId">[orderId]</a></td>
+					<td><span wicket:id="customerId">[customerId]</span></td>
+					<td><span wicket:id="created">[created]</span></td>
+					<td><span wicket:id="status">[status]</span></td>
+					<td><span wicket:id="price">[price]</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<span wicket:id="navigator">[dataview navigator]</span>
+	</wicket:extend>
 </wicket:panel>

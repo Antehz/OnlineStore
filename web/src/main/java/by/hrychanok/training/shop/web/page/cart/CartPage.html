@@ -1,4 +1,42 @@
-<wicket:extend>
-	<h2>Cart</h2>
-</wicket:extend>
+<meta charset="utf-8" />
+<html>
+<head>
+</head>
+<body>
+	<wicket:extend>
+		<table cellspacing="0" class="dataview">
+			<thead>
+				<tr>
+					<th>Товар</th>
+					<th>Наименование</th>
+					<th>Добавлен</th>
+					<th>Цена</th>
+					<th>Количество</th>
+					<th><a wicket:id="orderByPriceTotal">Стоимость</a></th>
+					<th>Удалить</th>
 
+				</tr>
+			</thead>
+			<tbody>
+				<tr wicket:id="cartTable">
+					<td><a wicket:id="linkProduct"></a></td>
+					<td><span wicket:id="name"></span></td>
+					<td><span wicket:id="added"></span></td>
+					<td><span wicket:id="pricePiece"></span></td>
+					<td>
+						<div id="wrapper-panel-frame" class="ui-corner-all">
+							<form wicket:id="form">
+								<input wicket:id="spinner" type="text" style="width: 35px;"></input><br />
+							</form>
+						</div>
+					</td>
+					<td><span wicket:id="priceTotal"></span></td>
+					<td><a wicket:id="delete-link">Удалить</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+		<span wicket:id="navigator">[dataview navigator]</span>
+	</wicket:extend>
+</body>
+</html>

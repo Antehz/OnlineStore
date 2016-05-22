@@ -36,14 +36,14 @@ public class OrderHistoryPage extends BasePageForTable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private static class HighlitableDataItem<T> extends Item<T> {
+/*	private static class HighlitableDataItem<T> extends Item<T> {
 		private static final long serialVersionUID = 1L;
 
 		private boolean highlite = false;
 
-		/**
+		*//**
 		 * toggles highlite
-		 */
+		 *//*
 		public void toggleHighlite() {
 			highlite = !highlite;
 		}
@@ -59,7 +59,7 @@ public class OrderHistoryPage extends BasePageForTable {
 				}
 			});
 		}
-	}
+	}*/
 
 	public OrderHistoryPage() {
 		super();
@@ -72,23 +72,14 @@ public class OrderHistoryPage extends BasePageForTable {
 			@Override
 			protected void populateItem(final Item<Order> item) {
 				Order order = item.getModelObject();
-				item.add(new ActionPanel("actions", item.getModel()) {
-					public void createLink(IModel model) {
-						Order selectedOrder = (Order) model.getObject();
-						Link link = new Link("select") {
-							@Override
-							public void onClick() {
-								selected = (Order) getParent().getDefaultModelObject();
-								setResponsePage(new OrderPage(selected.getId()));
-							}
-						};
-						link.setBody(Model.of(order.getId()));
-						add(link);
-								
-					};
-				}
-
-				);
+				Link linkId = new Link<Void>("linkId") {
+                    @Override
+                    public void onClick() {
+                        setResponsePage(new OrderPage(order.getId()));
+                    }
+				};
+				linkId.setBody(Model.of(order.getId()));
+				item.add(linkId);
 
 			/*	item.add(new Link<Void>("toggleHighlite") {
 					private static final long serialVersionUID = 1L;
@@ -113,11 +104,11 @@ public class OrderHistoryPage extends BasePageForTable {
 					}
 				}));
 			}
-
-			@Override
-			protected Item<Order> newItem(String id, int index, IModel<Order> model) {
-				return new HighlitableDataItem<>(id, index, model);
-			}
+//
+//			@Override
+//			protected Item<Order> newItem(String id, int index, IModel<Order> model) {
+//				return new HighlitableDataItem<>(id, index, model);
+//			}
 		};
 
 		dataView.setItemsPerPage(12L);
