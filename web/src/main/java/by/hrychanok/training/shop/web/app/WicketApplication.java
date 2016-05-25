@@ -8,6 +8,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import by.hrychanok.training.shop.web.page.home.HomePage;
+import de.agilecoders.wicket.core.Bootstrap;
 
 @Component
 public class WicketApplication extends WebApplication {
@@ -20,6 +21,7 @@ public class WicketApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
+		Bootstrap.install(this);
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfigForWeb.class);
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this, ctx));
 		getMarkupSettings().setStripWicketTags(true);

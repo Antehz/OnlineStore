@@ -65,7 +65,7 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 		order.setStatus(StatusOrder.Pending);
 		List<OrderContent> orderContent = getOrderContentById(order.getId());
 		mail.sendOrderConfirmationMail(order);
-		return repository.save(order);
+		return order;
 
 	}
 

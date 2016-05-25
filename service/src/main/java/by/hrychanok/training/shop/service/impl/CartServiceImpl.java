@@ -40,15 +40,16 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public CartContent addProductToCart(Long productId, Long customerId) {
+	public Boolean addProductToCart(Long productId, Long customerId) {
 
 		List<CartContent> contentCartCustomer = getCustomerCartContent(customerId);
+		
 		CartContent cartContent = new CartContent();
 		Product product = productService.findOne(productId);
 		Customer customer = customerService.findOne(customerId);
 		if (product.getAvailable() == 0) {
 			LOGGER.debug("Product is missing on the warehouse, id: " + product.getId());
-			throw new ServiceException("Given product isn't available");
+			return false;
 		}
 		cartContent.setProduct(product);
 		cartContent.setCustomer(customer);
@@ -59,6 +60,9 @@ public class CartServiceImpl implements CartService {
 		for (CartContent temp : contentCartCustomer) {
 			boolean existItem = temp.getProduct().getId().equals(cartContent.getProduct().getId());
 			if (existItem) {
+				if(temp.getAmount()>=product.getAvailable()){
+					return false;
+				}
 				temp.setAmount(temp.getAmount()+1);
 				temp.setDateAdd(new Date());
 				temp.setPrice(temp.getPrice() * temp.getAmount());
@@ -68,7 +72,7 @@ public class CartServiceImpl implements CartService {
 		}
 		cartContent = repository.save(cartContent);
 		LOGGER.info("Item {} has been added to cart customer id:", product.getId(), customer.getId());
-		return cartContent;
+		return true;
 	}
 	@Override
 	public void deleteProductFromCart(Long id) {
@@ -108,6 +112,16 @@ public class CartServiceImpl implements CartService {
 	public void save(CartContent cart) {
 		repository.saveAndFlush(cart);
 		
+	}
+
+	@Override
+	public Integer getTotalPriceCart(Long customerId) {
+		List<CartContent> contentCartCustomer = getCustomerCartContent(customerId);
+		Integer total = 0;
+		for (CartContent cartContent : contentCartCustomer) {
+			total=total+cartContent.getPrice();
+		}
+		return total;
 	}
 
 }

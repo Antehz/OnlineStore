@@ -541,6 +541,7 @@ ul.menu li a:hover, ul.menu li.current a {
 #content {
 	width: 900px;
 	margin: 0 auto;
+	float : left;
 	position: relative;
 }
 
@@ -657,14 +658,14 @@ ul.menu li a:hover, ul.menu li.current a {
 }
 
 .sub-page {
-	min-height: 280px;
+	min-height: 300px;
 	background: #fafafa;
 	overflow: hidden;
-	border: #fff 1px solid;
+	border: none;
 	border-bottom: none;
 	float: left;
-	width: 840px;
-	padding: 29px 39px 20px 39px;
+	width: 950px;
+	padding: 5px;
 }
 
 .box-4 {

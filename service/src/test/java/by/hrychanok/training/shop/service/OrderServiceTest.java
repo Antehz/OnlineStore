@@ -113,7 +113,7 @@ public class OrderServiceTest {
 
 			CartContent cart = new CartContent();
 			int amount = i;
-			cartService.addProductToCart(product.getId(), customer.getId(), amount);
+			cartService.addProductToCart(product.getId(), customer.getId());
 			order = orderService.createOrder(customer.getId(), ShippingMethod.Courier, "Test additional information");
 		}
 		orderList = orderService.findAll();

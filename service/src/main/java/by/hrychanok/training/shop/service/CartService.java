@@ -12,7 +12,7 @@ import by.hrychanok.training.shop.repository.filter.Filter;
 public interface CartService {
 	List<CartContent> getCustomerCartContent(Long customerId);
 
-	CartContent addProductToCart(Long productId, Long customerId);
+	Boolean addProductToCart(Long productId, Long customerId);
 
 	void deleteProductFromCart(Long id);
 
@@ -25,4 +25,7 @@ public interface CartService {
 	public List<CartContent> findAll(Filter filter, Pageable page);
 
 	public Long count(Filter filter);
+	
+	public Integer getTotalPriceCart(Long customerId);
+	
 }

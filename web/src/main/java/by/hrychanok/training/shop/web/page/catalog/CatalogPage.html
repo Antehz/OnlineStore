@@ -3,34 +3,40 @@
 <head>
 </head>
 <body>
-		<wicket:extend>
-			<table cellspacing="0" class="dataview">
-				<thead>
-					<tr>
+	<wicket:extend>
+		<table class="table" style="width: 920px";>
+			<thead>
+				<tr>
 					<th></th>
-						<th><a wicket:id="orderByManufacturer">Производитель</a></th>
-						<th><a wicket:id="orderByModel">Модель</a></th>
-						<th><a wicket:id="orderByPrice">Цена</a></th>
-						<th><a wicket:id="orderByRecomended">Рейтинг</a></th>
-						<th>Доступно</th>
-						<th></th>
-
-							</tr>
-							</thead>
-							<tbody>
-								<tr wicket:id="productTable">
-									<td><span wicket:id="action"></span></td>
-									<!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
-									<td><span wicket:id="manufacturer">[created]</span></td>
-									<td><span wicket:id="model">[status]</span></td>
-									<td><span wicket:id="price">[price] </span> руб.</td>
-									<td><span wicket:id="recomended"> </span></td>
-									<td><span wicket:id="available"> </span></td>
-									<td><a wicket:id="addToCart">Добавить в корзину</a></td>
-								</tr>
-							</tbody>
-						</table>
-						<span wicket:id="navigator">[dataview navigator]</span>
-						</wicket:extend>
+					<th><a wicket:id="orderByManufacturer">Производитель</a></th>
+					<th><a wicket:id="orderByModel">Модель</a></th>
+					<th><a wicket:id="orderByPrice">Цена</a></th>
+					<th><a wicket:id="orderByRecomended">Рейтинг</a></th>
+					<th>Доступно</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr wicket:id="productTable">
+					<td><span wicket:id="action"></span></td>
+					<!--   <td><a href="#" wicket:id="toggleHighlite">toggle highlite</a></td> -->
+					<td><span wicket:id="manufacturer">[created]</span></td>
+					<td><span wicket:id="model">[status]</span></td>
+					<td><span wicket:id="price">[price] </span> руб.</td>
+					<td><span wicket:id="recomended"> </span></td>
+					<td><span wicket:id="available"> </span></td>
+					<td>
+					<div id="wrapper-panel-frame" class="ui-corner-all">
+							<form wicket:id="form">
+								<button wicket:id="buyButton">Купить</button>
+								<div wicket:id="feedbackBuyItem" style="width: 100px;"></div>
+							</form>
+							</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<span wicket:id="navigator">[dataview navigator]</span>
+	</wicket:extend>
 </body>
 </html>

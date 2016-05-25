@@ -1,10 +1,20 @@
 <meta charset="utf-8" />
 <html>
 <head>
+<wicket:head>
+	<style type="text/css">
+.radioUL {
+	list-style: none;
+}
+.radioUL li {
+	line-height: 25px;
+}
+</style>
+</wicket:head>
 </head>
 <body>
 	<wicket:extend>
-		<table cellspacing="0" class="dataview">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>Товар</th>
@@ -24,19 +34,97 @@
 					<td><span wicket:id="added"></span></td>
 					<td><span wicket:id="pricePiece"></span></td>
 					<td>
-						<div id="wrapper-panel-frame" class="ui-corner-all">
-							<form wicket:id="form">
-								<input wicket:id="spinner" type="text" style="width: 35px;"></input><br />
-							</form>
-						</div>
+						<form wicket:id="formTable">
+							<input wicket:id="spinner" type="text" style="width: 35px;"></input><br />
+						</form>
 					</td>
 					<td><span wicket:id="priceTotal"></span></td>
-					<td><a wicket:id="delete-link">Удалить</a></td>
+					<td><form wicket:id="formDeleteItem">
+					<button wicket:id="deleteItem">Удалить</button>
+					</form>
+					</td>
 				</tr>
-
+				
+				<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>Итого</td>
+					<td><span wicket:id="totalPrice"></span></td>
+				</tr>
 			</tbody>
+
 		</table>
 		<span wicket:id="navigator">[dataview navigator]</span>
+		<br></br>
+		<div id="wrapper-panel-frame" class="ui-corner-all">
+			<form wicket:id="formChoseShipMethod">
+				<div wicket:id="radiogroup">
+					<ul class="radioUL">
+						<li><input wicket:id="radio1" type="radio" /> <label
+							wicket:id="label1">[label]</label></li>
+
+						<li><input wicket:id="radio2" type="radio" /> <label
+							wicket:id="label2">[label]</label></li>
+					</ul>
+				</div>
+				<button wicket:id="Ok">Ok</button>
+				<br />
+			</form>
+		</div>
+
+		<h2>Контактные данные</h2>
+
+		<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="formCustomerUpdateData">
+		 <table width="50%" , border="1" , cellspacing="0" , cellpadding="4">
+			
+			  <tr> 
+			 <td align="right" width="150">	Имя</td>
+			 <td><input type="text"  wicket:id="firstName"  /></td>
+			 </tr>
+			 <tr>
+			  <td align="right" >Фамилия</td>
+			 <td> <input type="text"  wicket:id="lastName" /></td>
+			 </tr>
+			 <tr>
+			  <td align="right" >Email</td>
+			 <td> <input type="text"  wicket:id="email" /></td>
+				</tr>
+				<tr>
+				 <td align="right" width="100">Адрес</td>
+				 <td><input type="text" wicket:id="address" /></td>
+				</tr>
+				<tr>
+				<td></td>
+			<td>	<button type="submit" wicket:id="save">Сохранить</button></td>
+			</tr>
+			
+			</table>
+			</form>
+		</div>
+		
+		
+		<div id="wrapper-panel-frame" class="ui-corner-all">
+			<form wicket:id="formOrder">
+				Коментарий к заказу : <input type="text"  wicket:id="additionalInfo" />
+				<div wicket:id="checkgroup">
+					<ul class="checkUL">
+						<li><input wicket:id="check1" type="checkbox" /> <label
+							wicket:id="labelCheck1"></label></li>
+
+					</ul>
+				</div>
+				<br />
+
+				<button wicket:id="createOrderButton">Create order</button>
+				<br />
+				<br />
+				<div wicket:id="feedbackCreateOrder" style="width: 360px;"></div>
+			</form>
+		</div>
+
 	</wicket:extend>
 </body>
 </html>
