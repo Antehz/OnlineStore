@@ -419,6 +419,47 @@ ul.menu li a:hover, ul.menu li.current a {
 	background-color: #12c0fa;
 	color: white;
 }
+
+/************************************product-filter****************************/
+#menu-vertical-right {
+	width : 60%;
+	position: relative;
+	float: right;
+	display: block;
+	overflow: hidden;
+	background: #1c1c1c;
+	margin: 0 0 20px 0;
+	padding: 20px 10px;
+	width: 190px;
+	font: 700 14px "Open Sans";
+	color: #9f9fa6;
+}
+
+.menu-vertical-right ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
+}
+
+.menu-vertical-right li a {
+	display: block;
+	color: #f1f1f1;
+	padding: 8px 0 8px 16px;
+	text-decoration: none;
+}
+
+.menu-vertical-right li a.active {
+	background-color: #12c0fa;
+	color: white;
+}
+
+.menu-vertical-right li a:hover:not (.active ) {
+	background-color: #12c0fa;
+	color: white;
+}
+
 /************************************tree**************************************/
 .tree-label{
 	display: block;
@@ -664,7 +705,7 @@ ul.menu li a:hover, ul.menu li.current a {
 	border: none;
 	border-bottom: none;
 	float: left;
-	width: 950px;
+	width: 930px;
 	padding: 5px;
 }
 

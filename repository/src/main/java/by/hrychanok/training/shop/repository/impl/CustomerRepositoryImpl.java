@@ -82,4 +82,32 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
 		return allitems;
 	}
 
+	@Override
+	public Long count(CustomerFilter filter) {
+		        EntityManager em = getEntityManager();
+
+		        CriteriaBuilder cb = em.getCriteriaBuilder();
+
+		        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+
+		        Root<Customer> from = cq.from(Customer.class);
+
+		        // set selection
+		        cq.select(cb.count(from));
+
+		        handleFilterParameters(filter, cb, cq, from);
+
+		        TypedQuery<Long> q = em.createQuery(cq);
+
+		        // set execute query
+		        return q.getSingleResult();
+		    }
+	 private void handleFilterParameters(CustomerFilter filter, CriteriaBuilder cb, CriteriaQuery<?> cq, Root<Customer> from) {
+	        if (filter.getUserName() != null) {
+	            Predicate fNameEqualCondition = cb.equal(from.get(Customer_.firstName), filter.getUserName());
+	            Predicate lNameEqualCondition = cb.equal(from.get(Customer_.lastName), filter.getUserName());
+	            cq.where(cb.or(fNameEqualCondition, lNameEqualCondition));
+	        }
+	}
+
 }

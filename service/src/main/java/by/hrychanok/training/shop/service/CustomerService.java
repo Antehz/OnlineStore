@@ -1,7 +1,6 @@
 package by.hrychanok.training.shop.service;
 
-
-
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -15,10 +14,20 @@ import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.model.ProductComment;
 import by.hrychanok.training.shop.repository.filter.CustomerFilter;
 import by.hrychanok.training.shop.repository.filter.Filter;
+
 public interface CustomerService extends BasicService<Customer, Long> {
 
-	Customer getCustomerByCredentials(String login, String password);
+	CustomerCredentials getCustomerByCredentials(String login, String password);
+
 	Customer registerCustomer(Customer customer, CustomerCredentials customerCredentials);
+
 	List<Customer> find(CustomerFilter filter);
+
+	CustomerCredentials getCredentials(Long id);
+
 	String getText();
+
+	Long count(CustomerFilter filter);
+
+	Collection<? extends String> resolveRoles(Long id);
 }

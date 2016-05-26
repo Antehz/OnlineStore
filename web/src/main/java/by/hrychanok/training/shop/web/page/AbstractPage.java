@@ -3,6 +3,7 @@ package by.hrychanok.training.shop.web.page;
 import java.util.Date;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -21,13 +22,15 @@ import by.hrychanok.training.shop.web.component.header.HeaderPanel;
 import by.hrychanok.training.shop.web.component.leftMenu.CatalogTreePanel;
 import by.hrychanok.training.shop.web.component.leftMenu.InfoPanel;
 import by.hrychanok.training.shop.web.component.leftMenu.PersonalCabinetPanel;
+import by.hrychanok.training.shop.web.component.productFilter.ProductFilterPanel;
+import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
+@AuthorizeInstantiation(value = { "admin", "customer" })
 
 public abstract class AbstractPage extends WebPage {
 
 	private Component headerPanel;
 	private Component leftMenuPanel;
 	private Component footerPanel;
-	private Component panelContent;
 
 	public AbstractPage() {
 		super();
@@ -37,9 +40,6 @@ public abstract class AbstractPage extends WebPage {
 		super(parameters);
 	}
 
-	@SpringBean
-	CategoryService cat;
-
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
@@ -47,7 +47,6 @@ public abstract class AbstractPage extends WebPage {
 		add(headerPanel = new HeaderPanel("headerPanel"));
 		add(leftMenuPanel = new PersonalCabinetPanel("leftMenuPanel"));
 		add(footerPanel = new FooterPanel("footerPanel"));
-		
-
+		 
 	}
 }

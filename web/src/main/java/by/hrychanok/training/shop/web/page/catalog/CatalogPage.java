@@ -4,6 +4,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -33,12 +34,17 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 import by.hrychanok.training.shop.model.AbstractModel;
 import by.hrychanok.training.shop.model.CartContent;
+import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.service.CartService;
+import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.service.ProductService;
 import by.hrychanok.training.shop.service.impl.CartServiceImpl;
+import by.hrychanok.training.shop.web.component.header.HeaderPanel;
+import by.hrychanok.training.shop.web.component.leftMenu.PersonalCabinetPanel;
+import by.hrychanok.training.shop.web.component.productFilter.ProductFilterPanel;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
 import by.hrychanok.training.shop.web.page.StaticImage;
@@ -53,11 +59,17 @@ public class CatalogPage extends BasePageForTable {
 
 	@SpringBean
 	CartService cartService;
+
+	@SpringBean
+	CustomerService customerService;
 	private static final long serialVersionUID = 1L;
 
-
 	public CatalogPage(PageParameters parametrs) {
+		
+		
+		
 		Long categoryId = parametrs.get("id").toLong();
+		Customer customer = customerService.findOne(1580L); // FIX!!!
 
 		SortableProductDataProvider dp = new SortableProductDataProvider(categoryId);
 
@@ -89,7 +101,7 @@ public class CatalogPage extends BasePageForTable {
 					}
 
 				});
-				String info = product.getModel() + "/n " + product.getDescription();
+				String info = product.getModel() + "  " + product.getDescription();
 				item.add(new Label("manufacturer", product.getManufacturer()));
 				item.add(new Label("model", info));
 				item.add(new Label("price", product.getPrice()));
@@ -106,12 +118,18 @@ public class CatalogPage extends BasePageForTable {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-					{
-						CatalogPage.this.addedInfo(form);;
-						target.add(feedbackBuyItem);
+					protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+
+						if (cartService.addProductToCart(product.getId(), customer.getId())) {
+							CatalogPage.this.addedInfo(form);
+							target.add(feedbackBuyItem);
+						} else {
+							CatalogPage.this.notAddedInfo(form);
+							target.add(feedbackBuyItem);
+						}
 					}
 				});
+
 				item.add(form);
 				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
 					private static final long serialVersionUID = 1L;
@@ -171,6 +189,7 @@ public class CatalogPage extends BasePageForTable {
 	}
 
 	private void notAddedInfo(Component component) {
-		this.warn("Не возможно добавить товар");
+		this.error("Ошибка");
 	}
+	
 }

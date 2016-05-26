@@ -7,4 +7,5 @@ import by.hrychanok.training.shop.repository.filter.CustomerFilter;
 
 public interface CustomerRepositoryCustom {
 	List<Customer> find(CustomerFilter filter);
+	Long count(CustomerFilter filter);
 }

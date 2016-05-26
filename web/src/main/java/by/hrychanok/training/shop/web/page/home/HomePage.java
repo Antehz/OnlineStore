@@ -2,6 +2,7 @@ package by.hrychanok.training.shop.web.page.home;
 
 import java.util.List;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -17,7 +18,7 @@ import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
-
+@AuthorizeInstantiation(value = { "admin", "customer" })
 public class HomePage  extends AbstractPage{
 
 	@Override

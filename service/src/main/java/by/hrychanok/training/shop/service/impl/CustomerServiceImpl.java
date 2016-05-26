@@ -1,5 +1,7 @@
 package by.hrychanok.training.shop.service.impl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -28,8 +30,8 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 		implements CustomerService {
 	private static Logger LOGGER = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
-	public String text="This;s TEST";
-	
+	public String text = "This;s TEST";
+
 	public String getText() {
 		return text;
 	}
@@ -41,34 +43,36 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 	@Autowired
 	CustomerCredentialsRepository customerCredentialsRepository;
 
-	@Autowired MailService mail;
+	@Autowired
+	MailService mail;
+
 	@Override
-	public Customer getCustomerByCredentials(String login, String password) {
-		Customer customer=null;;
+	public CustomerCredentials getCustomerByCredentials(String login, String password) {
+		Customer customer=null;
 		LOGGER.debug("Get customer by credentials  login:{}, password: {}", login, password);
 		CustomerCredentials customerCredentials = customerCredentialsRepository.findByLoginAndPassword(login, password);
 		if (customerCredentials != null) {
 			customer = customerCredentials.getCustomer();
 			LOGGER.info("Customer {} {} has been found", customer.getFirstName(), customer.getLastName());
 		} else {
-			LOGGER.warn("Customer with credentials logn: {} , password:  {} has not been found!", login, password);
+			LOGGER.warn("Customer with credentials login: {} , password:  {} has not been found!", login, password);
 		}
-		return customer;
+		return customer.getCustomerCredentials();
 	}
-
 	@Override
 	public Customer registerCustomer(Customer customer, CustomerCredentials customerCredentials) {
 		boolean exist = checkExistUser(customerCredentials.getLogin(), customer.getEmail());
 		System.out.println(exist);
-		if(!exist){
+		if (!exist) {
 			customer.setCustomerCredentials(customerCredentials);
 			customer = repository.save(customer);
-			if(customer!=null){
-			LOGGER.info("Customer succesfully registred : {}", customer);
-//			mail.sendRegistrationNotificationMail(customer);
+			if (customer != null) {
+				LOGGER.info("Customer succesfully registred : {}", customer);
+				// mail.sendRegistrationNotificationMail(customer);
 			}
-		}else{
-			throw new ServiceException(String.format("Customer with login: %s, or EMail: %s already exist!", customerCredentials.getLogin(), customer.getEmail()));
+		} else {
+			throw new ServiceException(String.format("Customer with login: %s, or EMail: %s already exist!",
+					customerCredentials.getLogin(), customer.getEmail()));
 		}
 		return customer;
 	}
@@ -92,5 +96,21 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public CustomerCredentials getCredentials(Long id) {
+		return repository.findOne(id).getCustomerCredentials();
+	}
+
+	@Override
+	public Long count(CustomerFilter filter) {
+		return repository.count(filter);
+	}
+
+	@Override
+	public Collection<? extends String> resolveRoles(Long id) {
+		CustomerCredentials customerCredentials = customerCredentialsRepository.findOne(id);
+		return Collections.singletonList(customerCredentials.getRole().name());
 	}
 }
