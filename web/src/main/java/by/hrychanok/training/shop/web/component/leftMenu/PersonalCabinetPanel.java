@@ -3,8 +3,6 @@ package by.hrychanok.training.shop.web.component.leftMenu;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 
-import AuthorizedSession.AuthorizedSession;
-import by.hrychanok.training.shop.web.component.login.LoginPage;
 import by.hrychanok.training.shop.web.page.cart.CartPage;
 import by.hrychanok.training.shop.web.page.home.HomePage;
 import by.hrychanok.training.shop.web.page.personalCabinet.CustomerOrderPage;
@@ -42,11 +40,10 @@ public class PersonalCabinetPanel extends InfoPanel {
 		Link logoutLink = new Link("toLogout") {
 			@Override
 			public void onClick() {
-				 getSession().invalidate();
-		         setResponsePage(LoginPage.class);
+				
 			}
 		};
-		logoutLink.setVisible(AuthorizedSession.get().isSignedIn());
+
 		add(logoutLink);
 
 	}

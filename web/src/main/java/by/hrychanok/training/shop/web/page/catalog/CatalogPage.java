@@ -3,7 +3,10 @@ package by.hrychanok.training.shop.web.page.catalog;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -51,6 +54,7 @@ import by.hrychanok.training.shop.web.page.StaticImage;
 import by.hrychanok.training.shop.web.page.personalCabinet.SortableTypeDataProvider;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
 
+
 public class CatalogPage extends BasePageForTable {
 	private static Logger LOGGER = LoggerFactory.getLogger(CatalogPage.class);
 
@@ -65,9 +69,6 @@ public class CatalogPage extends BasePageForTable {
 	private static final long serialVersionUID = 1L;
 
 	public CatalogPage(PageParameters parametrs) {
-		
-		
-		
 		Long categoryId = parametrs.get("id").toLong();
 		Customer customer = customerService.findOne(1580L); // FIX!!!
 
@@ -112,7 +113,14 @@ public class CatalogPage extends BasePageForTable {
 				// FeedbackPanel //
 				final KendoFeedbackPanel feedbackBuyItem = new KendoFeedbackPanel("feedbackBuyItem");
 				form.add(feedbackBuyItem.setOutputMarkupId(true));
-
+				
+				Button buyButton = new Button("buyButton") {
+			        public void onSubmit() {
+			        boolean df=	cartService.addProductToCart(product.getId(), customer.getId());
+			        
+			    }};
+				form.add(buyButton);
+/*
 				form.add(new AjaxButton("buyButton") {
 
 					private static final long serialVersionUID = 1L;
@@ -128,7 +136,7 @@ public class CatalogPage extends BasePageForTable {
 							target.add(feedbackBuyItem);
 						}
 					}
-				});
+				});*/
 
 				item.add(form);
 				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
