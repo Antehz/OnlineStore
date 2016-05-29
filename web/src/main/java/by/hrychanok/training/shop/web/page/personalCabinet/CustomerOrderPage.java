@@ -25,7 +25,7 @@ public class CustomerOrderPage extends AbstractPage{
     		 @Override
     		public void onClick() {
     			setResponsePage(new OrderHistoryPage());  //Сделать для конкретного пользователя
-    			
+    			//zxczxczxc
     		}
     	 });
     }
