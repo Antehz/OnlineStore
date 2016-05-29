@@ -20,9 +20,10 @@ public class Filter implements Specification, Serializable {
 		conditions = new ArrayList<>();
 	}
 
-	public boolean existCondition(){
-		return conditions.isEmpty()?false:true;
+	public boolean existCondition() {
+		return conditions.isEmpty() ? false : true;
 	}
+
 	public void addCondition(Condition condition) {
 		this.conditions.add(condition);
 	}
@@ -60,7 +61,7 @@ public class Filter implements Specification, Serializable {
 			return buildBeetwenPredicateToCriteria(condition, root, criteriaQuery, criteriaBuilder);
 		default:
 			return buildEqualsPredicateToCriteria(condition, root, criteriaQuery, criteriaBuilder);
-			
+
 		}
 		throw new RuntimeException();
 	}
@@ -72,7 +73,7 @@ public class Filter implements Specification, Serializable {
 
 	private Predicate buildGreaterThanPredicateToCriteria(Condition condition, Root root, CriteriaQuery criteriaQuery,
 			CriteriaBuilder criteriaBuilder) {
-		return criteriaBuilder.gt(root.<Integer>get(condition.field),(Integer)condition.value);
+		return criteriaBuilder.gt(root.<Integer> get(condition.field), (Integer) condition.value);
 	}
 
 	private Predicate buildNotEqualsPredicateToCriteria(Condition condition, Root root, CriteriaQuery criteriaQuery,
@@ -87,11 +88,12 @@ public class Filter implements Specification, Serializable {
 
 	private Predicate buildBeetwenPredicateToCriteria(Condition condition, Root root, CriteriaQuery criteriaQuery,
 			CriteriaBuilder criteriaBuilder) {
-		return criteriaBuilder.between(root.<Integer>get(condition.field), (Integer) condition.value,
+		return criteriaBuilder.between(root.<Integer> get(condition.field), (Integer) condition.value,
 				(Integer) condition.limitValue);
 	}
+
 	private Predicate buildLowerThanPredicateToCriteria(Condition condition, Root root, CriteriaQuery criteriaQuery,
 			CriteriaBuilder criteriaBuilder) {
-		return criteriaBuilder.lt(root.<Integer>get(condition.field), (Integer)condition.value);
+		return criteriaBuilder.lt(root.<Integer> get(condition.field), (Integer) condition.value);
 	}
 }

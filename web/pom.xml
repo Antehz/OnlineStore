@@ -77,7 +77,7 @@
 
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>wicket-jquery-ui-theme-vader</artifactId>
+			<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
 		</dependency>
 
 		<dependency>

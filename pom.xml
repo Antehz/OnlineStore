@@ -215,7 +215,7 @@
 
 			<dependency>
 				<groupId>com.googlecode.wicket-jquery-ui</groupId>
-				<artifactId>wicket-jquery-ui-theme-vader</artifactId>
+				<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
 				<version>7.2.1</version>
 			</dependency>
 			<dependency>

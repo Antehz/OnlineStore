@@ -1,12 +1,16 @@
 package by.hrychanok.training.shop.web.page.cart;
 
+import java.awt.print.Printable;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RadioGroup;
@@ -19,21 +23,30 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.data.domain.PageRequest;
 
 import com.googlecode.wicket.jquery.ui.form.spinner.AjaxSpinner;
 import by.hrychanok.training.shop.model.CartContent;
 import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.model.ShippingMethod;
+import by.hrychanok.training.shop.repository.filter.Comparison;
+import by.hrychanok.training.shop.repository.filter.Condition;
 import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.OrderService;
+import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
+import by.hrychanok.training.shop.web.page.GenericSortableTypeDataProvider;
+import by.hrychanok.training.shop.web.page.personalCabinet.CustomerOrderPage;
+import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPage;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
 
 import com.googlecode.wicket.kendo.ui.form.Check;
 import com.googlecode.wicket.kendo.ui.form.Radio;
+import com.googlecode.wicket.kendo.ui.form.TextArea;
 import com.googlecode.wicket.kendo.ui.form.TextField;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
@@ -58,6 +71,7 @@ public class CartPage extends BasePageForTable {
 	public static final Integer SHIPCOST = 50_000;
 
 	private Integer summaryPrice;
+	private Label shipPriceLabel = new Label("shipPriceLabel", Model.of(""));
 
 	public Integer getSummaryPrice() {
 		return cartService.getTotalPriceCart(customer.getId());
@@ -69,14 +83,31 @@ public class CartPage extends BasePageForTable {
 
 	@SuppressWarnings("unchecked")
 	public CartPage() {
-		customer = customerService.findOne(1580L); // FIX
+		customer = AuthorizedSession.get().getLoggedUser().getCustomer();
 
-		SortableCartDataProvider dp = new SortableCartDataProvider();
+		GenericSortableTypeDataProvider<CartContent> dp = new GenericSortableTypeDataProvider<CartContent>() {
+
+			public Iterator<? extends CartContent> returnIterator(PageRequest pageRequest) {
+				filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("customer")
+						.setValue(customer.getId()).build());
+				return cartService.findAll(filterState, pageRequest).iterator();
+
+			}
+
+			@Override
+			public long size() {
+				return cartService.count(filterState);
+			}
+
+		};
 
 		Model<Integer> totalPriceModel = Model.of(getSummaryPrice());
 		totalPriceLabel = new Label("totalPrice", totalPriceModel);
 		totalPriceLabel.setOutputMarkupId(true);
 		add(totalPriceLabel);
+
+		shipPriceLabel.setOutputMarkupId(true);
+		add(shipPriceLabel);
 
 		final DataView<CartContent> dataView = new DataView<CartContent>("cartTable", dp) {
 			private static final long serialVersionUID = 1L;
@@ -109,19 +140,20 @@ public class CartPage extends BasePageForTable {
 				Model<Integer> priceTotalModel = Model.of(cartContent.getPrice());
 				Label priceTotal = new Label("priceTotal", priceTotalModel);
 				priceTotal.setOutputMarkupId(true);
-			
-				formTable.add(createSpinner(totalPriceModel, cartContent, product, formTable,
-						priceTotalModel, priceTotal));
-				
+
+				formTable.add(
+						createSpinner(totalPriceModel, cartContent, product, formTable, priceTotalModel, priceTotal));
+
 				item.add(formTable);
 				item.add(priceTotal);
-				
+
 				final Form<Void> formDeleteItem = new Form<Void>("formDeleteItem");
 				item.add(formDeleteItem);
 				formDeleteItem.add(addDeleteButton(cartContent));
 
 				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
 					private static final long serialVersionUID = 1L;
+
 					@Override
 					public String getObject() {
 						return (item.getIndex() % 2 == 1) ? "even" : "odd";
@@ -150,28 +182,18 @@ public class CartPage extends BasePageForTable {
 
 		createContactDataForm();
 
-		Form formOrder = new Form("formOrder"); 
+		Form formOrder = new Form("formOrder");
 
 		createFormOrder(radioModel, formOrder);
 		add(new PagingNavigator("navigator", dataView));
-		
+
 	}
 
 	private void createFormOrder(final IModel<String> radioModel, Form formOrder) {
-		
-		TextField orderAdditionalInfo;
-		formOrder.add(orderAdditionalInfo = new TextField("additionalInfo", Model.of("")));
-		add(formOrder);
 
-		// checkBox:
-		final CheckGroup<String> groupCheck = new CheckGroup<String>("checkgroup",
-				Model.ofList(new ArrayList<String>()));
-		formOrder.add(groupCheck);
-		
-		Check<?> check1 = new Check<String>("check1", Model.of("My check 1"), groupCheck);
-		com.googlecode.wicket.kendo.ui.form.Check.Label labelCheck1 = new com.googlecode.wicket.kendo.ui.form.Check.Label(
-				"labelCheck1", "Согласен(а) с правилами пользования сайта и приобретения товара ", check1);
-		groupCheck.add(check1, labelCheck1);
+		TextArea<String> orderAdditionalInfo = new TextArea<String>("additionalInfo", Model.of(""));
+		formOrder.add(orderAdditionalInfo);
+		add(formOrder);
 
 		final KendoFeedbackPanel feedbackCreateOrder = new KendoFeedbackPanel("feedbackCreateOrder");
 		formOrder.add(feedbackCreateOrder.setOutputMarkupId(true));
@@ -187,28 +209,29 @@ public class CartPage extends BasePageForTable {
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				defineMethodShip(radioModel); 
+
+				defineMethodShip(radioModel);
 				if (cartService.getCustomerCartContent(customer.getId()).isEmpty()) {
 					CartPage.this.emptyCartWarn(this);
 					target.add(feedbackCreateOrder);
-				}else{
-				try {
-					orderService.createOrder(1580L, shipMethod, orderAdditionalInfo.getDefaultModelObjectAsString());
-					Thread.sleep(1000);
-				} catch (Exception e) {
-					//add LOGGER ...
-					System.out.println("EXEPTION!!!");
+				} else {
+					try {
+						orderService.createOrder(customer.getId(), shipMethod,
+								orderAdditionalInfo.getDefaultModelObjectAsString());
+						Thread.sleep(1500);
+						CartPage.this.successOrderInfo(this);
+						target.add(feedbackCreateOrder);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
 				}
-				CartPage.this.successOrderInfo(this);
-				target.add(feedbackCreateOrder);
 			}
-		}});
+		});
 	}
 
-
-
 	private void createContactDataForm() {
-		
+
 		Form formCustomerUpdateData = new Form("formCustomerUpdateData", new CompoundPropertyModel<Customer>(customer));
 		add(formCustomerUpdateData);
 
@@ -248,7 +271,7 @@ public class CartPage extends BasePageForTable {
 
 		Radio<String> radio1 = new Radio<String>("radio1", Model.of("Курьер"), group);
 		com.googlecode.wicket.kendo.ui.form.Radio.Label label1 = new com.googlecode.wicket.kendo.ui.form.Radio.Label(
-				"label1", "Доставка по городу", radio1);
+				"label1", "Доставка по городу(50 000 руб.)", radio1);
 
 		group.add(radio1, label1);
 
@@ -264,11 +287,15 @@ public class CartPage extends BasePageForTable {
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				if (defineMethodShip(radioModel)) {
 					totalPriceModel.setObject(getSummaryPrice());
+					shipPriceLabel.setDefaultModelObject("0");
 
 				} else {
 					totalPriceModel.setObject(getSummaryPrice() + SHIPCOST);
+					shipPriceLabel.setDefaultModelObject(SHIPCOST);
+
 				}
 				target.add(totalPriceLabel);
+				target.add(shipPriceLabel);
 			}
 		});
 		return radioModel;
@@ -276,7 +303,7 @@ public class CartPage extends BasePageForTable {
 
 	private Label createLabel(final IModel<String> radioModel) {
 		Integer shipCost = 50_000;
-		Integer totalPrice = cartService.getTotalPriceCart(1580L);
+		Integer totalPrice = cartService.getTotalPriceCart(customer.getId());
 		if (!defineMethodShip(radioModel)) {
 			totalPrice = +shipCost;
 		}
@@ -299,15 +326,14 @@ public class CartPage extends BasePageForTable {
 
 	}
 
-	private final void successOrderInfo(Component component)
-	{
+	private final void successOrderInfo(Component component) {
 		this.success("Заказ оформлен!");
 	}
-	
-	private final void emptyCartWarn(Component component)
-	{
+
+	private final void emptyCartWarn(Component component) {
 		this.error("Корзина пуста! Заказ не может быть оформлен!");
 	}
+
 	private void confirmRulesInfo(Component component) {
 		this.warn("Вы должны согласится с правилами пользования сайта  и получения товара!");
 	}
@@ -333,14 +359,14 @@ public class CartPage extends BasePageForTable {
 				try {
 					cartService.deleteProductFromCart(cartContent.getId());
 					Thread.sleep(1000);
-					
+
 				} catch (InterruptedException e) {
 					/*
 					 * if (LOG.isDebugEnabled()) { LOG.debug(e.getMessage(), e);
 					 * }
 					 */
 				}
-               setResponsePage(new CartPage());
+				setResponsePage(new CartPage());
 			}
 		};
 
@@ -350,8 +376,7 @@ public class CartPage extends BasePageForTable {
 
 	private AjaxSpinner<Integer> createSpinner(Model<Integer> totalPriceModel, CartContent cartContent, Product product,
 			final Form<Integer> formTable, Model<Integer> priceTotalModel, Label priceTotal) {
-		final AjaxSpinner<Integer> spinner = new AjaxSpinner<Integer>("spinner", formTable.getModel(),
-				Integer.class) {
+		final AjaxSpinner<Integer> spinner = new AjaxSpinner<Integer>("spinner", formTable.getModel(), Integer.class) {
 
 			private static final long serialVersionUID = 1L;
 

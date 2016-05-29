@@ -31,5 +31,14 @@ public enum Comparison {
 	 * Create a predicate for testing whether the first argument is
 	 * between the second and third arguments in value.
 	 */
-    between
+    between,
+    /**
+	 * Create a disjunction of the given boolean expressions.
+	 *
+	 * @param x boolean expression
+	 * @param y boolean expression
+	 *
+	 * @return or predicate
+	 */
+    or
 }

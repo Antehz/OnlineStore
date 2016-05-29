@@ -18,7 +18,6 @@ import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
-@AuthorizeInstantiation(value = { "admin", "customer" })
 public class HomePage  extends AbstractPage{
 
 	@Override

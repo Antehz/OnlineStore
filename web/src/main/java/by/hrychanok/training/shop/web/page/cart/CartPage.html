@@ -6,6 +6,7 @@
 .radioUL {
 	list-style: none;
 }
+
 .radioUL li {
 	line-height: 25px;
 }
@@ -40,17 +41,23 @@
 					</td>
 					<td><span wicket:id="priceTotal"></span></td>
 					<td><form wicket:id="formDeleteItem">
-					<button wicket:id="deleteItem">Удалить</button>
-					</form>
-					</td>
+							<button wicket:id="deleteItem">Удалить</button>
+						</form></td>
 				</tr>
-				
 				<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>Итого</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>Доставка</td>
+					<td><span wicket:id="shipPriceLabel"></span></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>Итого</td>
 					<td><span wicket:id="totalPrice"></span></td>
 				</tr>
 			</tbody>
@@ -77,50 +84,45 @@
 		<h2>Контактные данные</h2>
 
 		<div id="wrapper-panel-frame" class="ui-corner-all">
-		<form wicket:id="formCustomerUpdateData">
-		 <table width="50%" , border="1" , cellspacing="0" , cellpadding="4">
-			
-			  <tr> 
-			 <td align="right" width="150">	Имя</td>
-			 <td><input type="text"  wicket:id="firstName"  /></td>
-			 </tr>
-			 <tr>
-			  <td align="right" >Фамилия</td>
-			 <td> <input type="text"  wicket:id="lastName" /></td>
-			 </tr>
-			 <tr>
-			  <td align="right" >Email</td>
-			 <td> <input type="text"  wicket:id="email" /></td>
-				</tr>
-				<tr>
-				 <td align="right" width="100">Адрес</td>
-				 <td><input type="text" wicket:id="address" /></td>
-				</tr>
-				<tr>
-				<td></td>
-			<td>	<button type="submit" wicket:id="save">Сохранить</button></td>
-			</tr>
-			
-			</table>
+			<form wicket:id="formCustomerUpdateData">
+				<table width="50%" , border="1" , cellspacing="0" , cellpadding="4">
+
+					<tr>
+						<td align="right" width="150">Имя</td>
+						<td><input type="text" wicket:id="firstName" /></td>
+					</tr>
+					<tr>
+						<td align="right">Фамилия</td>
+						<td><input type="text" wicket:id="lastName" /></td>
+					</tr>
+					<tr>
+						<td align="right">Email</td>
+						<td><input type="text" wicket:id="email" /></td>
+					</tr>
+					<tr>
+						<td align="right" width="100">Адрес</td>
+						<td><input type="text" wicket:id="address" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button type="submit" wicket:id="save">Сохранить</button>
+						</td>
+					</tr>
+
+				</table>
 			</form>
 		</div>
-		
-		
+
+
 		<div id="wrapper-panel-frame" class="ui-corner-all">
 			<form wicket:id="formOrder">
-				Коментарий к заказу : <input type="text"  wicket:id="additionalInfo" />
-				<div wicket:id="checkgroup">
-					<ul class="checkUL">
-						<li><input wicket:id="check1" type="checkbox" /> <label
-							wicket:id="labelCheck1"></label></li>
-
-					</ul>
-				</div>
+				Коментарий к заказу :
+				<textarea wicket:id="additionalInfo" rows="5" cols="40"></textarea>
 				<br />
 
 				<button wicket:id="createOrderButton">Create order</button>
-				<br />
-				<br />
+				<br /> <br />
 				<div wicket:id="feedbackCreateOrder" style="width: 360px;"></div>
 			</form>
 		</div>

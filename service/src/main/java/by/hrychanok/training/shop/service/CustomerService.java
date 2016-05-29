@@ -30,4 +30,7 @@ public interface CustomerService extends BasicService<Customer, Long> {
 	Long count(CustomerFilter filter);
 
 	Collection<? extends String> resolveRoles(Long id);
+	
+	Boolean loginIsAvailable(String login);
+	Boolean emailIsAvailable(String email);
 }

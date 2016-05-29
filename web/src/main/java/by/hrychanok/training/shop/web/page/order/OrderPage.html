@@ -1,4 +1,54 @@
+<meta charset="utf-8" />
 <wicket:extend>
-<div wicket:id="orderProfile"> 
-	</div></wicket:extend>
+
+
+	<table class="table table-condensed">
+		<caption>Order information</caption>
+		<tbody>
+			<tr>
+				<td>id</td>
+				<td><span wicket:id="orderId" /></td>
+			</tr>
+			<tr>
+				<td>Метод отправки</td>
+				<td><span wicket:id="shippingMethod" /></td>
+			</tr>
+			<tr>
+				<td>Стоимость</td>
+				<td><span wicket:id="totalPrice" /> руб.</td>
+			</tr>
+			<tr wicket:id="trStyle">
+				<td>Статус</td>
+				<td><span wicket:id="status" /></td>
+			</tr>
+			<tr>
+				<td>Коментарий</td>
+				<td><span wicket:id="additionalInfo" /></td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+	<table class="table table-bordered" style="width: 870px">
+		<thead class="my-table-thead">
+			<tr>
+				<th>№</th>
+				<th>Продукт</th>
+				<th>Количество</th>
+				<th>Стоимость</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr wicket:id="orderContentTable">
+			    <td><span wicket:id="counter">[orderId]</span></td>
+				<td><a wicket:id="linkProduct">[orderId]</a></td>
+				<td><span wicket:id="amount">[amount]</span></td>
+				<td><span wicket:id="price">[price]</span> руб.</td>
+			</tr>
+		</tbody>
+	</table>
+	<span wicket:id="navigator">[dataview navigator]</span>
+
+</wicket:extend>
 

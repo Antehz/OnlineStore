@@ -7,4 +7,5 @@ import by.hrychanok.training.shop.model.CustomerCredentials;
 
 public interface CustomerCredentialsRepository extends JpaRepository<CustomerCredentials, Long> {
 	CustomerCredentials findByLoginAndPassword(String login, String password);
+	CustomerCredentials findByLogin(String login);
 }

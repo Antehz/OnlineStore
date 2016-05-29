@@ -1,4 +1,5 @@
-/* Global properties ======================================================== */
+	/* Global properties ======================================================== */
+	
 html {
 	height: 100%;
 }
@@ -193,6 +194,7 @@ ul.list-2 li a:hover {
 }
 
 .wrap {
+	height: 120px;
 	overflow: hidden;
 	position: relative
 }
@@ -293,6 +295,10 @@ ul.list-2 li a:hover {
 	margin-bottom: 8px;
 }
 
+.my-table-thead{
+	background:rgba(28, 28, 28, 0.84);
+	color: #EBEBF3
+}
 /*********************************header*************************************/
 header {
 	width: 100%;
@@ -415,14 +421,38 @@ ul.menu li a:hover, ul.menu li.current a {
 	color: white;
 }
 
-.menu-vertical li a:hover:not (.active ) {
-	background-color: #12c0fa;
-	color: white;
+.menu-vertical
+ 
+li
+ 
+a
+:hover
+:not
+ 
+(
+.active
+ 
+)
+{
+background-color
+:
+ 
+#12c0fa
+;
+
+	
+color
+:
+ 
+white
+;
+
+
 }
 
 /************************************product-filter****************************/
 #menu-vertical-right {
-	width : 60%;
+	width: 60%;
 	position: relative;
 	float: right;
 	display: block;
@@ -455,18 +485,43 @@ ul.menu li a:hover, ul.menu li.current a {
 	color: white;
 }
 
-.menu-vertical-right li a:hover:not (.active ) {
-	background-color: #12c0fa;
-	color: white;
+.menu-vertical-right
+ 
+li
+ 
+a
+:hover
+:not
+ 
+(
+.active
+ 
+)
+{
+background-color
+:
+ 
+#12c0fa
+;
+
+	
+color
+:
+ 
+white
+;
+
+
 }
 
 /************************************tree**************************************/
-.tree-label{
+.tree-label {
 	display: block;
-	color : #e2e2e4;
+	color: #e2e2e4;
 	width: 5px;
 	font-size: 14px;
 }
+
 .tree-theme-windows div.tree-subtree {
 	margin: 0px 0px 0px 18px;
 	padding: 0px;
@@ -520,7 +575,7 @@ ul.menu li a:hover, ul.menu li.current a {
 .tree-theme-windows span.tree-content {
 	color: #e2e2e4;
 	display: block;
-	width:3px;
+	width: 3px;
 	margin-left: 18px;
 }
 
@@ -540,7 +595,6 @@ ul.menu li a:hover, ul.menu li.current a {
 	margin: 0px;
 	padding: 0px;
 }
-
 
 /* content */
 .tree-theme-windows span.tree-content a {
@@ -582,7 +636,7 @@ ul.menu li a:hover, ul.menu li.current a {
 #content {
 	width: 900px;
 	margin: 0 auto;
-	float : left;
+	float: left;
 	position: relative;
 }
 
@@ -706,7 +760,7 @@ ul.menu li a:hover, ul.menu li.current a {
 	border-bottom: none;
 	float: left;
 	width: 930px;
-	padding: 5px;
+	padding: 5px 10px 30px 15px;
 }
 
 .box-4 {

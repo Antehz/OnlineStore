@@ -113,4 +113,26 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 		CustomerCredentials customerCredentials = customerCredentialsRepository.findOne(id);
 		return Collections.singletonList(customerCredentials.getRole().name());
 	}
+
+	@Override
+	public Boolean loginIsAvailable(String login) {
+		if (customerCredentialsRepository.findByLogin(login)!=null) {
+			return false;
+			}
+			else{
+				return true;
+			
+		}
+	}
+
+	@Override
+	public Boolean emailIsAvailable(String email) {
+		if (repository.findByEmail(email)!=null) {
+			return false;
+			}
+			else{
+				return true;
+			
+		}
+	}
 }

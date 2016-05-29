@@ -14,5 +14,6 @@ import by.hrychanok.training.shop.model.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long>, CustomerRepositoryCustom, JpaSpecificationExecutor<Customer> {
 
+	Customer findByEmail(String email);
 
 }

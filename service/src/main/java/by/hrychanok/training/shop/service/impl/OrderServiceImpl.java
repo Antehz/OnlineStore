@@ -64,7 +64,7 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 		order.setTotalPrice(priceTotal);
 		order.setStatus(StatusOrder.Pending);
 		List<OrderContent> orderContent = getOrderContentById(order.getId());
-		mail.sendOrderConfirmationMail(order);
+		//mail.sendOrderConfirmationMail(order);
 		return order;
 
 	}
@@ -177,11 +177,16 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 	}
 
 	@Override
-	public Page<Order> findAllPage(Filter filter, Pageable page) {
+	public List<OrderContent> findAllContent(Filter filter, Pageable page) {
+		return orderContentRepository.findAll(filter, page).getContent();
+	}
+
+	@Override
+	public Long countContent(Filter filter) {
 		if (filter.existCondition()) {
-			return repository.findAll(filter, page);
+			return orderContentRepository.count(filter);
 		} else {
-			return repository.findAll(page);
+			return orderContentRepository.count();
 		}
 	}
 

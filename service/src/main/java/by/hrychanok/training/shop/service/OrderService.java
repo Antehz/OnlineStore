@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
+import by.hrychanok.training.shop.model.CartContent;
 import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.OrderContent;
@@ -36,5 +37,6 @@ public interface OrderService extends BasicService<Order, Long> {
 
 	Long count(Filter filter);
 
-	Page<Order> findAllPage(Filter filter, Pageable page);
+	List<OrderContent> findAllContent(Filter filter, Pageable page);
+	Long countContent(Filter filter);
 }

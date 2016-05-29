@@ -65,7 +65,7 @@ public class CartServiceImpl implements CartService {
 				}
 				temp.setAmount(temp.getAmount()+1);
 				temp.setDateAdd(new Date());
-				temp.setPrice(temp.getPrice() * temp.getAmount());
+				temp.setPrice(temp.getPrice()+product.getPrice());
 				cartContent = repository.save(temp);
 				LOGGER.info("Amount of items {} was changed for customer {} cart", product.getId(), customer.getId());
 			}
