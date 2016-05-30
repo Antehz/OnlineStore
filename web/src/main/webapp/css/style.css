@@ -1,5 +1,4 @@
-	/* Global properties ======================================================== */
-	
+/* Global properties ======================================================== */
 html {
 	height: 100%;
 }
@@ -295,8 +294,8 @@ ul.list-2 li a:hover {
 	margin-bottom: 8px;
 }
 
-.my-table-thead{
-	background:rgba(28, 28, 28, 0.84);
+.my-table-thead {
+	background: rgba(28, 28, 28, 0.84);
 	color: #EBEBF3
 }
 /*********************************header*************************************/
@@ -422,32 +421,52 @@ ul.menu li a:hover, ul.menu li.current a {
 }
 
 .menu-vertical
+
  
+
 li
+
  
+
 a
+
+
 :hover
+
+
 :not
+
  
+
 (
 .active
+
  
+
 )
 {
 background-color
+
+
 :
+
  
+
 #12c0fa
-;
 
-	
+
+;
 color
+
+
 :
+
  
+
 white
+
+
 ;
-
-
 }
 
 /************************************product-filter****************************/
@@ -486,32 +505,52 @@ white
 }
 
 .menu-vertical-right
+
  
+
 li
+
  
+
 a
+
+
 :hover
+
+
 :not
+
  
+
 (
 .active
+
  
+
 )
 {
 background-color
+
+
 :
+
  
+
 #12c0fa
-;
 
-	
+
+;
 color
+
+
 :
+
  
+
 white
+
+
 ;
-
-
 }
 
 /************************************tree**************************************/
@@ -657,6 +696,14 @@ white
 	background: #1c1c1c;
 }
 
+.product-profile {
+	position: relative;
+	padding: 10px;
+	bottom: 10px;
+	left: 20px;
+}
+
+}
 .pad-1 {
 	padding: 39px;
 }

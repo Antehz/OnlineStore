@@ -8,6 +8,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -16,6 +17,7 @@ import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -81,14 +83,15 @@ public class CatalogPage extends BasePageForTable {
 					@Override
 					public void createLink(IModel model) {
 						Product selectedProduct = (Product) model.getObject();
-						Image image = new Image("imagetest",
-								new PackageResourceReference(CatalogPage.class, selectedProduct.getImageURL()));
+						ContextImage image = new ContextImage("imagetest",  selectedProduct.getImageURL());
 
 						Link link = new Link("select") {
 							@Override
 							public void onClick() {
 								selected = (AbstractModel) getParent().getDefaultModelObject();
-								setResponsePage(new ProductPage(selected.getId()));
+								PageParameters parameters = new PageParameters();
+								parameters.add("id", selectedProduct.getId());
+								setResponsePage(new ProductPage(parameters));
 							}
 						};
 

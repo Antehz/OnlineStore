@@ -15,7 +15,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import by.hrychanok.training.shop.model.Category;
 import by.hrychanok.training.shop.service.CategoryService;
 import by.hrychanok.training.shop.web.page.AbstractPage;
-import by.hrychanok.training.shop.web.page.testPage;
 import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
 import by.hrychanok.training.shop.web.page.catalog.CategoryProvider;
 import by.hrychanok.training.shop.web.page.home.HomePage;

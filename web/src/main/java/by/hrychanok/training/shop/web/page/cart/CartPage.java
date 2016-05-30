@@ -24,6 +24,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.data.domain.PageRequest;
 
@@ -120,7 +121,9 @@ public class CartPage extends BasePageForTable {
 				Link linkProductId = new Link<Void>("linkProduct") {
 					@Override
 					public void onClick() {
-						setResponsePage(new ProductPage(product.getId()));
+						PageParameters parameters = new PageParameters();
+						parameters.add("id", product.getId());
+						setResponsePage(new ProductPage(parameters));
 					}
 				};
 				linkProductId.setBody(Model.of(product.getId()));

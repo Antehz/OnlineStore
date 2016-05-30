@@ -82,7 +82,9 @@ public class OrderPage extends AbstractPage {
 				Link linkProductId = new Link<Void>("linkProduct") {
 					@Override
 					public void onClick() {
-						setResponsePage(new ProductPage(orderContent.getProduct().getId()));
+						PageParameters parameters = new PageParameters();
+						parameters.add("id", orderContent.getProduct().getId());
+						setResponsePage(new ProductPage(parameters));
 					}
 				};
 				linkProductId.setBody(Model.of(orderContent.getProduct().getId()));
