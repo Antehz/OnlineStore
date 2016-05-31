@@ -22,6 +22,7 @@ import by.hrychanok.training.shop.repository.CartContentRepository;
 import by.hrychanok.training.shop.repository.CustomerRepository;
 import by.hrychanok.training.shop.repository.OrderContentRepository;
 import by.hrychanok.training.shop.repository.OrderRepository;
+import by.hrychanok.training.shop.repository.ProductRepository;
 import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.OrderService;
@@ -41,36 +42,31 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 	CustomerService customerService;
 	@Autowired
 	CartContentRepository cartContentRepository;
+	@Autowired
+	ProductRepository productRepository;
 
 	@Override
-	public Order createOrder(Long customerId, ShippingMethod shippingMethod, String additionalInfo) {
-		Order order = new Order();
-		Customer customer = customerService.findOne(customerId);
-		if (customer == null) {
-			throw new ServiceException(String.format("Customer has id: %s not found", customerId));
-		}
-		order.setCustomer(customer);
+	public Order createOrder(Order order) {
+		Customer customer = order.getCustomer();
 		order.setStartDate(new Date());
-		order.setShippingMethod(shippingMethod);
-		order.setAdditionalInfo(additionalInfo);
 		order.setStatus(StatusOrder.Making);
 		List<CartContent> cartContent = customer.getCartContent();
 		if (cartContent.isEmpty()) {
-			throw new ServiceException(String.format("Cart of customer has id: %s is empty", customerId));
+			throw new ServiceException(String.format("Cart of customer has id: %s is empty", customer.getId()));
 		}
+		System.out.println(order);
 		repository.save(order);
-		Integer priceTotal = transferFromCartToOrder(order, cartContent);
-		priceTotal = shippingInfluenceOnPrice(priceTotal, shippingMethod);
-		order.setTotalPrice(priceTotal);
+		transferFromCartToOrder(order, cartContent);
 		order.setStatus(StatusOrder.Pending);
 		List<OrderContent> orderContent = getOrderContentById(order.getId());
-		//mail.sendOrderConfirmationMail(order);
+		// mail.sendOrderConfirmationMail(order);
 		return order;
 
 	}
 
-	public Integer transferFromCartToOrder(Order order, List<CartContent> cartContent) {
+	public void transferFromCartToOrder(Order order, List<CartContent> cartContent) {
 		Integer priceTotal = 0;
+		Product product;
 		for (CartContent item : cartContent) {
 			OrderContent orderContent = new OrderContent();
 			orderContent.setProduct(item.getProduct());
@@ -78,22 +74,21 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 			Integer price = orderContent.getProduct().getPrice() * orderContent.getAmount();
 			orderContent.setPrice(price);
 			orderContent.setOrder(order);
+			changeProductData(item, orderContent);
 			orderContentRepository.save(orderContent);
 			priceTotal = priceTotal + price;
 		}
 		cartContentRepository.clearCustomerCartContent(order.getCustomer().getId());
-		return priceTotal;
 	}
 
-	public Integer shippingInfluenceOnPrice(Integer priceTotal, ShippingMethod shippingMethod) {
-		int costCourierDelivery = 70000;
-		boolean freeShip = ShippingMethod.Courier.equals(shippingMethod) && priceTotal > 500000
-				|| ShippingMethod.Pickup.equals(shippingMethod);
-		if (freeShip) {
-			return priceTotal;
-		} else {
-			return priceTotal + costCourierDelivery;
-		}
+	private void changeProductData(CartContent item, OrderContent orderContent) {
+		Product product;
+		product = productRepository.findOne(item.getProduct().getId());
+		Integer currentAvailable = product.getAvailable();
+		product.setAvailable(currentAvailable - orderContent.getAmount());
+		Integer currentCountOrder = product.getCountOrder();
+		product.setCountOrder(currentCountOrder++);
+		productRepository.save(product);
 	}
 
 	@Override

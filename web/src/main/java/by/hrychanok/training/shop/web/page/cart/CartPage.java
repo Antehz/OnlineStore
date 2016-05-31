@@ -2,17 +2,20 @@ package by.hrychanok.training.shop.web.page.cart;
 
 import java.awt.print.Printable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
 import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -31,12 +34,15 @@ import org.springframework.data.domain.PageRequest;
 import com.googlecode.wicket.jquery.ui.form.spinner.AjaxSpinner;
 import by.hrychanok.training.shop.model.CartContent;
 import by.hrychanok.training.shop.model.Customer;
+import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.model.ShippingMethod;
+import by.hrychanok.training.shop.model.Tire;
 import by.hrychanok.training.shop.repository.filter.Comparison;
 import by.hrychanok.training.shop.repository.filter.Condition;
 import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
+import by.hrychanok.training.shop.service.GenericProductService;
 import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
@@ -68,9 +74,10 @@ public class CartPage extends BasePageForTable {
 
 	@SpringBean
 	CustomerService customerService;
+	private Order order = new Order();
 
 	public static final Integer SHIPCOST = 50_000;
-
+	Integer totalPrice;
 	private Integer summaryPrice;
 	private Label shipPriceLabel = new Label("shipPriceLabel", Model.of(""));
 
@@ -154,15 +161,6 @@ public class CartPage extends BasePageForTable {
 				item.add(formDeleteItem);
 				formDeleteItem.add(addDeleteButton(cartContent));
 
-				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public String getObject() {
-						return (item.getIndex() % 2 == 1) ? "even" : "odd";
-					}
-				}));
-
 			};
 		};
 
@@ -180,21 +178,41 @@ public class CartPage extends BasePageForTable {
 		});
 		add(dataView);
 
-		// Add radio-button for choosing parameters new order
-		final IModel<String> radioModel = createShipMethodChoosen(totalPriceModel);
-
 		createContactDataForm();
 
-		Form formOrder = new Form("formOrder");
-
-		createFormOrder(radioModel, formOrder);
+		createFormOrder(totalPriceModel);
+		
 		add(new PagingNavigator("navigator", dataView));
 
 	}
 
-	private void createFormOrder(final IModel<String> radioModel, Form formOrder) {
+	private void createFormOrder(Model<Integer> totalPriceModel) {
+		
+		Form<Order> formOrder = new Form<Order>("formOrder", new CompoundPropertyModel<Order>(order));
+	
+		RadioChoice<ShippingMethod> methods = new RadioChoice<>("shippingMethod", Arrays.asList(ShippingMethod.values()));
+		 methods.add(new AjaxFormChoiceComponentUpdatingBehavior()
+	        {
+	            @Override
+	            protected void onUpdate(AjaxRequestTarget target)
+	            {
+	            	if (defineMethodShip(getComponent()) || getSummaryPrice()>1_000_000) {
+						totalPriceModel.setObject(getSummaryPrice());
+					shipPriceLabel.setDefaultModelObject("0");
+						shipPriceLabel.setVisible(false);
 
-		TextArea<String> orderAdditionalInfo = new TextArea<String>("additionalInfo", Model.of(""));
+					} else {
+						totalPriceModel.setObject(getSummaryPrice() + SHIPCOST);
+						shipPriceLabel.setDefaultModelObject(SHIPCOST);
+
+					}
+					target.add(totalPriceLabel);
+					target.add(shipPriceLabel);
+	            }
+	        });
+		 formOrder.add(methods);
+		 
+		TextArea<String> orderAdditionalInfo = new TextArea<String>("additionalInfo");
 		formOrder.add(orderAdditionalInfo);
 		add(formOrder);
 
@@ -213,14 +231,14 @@ public class CartPage extends BasePageForTable {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
-				defineMethodShip(radioModel);
 				if (cartService.getCustomerCartContent(customer.getId()).isEmpty()) {
 					CartPage.this.emptyCartWarn(this);
 					target.add(feedbackCreateOrder);
 				} else {
 					try {
-						orderService.createOrder(customer.getId(), shipMethod,
-								orderAdditionalInfo.getDefaultModelObjectAsString());
+						order.setCustomer(customer);
+						order.setTotalPrice(totalPriceModel.getObject());
+						orderService.createOrder(order);
 						Thread.sleep(1500);
 						CartPage.this.successOrderInfo(this);
 						target.add(feedbackCreateOrder);
@@ -264,60 +282,8 @@ public class CartPage extends BasePageForTable {
 		});
 	}
 
-	private IModel<String> createShipMethodChoosen(Model<Integer> totalPriceModel) {
-		Form<Void> formContactData = new Form<Void>("formChoseShipMethod");
-		add(formContactData);
-
-		final IModel<String> radioModel = new Model<String>("Самовывоз");
-		final RadioGroup<String> group = new RadioGroup<String>("radiogroup", radioModel);
-		formContactData.add(group);
-
-		Radio<String> radio1 = new Radio<String>("radio1", Model.of("Курьер"), group);
-		com.googlecode.wicket.kendo.ui.form.Radio.Label label1 = new com.googlecode.wicket.kendo.ui.form.Radio.Label(
-				"label1", "Доставка по городу(50 000 руб.)", radio1);
-
-		group.add(radio1, label1);
-
-		Radio<String> radio2 = new Radio<String>("radio2", Model.of("Самовывоз"), group);
-		Label label2 = new com.googlecode.wicket.kendo.ui.form.Radio.Label("label2", "Самовывоз", radio2);
-		group.add(radio2, label2);
-
-		formContactData.add(new AjaxButton("Ok") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				if (defineMethodShip(radioModel)) {
-					totalPriceModel.setObject(getSummaryPrice());
-					shipPriceLabel.setDefaultModelObject("0");
-
-				} else {
-					totalPriceModel.setObject(getSummaryPrice() + SHIPCOST);
-					shipPriceLabel.setDefaultModelObject(SHIPCOST);
-
-				}
-				target.add(totalPriceLabel);
-				target.add(shipPriceLabel);
-			}
-		});
-		return radioModel;
-	}
-
-	private Label createLabel(final IModel<String> radioModel) {
-		Integer shipCost = 50_000;
-		Integer totalPrice = cartService.getTotalPriceCart(customer.getId());
-		if (!defineMethodShip(radioModel)) {
-			totalPrice = +shipCost;
-		}
-		Label totalPriceLabel = new Label("totalPrice", totalPrice);
-
-		return totalPriceLabel;
-	}
-
-	private Boolean defineMethodShip(final IModel<String> radioModel) {
-
-		if (radioModel.getObject().equals("Самовывоз")) {
+	private Boolean defineMethodShip(Component component) {
+		if (component.getDefaultModelObject().equals(ShippingMethod.Pickup)) {
 			shipMethod = ShippingMethod.Pickup;
 			return true;
 
@@ -335,10 +301,6 @@ public class CartPage extends BasePageForTable {
 
 	private final void emptyCartWarn(Component component) {
 		this.error("Корзина пуста! Заказ не может быть оформлен!");
-	}
-
-	private void confirmRulesInfo(Component component) {
-		this.warn("Вы должны согласится с правилами пользования сайта  и получения товара!");
 	}
 
 	private Button addDeleteButton(CartContent cartContent) {

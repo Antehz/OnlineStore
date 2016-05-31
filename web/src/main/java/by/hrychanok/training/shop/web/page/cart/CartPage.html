@@ -44,6 +44,7 @@
 							<button wicket:id="deleteItem">Удалить</button>
 						</form></td>
 				</tr>
+			<wicket:enclosure child="shipPriceLabel">
 				<tr>
 					<td></td>
 					<td></td>
@@ -52,6 +53,7 @@
 					<td>Доставка</td>
 					<td><span wicket:id="shipPriceLabel"></span></td>
 				</tr>
+				</wicket:enclosure>
 				<tr>
 					<td></td>
 					<td></td>
@@ -65,22 +67,6 @@
 		</table>
 		<span wicket:id="navigator">[dataview navigator]</span>
 		<br></br>
-		<div id="wrapper-panel-frame" class="ui-corner-all">
-			<form wicket:id="formChoseShipMethod">
-				<div wicket:id="radiogroup">
-					<ul class="radioUL">
-						<li><input wicket:id="radio1" type="radio" /> <label
-							wicket:id="label1">[label]</label></li>
-
-						<li><input wicket:id="radio2" type="radio" /> <label
-							wicket:id="label2">[label]</label></li>
-					</ul>
-				</div>
-				<button wicket:id="Ok">Ok</button>
-				<br />
-			</form>
-		</div>
-
 		<h2>Контактные данные</h2>
 
 		<div id="wrapper-panel-frame" class="ui-corner-all">
@@ -114,13 +100,19 @@
 			</form>
 		</div>
 
-
 		<div id="wrapper-panel-frame" class="ui-corner-all">
+		
 			<form wicket:id="formOrder">
-				Коментарий к заказу :
+			
+			<h4>Выберите способ доставки. Курьерская доставка стоить 50 000 бел.руб. При заказа на сумму свыше 1 000 000 руб доставка бесплатна.</h4>
+			<div wicket:id="shippingMethod">
+			<input type="radio"> </input>
+		    <input type="radio"> </input>
+			</div>
+			
+				<br /> Коментарий к заказу :
 				<textarea wicket:id="additionalInfo" rows="5" cols="40"></textarea>
 				<br />
-
 				<button wicket:id="createOrderButton">Create order</button>
 				<br /> <br />
 				<div wicket:id="feedbackCreateOrder" style="width: 360px;"></div>

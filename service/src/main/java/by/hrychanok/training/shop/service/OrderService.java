@@ -17,7 +17,7 @@ import by.hrychanok.training.shop.model.StatusOrder;
 import by.hrychanok.training.shop.repository.filter.Filter;
 
 public interface OrderService extends BasicService<Order, Long> {
-	Order createOrder(Long customerId, ShippingMethod shippingMethod, String additionalInfo);
+	Order createOrder(Order order);
 
 	List<Order> getOrdersByCustomer(Long id);
 

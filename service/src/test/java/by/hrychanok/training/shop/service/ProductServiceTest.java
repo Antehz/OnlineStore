@@ -52,15 +52,19 @@ public class ProductServiceTest {
 	ProductService productService;
 	@Autowired
 	CategoryService categoryService;
+	@Autowired
+	GenericProductService<Tire> genericService;
 	List<Product> productList = new ArrayList();
 	Product product;
 
+
+	
 	@Test
 	public void testService() {
 		Assert.assertNotNull(productService);
 	}
 
-	@Before
+	
 	public void createProduct() {
 		productService.deleteAllComment();
 		customerService.deleteAll();
@@ -113,7 +117,7 @@ public class ProductServiceTest {
 		CustomerCredentials cCredentials = new CustomerCredentials();
 		cCredentials.setLogin("LOginUSer");
 		cCredentials.setPassword("testPassword");
-		cCredentials.setRole(UserRole.Customer);
+		cCredentials.setRole(UserRole.customer);
 		cTest.setFirstName("testFirstName");
 		cTest.setLastName("testLastName");
 		cTest.setEmail("testing@gmail.com");
@@ -139,7 +143,7 @@ public class ProductServiceTest {
 		CustomerCredentials cCredentials = new CustomerCredentials();
 		cCredentials.setLogin("LOginUSer");
 		cCredentials.setPassword("testPassword");
-		cCredentials.setRole(UserRole.Customer);
+		cCredentials.setRole(UserRole.customer);
 		cTest.setFirstName("testFirstName");
 		cTest.setLastName("testLastName");
 		cTest.setEmail("testing@gmail.com");
@@ -166,7 +170,7 @@ public class ProductServiceTest {
 		CustomerCredentials cCredentials = new CustomerCredentials();
 		cCredentials.setLogin("LOginUSer");
 		cCredentials.setPassword("testPassword");
-		cCredentials.setRole(UserRole.Customer);
+		cCredentials.setRole(UserRole.customer);
 		cTest.setFirstName("testFirstName");
 		cTest.setLastName("testLastName");
 		cTest.setEmail("testing@gmail.com");
@@ -195,7 +199,7 @@ public class ProductServiceTest {
 		CustomerCredentials cCredentials = new CustomerCredentials();
 		cCredentials.setLogin("LOginUSer");
 		cCredentials.setPassword("testPassword");
-		cCredentials.setRole(UserRole.Customer);
+		cCredentials.setRole(UserRole.customer);
 		cTest.setFirstName("testFirstName");
 		cTest.setLastName("testLastName");
 		cTest.setEmail("testing@gmail.com");
@@ -245,9 +249,17 @@ public class ProductServiceTest {
 	}
 	@Test
 	public void getProductByCategoryName(){
-		List<Product> productList = productService.findProductByCategoryName("Шины");
-		Assert.assertFalse(productList.isEmpty());
+		List<Product> productList = productService.findProductByCategoryName("Летние");
+		for (Product product : productList) {
+			System.out.println(product);
+		}
+		//Assert.assertFalse(productList.isEmpty());
 		
+	}
+	@Test
+	public void genericTest(){
+		Tire tire = genericService.findOne(1799L);
+		System.out.println(tire);
 	}
 
 }

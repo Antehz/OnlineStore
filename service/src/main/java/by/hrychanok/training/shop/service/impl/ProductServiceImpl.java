@@ -19,6 +19,7 @@ import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.model.ProductComment;
 import by.hrychanok.training.shop.repository.CategoryRepository;
 import by.hrychanok.training.shop.repository.CustomerRepository;
+import by.hrychanok.training.shop.repository.GenericProductRepository;
 import by.hrychanok.training.shop.repository.ProductCommentRepository;
 import by.hrychanok.training.shop.repository.ProductRepository;
 import by.hrychanok.training.shop.repository.filter.Filter;
@@ -35,15 +36,6 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 	ProductCommentRepository productCommentRepository;
 	@Autowired
 	CustomerRepository customerRepository;
-
-/*	@Override
-	public Category findCategoryByProductId(Long id) {
-		Category category = categoryRepository.findCategoryById(id);
-		if (category == null) {
-			LOGGER.debug(String.format("Category for id: %s not found", id));
-		}
-		return category;
-	}*/
 
 	@Override
 	public List<Product> findProductByCategoryId(Long id) {
@@ -113,6 +105,7 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 
 	@Override
 	public List<Product> findAll(Pageable page) {
+		
 		return repository.findAll(page).getContent();
 	}
 	@Override
@@ -123,5 +116,4 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 			return repository.count();
 		}
 	}
-
 }

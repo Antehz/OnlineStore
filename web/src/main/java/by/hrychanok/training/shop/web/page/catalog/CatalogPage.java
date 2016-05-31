@@ -127,22 +127,12 @@ public class CatalogPage extends BasePageForTable {
 							target.add(feedbackBuyItem);
 						}
 					}
-				});
-
+				}).setEnabled(product.getAvailable()>0);
+				
 				item.add(form);
-				item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public String getObject() {
-						return (item.getIndex() % 2 == 1) ? "even" : "odd";
-					}
-				}));
 			}
-
 		};
-
-		dataView.setItemsPerPage(12L);
+		dataView.setItemsPerPage(8L);
 		dataView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
 
 		add(new OrderByBorder("orderByManufacturer", "manufacturer", dp) {
@@ -181,8 +171,12 @@ public class CatalogPage extends BasePageForTable {
 		add(dataView);
 		add(new PagingNavigator("navigator", dataView));
 
+		
+		
 	}
 
+	
+	
 	private void addedInfo(Component component) {
 		this.success("Добавлено");
 	}

@@ -95,9 +95,10 @@ public class Order extends AbstractModel  {
 
 	@Override
 	public String toString() {
-		return "Order [startDate=" + startDate + ", shippingMethod=" + shippingMethod + ", totalPrice=" + totalPrice
-				+ ", status=" + status + ", additionalInfo=" + additionalInfo + "]";
+		return "Order [customer=" + customer + ", startDate=" + startDate + ", shippingMethod=" + shippingMethod
+				+ ", totalPrice=" + totalPrice + ", status=" + status + ", additionalInfo=" + additionalInfo + "]";
 	}
+
 
 	
 	

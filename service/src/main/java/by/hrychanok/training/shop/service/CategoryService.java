@@ -13,4 +13,5 @@ public interface CategoryService {
 	void deleteCategoryBransh(String name);
 	Category save(Category category);
 	Category findOne(Long id);
+	List<Category> findAll();
 }

@@ -71,4 +71,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return repository.findOne(id);
 	}
 
+	@Override
+	public List<Category> findAll() {
+		return repository.findAll();
+	}
+
 }

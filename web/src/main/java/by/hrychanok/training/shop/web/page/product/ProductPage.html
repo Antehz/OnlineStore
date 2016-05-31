@@ -2,43 +2,40 @@
 
 <wicket:extend>
 
-		<h3 style = "    float: right;
-    margin-right: 340px;">
-		
-			<span wicket:id="name" /> <span wicket:id="manufacturer" /> <span
-				wicket:id="model" />
-		</h3>
+	<h3 style="float: right; margin-right: 340px;">
 
-		<img wicket:id="image" class="img-thumbnail" style="float: left" />
+		<span wicket:id="name" /> <span wicket:id="manufacturer" /> <span
+			wicket:id="model" />
+	</h3>
 
-<table class="table table-bordered" style="    width: 400px; float: left;
-    margin-left: 60px;">
-			<thead class="my-table-thead">
-				<tr>
-					<th>Артикул</th>
-					<th>Заказы</th>
-					<th>Рейтинг</th>
-					<th>Наличие</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><span wicket:id="id" /></td>
-					<td><span wicket:id="countOrder" /></td>
-					<td><span wicket:id="countRecommended" /></td>
-					<td><span wicket:id="available" /></td>
-				</tr>
-			</tbody>
-		</table>
+	<img wicket:id="image" class="img-thumbnail" style="float: left" />
+
+	<table class="table table-bordered"
+		style="width: 400px; float: left; margin-left: 60px;">
+		<thead class="my-table-thead">
+			<tr>
+				<th>Артикул</th>
+				<th>Заказы</th>
+				<th>Рейтинг</th>
+				<th>Наличие</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><span wicket:id="id" /></td>
+				<td><span wicket:id="countOrder" /></td>
+				<td><span wicket:id="countRecommended" /></td>
+				<td><span wicket:id="available" /></td>
+			</tr>
+		</tbody>
+	</table>
 
 
-		<h1 style="color: #428bca;float: left;margin-left: 10px;">
-			<span wicket:id="price"/>
-			руб.
-		</h1>
-<br/>
-		<div wicket:id="tabs" style = "display:block ; float:left">
-	</div>
+	<h1 style="color: #428bca; float: left; margin-left: 10px;">
+		<span wicket:id="price" /> руб.
+	</h1>
+	<br />
+	<div wicket:id="tabs" style="width :880px; display: block; float: left; margin-top: 20px;"></div>
 
 </wicket:extend>
 
