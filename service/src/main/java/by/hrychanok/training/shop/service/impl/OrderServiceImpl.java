@@ -86,7 +86,7 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 		product = productRepository.findOne(item.getProduct().getId());
 		Integer currentAvailable = product.getAvailable();
 		product.setAvailable(currentAvailable - orderContent.getAmount());
-		Integer currentCountOrder = product.getCountOrder();
+		Integer currentCountOrder = product.getCountOrder()+orderContent.getAmount();
 		product.setCountOrder(currentCountOrder++);
 		productRepository.save(product);
 	}

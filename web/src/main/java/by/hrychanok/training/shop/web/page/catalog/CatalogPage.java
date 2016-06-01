@@ -1,6 +1,7 @@
 package by.hrychanok.training.shop.web.page.catalog;
 
 import java.util.Iterator;
+import by.hrychanok.training.shop.repository.filter.Filter;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
@@ -51,24 +52,28 @@ public class CatalogPage extends BasePageForTable {
 
 	@SpringBean
 	CustomerService customerService;
-
+	private Filter filterState = new Filter();
 	private static final long serialVersionUID = 1L;
 
 	public CatalogPage(PageParameters parametrs) {
 
 		Long categoryId = parametrs.get("id").toLong();
 		CustomerCredentials customer = AuthorizedSession.get().getLoggedUser();
-
-		GenericSortableTypeDataProvider<Product> dp = new GenericSortableTypeDataProvider<Product>() {
+		filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("category")
+				.setValue(categoryId).build());
+		
+		GenericSortableTypeDataProvider<Product> dp = new GenericSortableTypeDataProvider<Product>(filterState) {
 
 			public Iterator<? extends Product> returnIterator(PageRequest pageRequest) {
-				filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("category")
-						.setValue(categoryId).build());
+				
 				return productService.findAll(filterState, pageRequest).iterator();
 			}
+
 			@Override
 			public long size() {
-				return productService.count(filterState);
+				Long size = productService.count(filterState);
+				Filter f = getFilterState();
+				return size;
 			}
 		};
 
@@ -83,7 +88,7 @@ public class CatalogPage extends BasePageForTable {
 					@Override
 					public void createLink(IModel model) {
 						Product selectedProduct = (Product) model.getObject();
-						ContextImage image = new ContextImage("imagetest",  selectedProduct.getImageURL());
+						ContextImage image = new ContextImage("imagetest", selectedProduct.getImageURL());
 
 						Link link = new Link("select") {
 							@Override
@@ -127,8 +132,8 @@ public class CatalogPage extends BasePageForTable {
 							target.add(feedbackBuyItem);
 						}
 					}
-				}).setEnabled(product.getAvailable()>0);
-				
+				}).setEnabled(product.getAvailable() > 0);
+
 				item.add(form);
 			}
 		};
@@ -171,12 +176,8 @@ public class CatalogPage extends BasePageForTable {
 		add(dataView);
 		add(new PagingNavigator("navigator", dataView));
 
-		
-		
 	}
 
-	
-	
 	private void addedInfo(Component component) {
 		this.success("Добавлено");
 	}

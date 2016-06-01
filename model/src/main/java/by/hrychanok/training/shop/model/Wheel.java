@@ -16,8 +16,8 @@ public class Wheel extends Product {
 	private Integer rimSize;
 	private Integer rimWidth;
 	private Integer numberHole;
-	private Double pcd;
-	private Double dia;
+	private Integer pcd;
+	private Integer dia;
 	private Integer et;
 
 	@Column
@@ -48,20 +48,20 @@ public class Wheel extends Product {
 	}
 
 	@Column
-	public Double getPcd() {
+	public Integer getPcd() {
 		return pcd;
 	}
 
-	public void setPcd(Double pcd) {
+	public void setPcd(Integer pcd) {
 		this.pcd = pcd;
 	}
 
 	@Column
-	public Double getDia() {
+	public Integer getDia() {
 		return dia;
 	}
 
-	public void setDia(Double dia) {
+	public void setDia(Integer dia) {
 		this.dia = dia;
 	}
 

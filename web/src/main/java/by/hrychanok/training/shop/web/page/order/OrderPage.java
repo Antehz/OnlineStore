@@ -23,6 +23,7 @@ import by.hrychanok.training.shop.model.OrderContent;
 import by.hrychanok.training.shop.model.StatusOrder;
 import by.hrychanok.training.shop.repository.filter.Comparison;
 import by.hrychanok.training.shop.repository.filter.Condition;
+import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.GenericSortableTypeDataProvider;
@@ -42,6 +43,7 @@ public class OrderPage extends AbstractPage {
 	public OrderPage(Long id) {
 		order = orderService.findOne(id);
 	}
+	private Filter filterState = new Filter();
 
 	@Override
 	protected void onInitialize() {
@@ -54,12 +56,11 @@ public class OrderPage extends AbstractPage {
 		add(new Label("additionalInfo", Model.of(order.getAdditionalInfo())));
 
 		// Table 2 - order content
-
-		GenericSortableTypeDataProvider<OrderContent> dp = new GenericSortableTypeDataProvider<OrderContent>() {
+		filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("order")
+				.setValue(order.getId()).build());
+		GenericSortableTypeDataProvider<OrderContent> dp = new GenericSortableTypeDataProvider<OrderContent>(filterState) {
 
 			public Iterator<? extends OrderContent> returnIterator(PageRequest pageRequest) {
-				filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("order")
-						.setValue(order.getId()).build());
 				return orderService.findAllContent(filterState, pageRequest).iterator();
 			}
 

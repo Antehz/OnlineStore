@@ -40,6 +40,7 @@ import by.hrychanok.training.shop.model.ShippingMethod;
 import by.hrychanok.training.shop.model.Tire;
 import by.hrychanok.training.shop.repository.filter.Comparison;
 import by.hrychanok.training.shop.repository.filter.Condition;
+import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.GenericProductService;
@@ -74,6 +75,8 @@ public class CartPage extends BasePageForTable {
 
 	@SpringBean
 	CustomerService customerService;
+
+	private Filter filterState = new Filter();
 	private Order order = new Order();
 
 	public static final Integer SHIPCOST = 50_000;
@@ -92,12 +95,13 @@ public class CartPage extends BasePageForTable {
 	@SuppressWarnings("unchecked")
 	public CartPage() {
 		customer = AuthorizedSession.get().getLoggedUser().getCustomer();
-
-		GenericSortableTypeDataProvider<CartContent> dp = new GenericSortableTypeDataProvider<CartContent>() {
+		filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("customer")
+				.setValue(customer.getId()).build());
+		GenericSortableTypeDataProvider<CartContent> dp = new GenericSortableTypeDataProvider<CartContent>(
+				filterState) {
 
 			public Iterator<? extends CartContent> returnIterator(PageRequest pageRequest) {
-				filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("customer")
-						.setValue(customer.getId()).build());
+
 				return cartService.findAll(filterState, pageRequest).iterator();
 
 			}
@@ -181,37 +185,36 @@ public class CartPage extends BasePageForTable {
 		createContactDataForm();
 
 		createFormOrder(totalPriceModel);
-		
+
 		add(new PagingNavigator("navigator", dataView));
 
 	}
 
 	private void createFormOrder(Model<Integer> totalPriceModel) {
-		
+
 		Form<Order> formOrder = new Form<Order>("formOrder", new CompoundPropertyModel<Order>(order));
-	
-		RadioChoice<ShippingMethod> methods = new RadioChoice<>("shippingMethod", Arrays.asList(ShippingMethod.values()));
-		 methods.add(new AjaxFormChoiceComponentUpdatingBehavior()
-	        {
-	            @Override
-	            protected void onUpdate(AjaxRequestTarget target)
-	            {
-	            	if (defineMethodShip(getComponent()) || getSummaryPrice()>1_000_000) {
-						totalPriceModel.setObject(getSummaryPrice());
+
+		RadioChoice<ShippingMethod> methods = new RadioChoice<>("shippingMethod",
+				Arrays.asList(ShippingMethod.values()));
+		methods.add(new AjaxFormChoiceComponentUpdatingBehavior() {
+			@Override
+			protected void onUpdate(AjaxRequestTarget target) {
+				if (defineMethodShip(getComponent()) || getSummaryPrice() > 1_000_000) {
+					totalPriceModel.setObject(getSummaryPrice());
 					shipPriceLabel.setDefaultModelObject("0");
-						shipPriceLabel.setVisible(false);
+					shipPriceLabel.setVisible(false);
 
-					} else {
-						totalPriceModel.setObject(getSummaryPrice() + SHIPCOST);
-						shipPriceLabel.setDefaultModelObject(SHIPCOST);
+				} else {
+					totalPriceModel.setObject(getSummaryPrice() + SHIPCOST);
+					shipPriceLabel.setDefaultModelObject(SHIPCOST);
 
-					}
-					target.add(totalPriceLabel);
-					target.add(shipPriceLabel);
-	            }
-	        });
-		 formOrder.add(methods);
-		 
+				}
+				target.add(totalPriceLabel);
+				target.add(shipPriceLabel);
+			}
+		});
+		formOrder.add(methods);
+
 		TextArea<String> orderAdditionalInfo = new TextArea<String>("additionalInfo");
 		formOrder.add(orderAdditionalInfo);
 		add(formOrder);

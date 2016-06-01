@@ -77,52 +77,11 @@ public class ProductPage extends AbstractPage {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
-				return new ProductCombinePanel(panelId, Model.of(product));
+				return new ProductCombinePanel(panelId, product.getId());
 			}
 		});
 
-	/*	tabs.add(new AjaxTab(Model.of("Характеристики")) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public WebMarkupContainer getLazyPanel(String panelId) {
-				try {
-					// sleep the thread for a half second to simulate a long
-					// load
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				return defineProduct(panelId);
-			}
-		});
-		tabs.add(new AjaxTab(Model.of("Все заказы")) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public WebMarkupContainer getLazyPanel(String panelId) {
-				try {
-					// sleep the thread for a half second to simulate a long
-					// load
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				return new OrderHistoryPage(panelId);
-			}
-		});*/
 		return tabs;
 	}
 
-	/*private Panel defineProduct(String panelId) {
-		Boolean tire = "Шины".equals(product.getCategory().getParent().getName());
-
-		if (tire) {
-			return new TireFeatures(panelId, Model.of(product));
-		}
-		return null;
-	};*/
 }

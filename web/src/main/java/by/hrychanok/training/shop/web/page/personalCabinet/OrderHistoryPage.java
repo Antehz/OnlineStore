@@ -27,6 +27,8 @@ import org.springframework.data.domain.PageRequest;
 
 import by.hrychanok.training.shop.model.AbstractModel;
 import by.hrychanok.training.shop.model.CartContent;
+import by.hrychanok.training.shop.model.Customer;
+import by.hrychanok.training.shop.model.CustomerCredentials;
 import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.model.StatusOrder;
@@ -34,6 +36,7 @@ import by.hrychanok.training.shop.repository.filter.Comparison;
 import by.hrychanok.training.shop.repository.filter.Condition;
 import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.OrderService;
+import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
 import by.hrychanok.training.shop.web.page.GenericSortableTypeDataProvider;
 import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
@@ -53,7 +56,8 @@ public class OrderHistoryPage extends Panel {
 
 	List<Condition> conditionsList = new ArrayList<Condition>();
 
-	
+	private Filter filterState = new Filter();
+
 	public OrderHistoryPage(String id) {
 		super(id);
 	}
@@ -64,15 +68,18 @@ public class OrderHistoryPage extends Panel {
 
 	}
 
+
 	@Override
 	protected void onInitialize() {
-		super.onInitialize();
+		CustomerCredentials customer = AuthorizedSession.get().getLoggedUser();
 
-		GenericSortableTypeDataProvider<Order> dp = new GenericSortableTypeDataProvider<Order>() {
+		super.onInitialize();
+		filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("customer")
+				.setValue(customer.getId()).build());
+
+		GenericSortableTypeDataProvider<Order> dp = new GenericSortableTypeDataProvider<Order>(filterState) {
 
 			public Iterator<? extends Order> returnIterator(PageRequest pageRequest) {
-				filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("customer")
-						.setValue(customer.getId()).build());
 				return orderService.findAll(filterState, pageRequest).iterator();
 			}
 
