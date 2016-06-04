@@ -2,25 +2,35 @@
 
 <wicket:panel>
 
-		<table class =  "table table-bordered" style = "width:870px">
-			<thead class = "my-table-thead">
+	<table class="table table-bordered" style="width: 870px">
+		<thead class="my-table-thead">
 			<tr>
-					 <th wicket:id="orderById">Order ID</th>
-					<th>Customer ID</th>
-					<th wicket:id="orderByCreated">Date</th>
-					<th wicket:id="orderByStatus">Status</th>
-					<th wicket:id="orderByPrice">Price</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr wicket:id="oir">
-					<td><a wicket:id="linkId">[orderId]</a></td>
-					<td><span wicket:id="customerId">[customerId]</span></td>
-					<td><span wicket:id="created">[created]</span></td>
-					<td><span wicket:id="status">[status]</span></td>
-					<td><span wicket:id="price">[price]</span>   руб.</td>
-				</tr>
-			</tbody>
-		</table>
-		<span wicket:id="navigator">[dataview navigator]</span>
+				<th wicket:id="orderById">Order ID</th>
+				<th>Customer ID</th>
+				<th wicket:id="orderByCreated">Date</th>
+				<th wicket:id="orderByStatus">Status</th>
+				<th wicket:id="orderByPrice">Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr wicket:id="oir">
+				<td><a wicket:id="linkId">[orderId]</a></td>
+				<td><span wicket:id="customerId">[customerId]</span></td>
+				<td><span wicket:id="created">[created]</span></td>
+				<td><span wicket:id="status">[status]</span></td>
+				<td><span wicket:id="price">[price]</span> руб.</td>
+				<wicket:enclosure child="formManageOrder"> 
+				
+				<div id="wrapper-panel-frame" class="ui-corner-all">
+					<form wicket:id="formManageOrder">
+				<td><select wicket:id="select"></select> <br /> <br />
+					<div wicket:id="feedback" style="width: 170px;"></div></td>
+					<td><span wicket:id="deleteButton"></span><br /></td>
+				</form>
+				</div>
+				</wicket:enclosure>
+			</tr>
+		</tbody>
+	</table>
+	<span wicket:id="navigator">[dataview navigator]</span>
 </wicket:panel>

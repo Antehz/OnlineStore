@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.panel.SignInPanel;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -26,6 +27,7 @@ import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.component.adminPanel.AdminPage;
 import by.hrychanok.training.shop.web.component.login.LoginPage;
+import by.hrychanok.training.shop.web.component.login.LoginPanel;
 import by.hrychanok.training.shop.web.component.login.RegistrationPage;
 import by.hrychanok.training.shop.web.page.cart.CartPage;
 import by.hrychanok.training.shop.web.page.home.HomePage;
@@ -33,12 +35,13 @@ import by.hrychanok.training.shop.web.page.info.AboutUsPage;
 import by.hrychanok.training.shop.web.page.info.ContactPage;
 import by.hrychanok.training.shop.web.page.info.NewsPage;
 import by.hrychanok.training.shop.web.page.info.PaymentPage;
+import by.hrychanok.training.shop.web.page.product.ProductCombinePanel;
 
 public class HeaderPanel extends Panel {
 
 	@SpringBean
 	CartService cartService;
-	private int countItemIntoCart = 0;
+	
 	
 	boolean visibleForOnlyAdmin = AuthorizedSession.get().isSignedIn()
 			&& AuthorizedSession.get().getLoggedUser().getRole().equals(UserRole.admin);
@@ -54,6 +57,9 @@ public class HeaderPanel extends Panel {
 	protected void onInitialize() {
 		super.onInitialize();
 
+		/*ModalWindow modalWindow = new ModalWindow("modal");
+		add(modalWindow);*/
+		
 		final Form<Void> formLogin = new Form<Void>("formLogin");
 		this.add(formLogin);
 
@@ -63,6 +69,8 @@ public class HeaderPanel extends Panel {
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				/*modalWindow.setContent(new LoginPanel(modalWindow));
+				modalWindow.show(target);*/
 				setResponsePage(LoginPage.class);
 			}
 		};
@@ -132,16 +140,7 @@ public class HeaderPanel extends Panel {
 		cartLink.setVisible(visibleForUser);
 		add(cartLink);
 		
-		Label countItem = new Label("countItem", Model.of(countItemIntoCart));
-		countItem.setVisible(false);
-		if (visibleForUser) {
-		    Long customerId = AuthorizedSession.get().getLoggedUser().getId();
-			List<CartContent> cartContentList = cartService.getCustomerCartContent(customerId);
-			int countItemIntoCart = cartContentList.size();
-			countItem.setDefaultModelObject(countItemIntoCart);
-			countItem.setVisible(true);
-		}
-		add(countItem);
+	
 		
 		Link adminLink = new Link("toAdminPage") {
 			@Override

@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+
 import by.hrychanok.training.shop.web.component.login.LoginPage;
 import by.hrychanok.training.shop.web.page.home.HomePage;
 import de.agilecoders.wicket.core.Bootstrap;

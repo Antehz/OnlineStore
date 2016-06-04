@@ -16,7 +16,7 @@
 <body>
 	<wicket:extend>
 		<table class="table table-hover">
-			<thead>
+			<thead class = "my-table-thead">
 				<tr>
 					<th>Товар</th>
 					<th>Наименование</th>
@@ -44,7 +44,6 @@
 							<button wicket:id="deleteItem">Удалить</button>
 						</form></td>
 				</tr>
-			<wicket:enclosure child="shipPriceLabel">
 				<tr>
 					<td></td>
 					<td></td>
@@ -53,7 +52,6 @@
 					<td>Доставка</td>
 					<td><span wicket:id="shipPriceLabel"></span></td>
 				</tr>
-				</wicket:enclosure>
 				<tr>
 					<td></td>
 					<td></td>

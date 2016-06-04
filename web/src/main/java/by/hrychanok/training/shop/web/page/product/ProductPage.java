@@ -3,9 +3,12 @@ package by.hrychanok.training.shop.web.page.product;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
@@ -17,12 +20,17 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.form.button.IndicatingAjaxButton;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.kendo.ui.widget.tabs.TabbedPanel;
 
+import by.hrychanok.training.shop.model.CustomerCredentials;
 import by.hrychanok.training.shop.model.Product;
+import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.ProductService;
+import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.StaticImage;
 import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
@@ -34,7 +42,11 @@ public class ProductPage extends AbstractPage {
 	@SpringBean
 	ProductService productService;
 
+	@SpringBean
+	CartService cartService;
+
 	private Product product;
+	private CustomerCredentials customer;
 
 	public ProductPage(PageParameters parametrs) {
 		StringValue productId = parametrs.get("id");
@@ -44,6 +56,7 @@ public class ProductPage extends AbstractPage {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
+		CustomerCredentials customer = AuthorizedSession.get().getLoggedUser();
 		ContextImage image = new ContextImage("image", product.getImageURL());
 		add(image);
 		add(new Label("id", Model.of(product.getId())));
@@ -54,6 +67,41 @@ public class ProductPage extends AbstractPage {
 		add(new Label("countOrder", Model.of(product.getCountOrder())));
 		add(new Label("countRecommended", Model.of(product.getCountRecommended())));
 		add(new Label("available", Model.of(product.getAvailable())));
+		final Form<Void> form = new Form<Void>("form");
+		this.add(form);
+
+		// FeedbackPanel //
+		final KendoFeedbackPanel feedbackBuyItem = new KendoFeedbackPanel("feedbackBuyItem");
+		form.add(feedbackBuyItem.setOutputMarkupId(true));
+
+		IndicatingAjaxButton buyButton = new IndicatingAjaxButton("buyButton") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected boolean isDisabledOnClick() {
+				return true;
+			}
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				if (cartService.addProductToCart(product.getId(), customer.getId())) {
+					ProductPage.this.addedInfo(form);
+					target.add(feedbackBuyItem);
+				} else {
+					ProductPage.this.notAddedInfo(form);
+					target.add(feedbackBuyItem);
+				}
+				try {
+					Thread.sleep(2000);
+
+				} catch (InterruptedException e) {
+				}
+
+				target.add(feedbackBuyItem);
+			}
+		};
+		form.add(buyButton);
 
 		// add tabs
 
@@ -80,8 +128,33 @@ public class ProductPage extends AbstractPage {
 				return new ProductCombinePanel(panelId, product.getId());
 			}
 		});
+		
+		tabs.add(new AjaxTab(Model.of("Отзывы")) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public WebMarkupContainer getLazyPanel(String panelId) {
+				try {
+					// sleep the thread for a half second to simulate a long
+					// load
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				return new ProductCombinePanel(panelId, product.getId());
+			}
+		});
+
 
 		return tabs;
 	}
 
+	private void addedInfo(Component component) {
+		this.success("Добавлено");
+	}
+
+	private void notAddedInfo(Component component) {
+		this.error("Ошибка");
+	}
 }

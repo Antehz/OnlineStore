@@ -31,11 +31,23 @@
 	</table>
 
 
-	<h1 style="color: #428bca; float: left; margin-left: 10px;">
+	<h1
+		style="position: absolute; color: rgba(38, 174, 216, 0.95); top: 127px;     right: 450px;">
 		<span wicket:id="price" /> руб.
 	</h1>
+
+	<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="form"
+			style="position: relative; float: right; top: 122px; right: 138px;">
+			<button wicket:id="buyButton">Купить</button>
+			<br /> <br />
+			<div wicket:id="feedbackBuyItem" style="width: 200px;"></div>
+		</form>
+
+	</div>
 	<br />
-	<div wicket:id="tabs" style="width :880px; display: block; float: left; margin-top: 20px;"></div>
+	<div wicket:id="tabs"
+		style="width: 880px; display: block; float: left; margin-top: 70px;"></div>
 
 </wicket:extend>
 

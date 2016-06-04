@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("by.hrychanok.training.shop")
 public class SpringConfigForWeb {
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "org.postgresql.Driver";
-	private static final String PROPERTY_NAME_DATABASE_URL = "jdbc:postgresql://localhost:5432/dbfortest";
+	private static final String PROPERTY_NAME_DATABASE_URL = "jdbc:postgresql://localhost:5432/maindb";
 	private static final String PROPERTY_NAME_DATABASE_USERNAME = "postgres";
 	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "postgres";
 

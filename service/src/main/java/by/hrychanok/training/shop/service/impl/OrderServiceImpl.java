@@ -86,7 +86,7 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 		product = productRepository.findOne(item.getProduct().getId());
 		Integer currentAvailable = product.getAvailable();
 		product.setAvailable(currentAvailable - orderContent.getAmount());
-		Integer currentCountOrder = product.getCountOrder()+orderContent.getAmount();
+		Integer currentCountOrder = product.getCountOrder() + orderContent.getAmount();
 		product.setCountOrder(currentCountOrder++);
 		productRepository.save(product);
 	}
@@ -183,6 +183,51 @@ public class OrderServiceImpl extends BasicServiceImpl<Order, OrderRepository, L
 		} else {
 			return orderContentRepository.count();
 		}
+	}
+
+	@Override
+	public OrderContent editContent(OrderContent orderContent, Integer amount) {
+
+		Product product = orderContent.getProduct();
+
+		Integer currentOrderContentAmount = orderContent.getAmount();
+		Integer currentAvailableProduct = product.getAvailable();
+		Integer difference = amount - currentOrderContentAmount;
+		if (difference > 0) {
+			product.setAvailable(currentAvailableProduct - difference);
+		} else {
+			product.setAvailable(currentAvailableProduct - difference);
+		}
+		productRepository.saveAndFlush(product);
+
+		orderContent.setAmount(amount);
+		orderContent.setPrice(orderContent.getProduct().getPrice() * amount);
+		orderContent = orderContentRepository.saveAndFlush(orderContent);
+		Order order = repository.findOne(orderContent.getOrder().getId());
+		countOrderTotalPrice(order.getId());
+		return orderContent;
+	}
+
+	@Override
+	public void deleteContent(OrderContent orderContent) {
+		Product product = orderContent.getProduct();
+		product.setAvailable(product.getAvailable() + orderContent.getAmount());
+		productRepository.saveAndFlush(product);
+		orderContentRepository.delete(orderContent);
+
+	}
+
+	@Override
+	public Integer countOrderTotalPrice(Long orderId) {
+		Integer summ = 0;
+		Order order = repository.findOne(orderId);
+		List<OrderContent> listContent = order.getOrderContent();
+		for (OrderContent content : listContent) {
+			summ = summ + content.getPrice();
+		}
+		order.setTotalPrice(summ);
+		repository.saveAndFlush(order);
+		return summ;
 	}
 
 }

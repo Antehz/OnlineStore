@@ -15,7 +15,7 @@
 			</tr>
 			<tr>
 				<td>Стоимость</td>
-				<td><span wicket:id="totalPrice" /> руб.</td>
+				<td><span wicket:id="summaryOrderCostLabel" /> руб.</td>
 			</tr>
 			<tr wicket:id="trStyle">
 				<td>Статус</td>
@@ -35,17 +35,30 @@
 			<tr>
 				<th>№</th>
 				<th>Продукт</th>
-				<th>Количество</th>
 				<th>Стоимость</th>
+				<th>Количество</th>
+
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
+
 			<tr wicket:id="orderContentTable">
-			    <td><span wicket:id="counter">[orderId]</span></td>
+				<td><span wicket:id="counter">[orderId]</span></td>
 				<td><a wicket:id="linkProduct">[orderId]</a></td>
-				<td><span wicket:id="amount">[amount]</span></td>
-				<td><span wicket:id="price">[price]</span> руб.</td>
+
+				<td><span wicket:id="priceTotalOneProductLabel">[price]</span>
+					руб.</td>
+				<form wicket:id="formTable">
+					<td><input wicket:id="spinner" type="text"
+						style="width: 35px;"></input><br /></td>
+					<wicket:enclosure child="deleteButton">
+						<td><button wicket:id="deleteButton">Удалить</button></td>
+					</wicket:enclosure>
+					<div wicket:id="feedback" style="width: 360px;"></div>
+				</form>
 			</tr>
+
 		</tbody>
 	</table>
 	<span wicket:id="navigator">[dataview navigator]</span>

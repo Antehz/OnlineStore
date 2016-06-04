@@ -52,6 +52,9 @@ public class CatalogPage extends BasePageForTable {
 
 	@SpringBean
 	CustomerService customerService;
+	
+	boolean visibleForUser = AuthorizedSession.get().isSignedIn();
+
 	private Filter filterState = new Filter();
 	private static final long serialVersionUID = 1L;
 
@@ -117,7 +120,7 @@ public class CatalogPage extends BasePageForTable {
 				final KendoFeedbackPanel feedbackBuyItem = new KendoFeedbackPanel("feedbackBuyItem");
 				form.add(feedbackBuyItem.setOutputMarkupId(true));
 
-				form.add(new AjaxButton("buyButton") {
+				AjaxButton buyButton = new AjaxButton("buyButton") {
 
 					private static final long serialVersionUID = 1L;
 
@@ -132,8 +135,11 @@ public class CatalogPage extends BasePageForTable {
 							target.add(feedbackBuyItem);
 						}
 					}
-				}).setEnabled(product.getAvailable() > 0);
+				};
 
+				buyButton.setVisible(visibleForUser);
+				buyButton.setEnabled(product.getAvailable() > 0);
+				form.add(buyButton);
 				item.add(form);
 			}
 		};

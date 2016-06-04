@@ -119,6 +119,7 @@ public class CartPage extends BasePageForTable {
 		add(totalPriceLabel);
 
 		shipPriceLabel.setOutputMarkupId(true);
+		shipPriceLabel.setDefaultModelObject("0");
 		add(shipPriceLabel);
 
 		final DataView<CartContent> dataView = new DataView<CartContent>("cartTable", dp) {
@@ -151,15 +152,15 @@ public class CartPage extends BasePageForTable {
 
 				// Spinner //
 				final Form<Integer> formTable = new Form<Integer>("formTable", Model.of(cartContent.getAmount()));
-				Model<Integer> priceTotalModel = Model.of(cartContent.getPrice());
-				Label priceTotal = new Label("priceTotal", priceTotalModel);
-				priceTotal.setOutputMarkupId(true);
+				Model<Integer> priceTotalOneProductModel = Model.of(cartContent.getPrice());
+				Label priceTotalOneProduct = new Label("priceTotal", priceTotalOneProductModel);
+				priceTotalOneProduct.setOutputMarkupId(true);
 
 				formTable.add(
-						createSpinner(totalPriceModel, cartContent, product, formTable, priceTotalModel, priceTotal));
+						createSpinner(totalPriceModel, cartContent, product, formTable, priceTotalOneProductModel, priceTotalOneProduct));
 
 				item.add(formTable);
-				item.add(priceTotal);
+				item.add(priceTotalOneProduct);
 
 				final Form<Void> formDeleteItem = new Form<Void>("formDeleteItem");
 				item.add(formDeleteItem);
@@ -206,7 +207,8 @@ public class CartPage extends BasePageForTable {
 
 				} else {
 					totalPriceModel.setObject(getSummaryPrice() + SHIPCOST);
-					shipPriceLabel.setDefaultModelObject(SHIPCOST);
+					shipPriceLabel.setDefaultModelObject("50000");
+					shipPriceLabel.setVisible(true);
 
 				}
 				target.add(totalPriceLabel);
@@ -249,6 +251,7 @@ public class CartPage extends BasePageForTable {
 						e.printStackTrace();
 					}
 
+					setResponsePage(CustomerOrderPage.class);
 				}
 			}
 		});

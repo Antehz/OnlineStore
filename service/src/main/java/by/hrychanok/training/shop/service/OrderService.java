@@ -39,4 +39,7 @@ public interface OrderService extends BasicService<Order, Long> {
 
 	List<OrderContent> findAllContent(Filter filter, Pageable page);
 	Long countContent(Filter filter);
+	OrderContent editContent(OrderContent orderContent, Integer value);
+	Integer countOrderTotalPrice(Long orderId);
+	void deleteContent(OrderContent orderContent);
 }
