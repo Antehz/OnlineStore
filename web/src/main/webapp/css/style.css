@@ -40,6 +40,11 @@ body {
 	width: 1300px;
 	margin: 0 auto;
 }
+.maina {
+	margin: 0 auto;
+}
+
+
 /***********************************************************************/
 a {
 	text-decoration: none;
@@ -189,13 +194,11 @@ ul.list-2 li a:hover {
 .wrapper {
 	width: 100%;
 	overflow: hidden;
-	position: relative
 }
 
 .wrap {
-	height: 120px;
+	height: 180px;
 	overflow: hidden;
-	position: relative
 }
 
 .extra-wrap {
@@ -313,11 +316,11 @@ h1 {
 
 header p {
 	float: right;
-	width: 230px;
-	overflow: hidden;
-	font: 16px/20px Tahoma, Geneva, sans-serif;
-	color: #c6c6ce;
-	padding: 27px 0 27px 0;
+    width: 290px;
+    overflow: hidden;
+    font: 16px/20px Tahoma, Geneva, sans-serif;
+    color: #c6c6ce;
+    margin-top: 11px;
 }
 
 header p>span {
@@ -672,11 +675,12 @@ white
 }
 
 /*********************************content*************************************/
-#content {
+#contentpage {
 	width: 900px;
 	margin: 0 auto;
 	float: left;
 	position: relative;
+	font-size: smaller;
 }
 
 #bd {

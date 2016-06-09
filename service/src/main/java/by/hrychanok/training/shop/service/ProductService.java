@@ -16,7 +16,7 @@ public interface ProductService extends BasicService<Product, Long> {
 
 	List<Product> findAll(Filter filter, Pageable page);
 
-	List<Product> findAll(Pageable page);
+	List<Product> findAll(Filter filter);
 	
 	ProductComment addCommentForProduct(Long productId, Long customerId, String message);
 
@@ -35,4 +35,5 @@ public interface ProductService extends BasicService<Product, Long> {
 
 	Long count(Filter filter);
 	
+	List<String> getListModelsAndManufacturers(Long categoryId, String property);
 }

@@ -11,7 +11,7 @@
 	<img wicket:id="image" class="img-thumbnail" style="float: left" />
 
 	<table class="table table-bordered"
-		style="width: 400px; float: left; margin-left: 60px;">
+		style="position: absolute; width: 550px; left: 300px; top: 50px;">
 		<thead class="my-table-thead">
 			<tr>
 				<th>Артикул</th>
@@ -32,14 +32,19 @@
 
 
 	<h1
-		style="position: absolute; color: rgba(38, 174, 216, 0.95); top: 127px;     right: 450px;">
+		style="position: absolute; color: rgba(36, 56, 29, 0.78); top: 130px; right: 393px;">
 		<span wicket:id="price" /> руб.
 	</h1>
 
 	<div id="wrapper-panel-frame" class="ui-corner-all">
 		<form wicket:id="form"
-			style="position: relative; float: right; top: 122px; right: 138px;">
-			<button wicket:id="buyButton">Купить</button>
+			style="position: absolute;
+	/* float: right; */ top: 150px; right: 0px;">
+	<input wicket:id="spinner" type="text" style="width: 35px; "></input><br/>
+	
+			<button wicket:id="buyButton">
+				<img wicket:id="imageToCart" style="width: 130px" />
+			</button>
 			<br /> <br />
 			<div wicket:id="feedbackBuyItem" style="width: 200px;"></div>
 		</form>
@@ -47,7 +52,7 @@
 	</div>
 	<br />
 	<div wicket:id="tabs"
-		style="width: 880px; display: block; float: left; margin-top: 70px;"></div>
+		style="width: 880px; display: block; float: left; margin-top: 90px;"></div>
 
 </wicket:extend>
 

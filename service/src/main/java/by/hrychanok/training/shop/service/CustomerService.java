@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.hrychanok.training.shop.model.CartContent;
@@ -33,4 +34,8 @@ public interface CustomerService extends BasicService<Customer, Long> {
 	
 	Boolean loginIsAvailable(String login);
 	Boolean emailIsAvailable(String email);
+	
+	public List<Customer> findAll(Filter filter, Pageable page);
+
+	public Long count(Filter filter);
 }

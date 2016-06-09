@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,7 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 
 	@Override
 	public CustomerCredentials getCustomerByCredentials(String login, String password) {
-		Customer customer=null;
+		Customer customer = null;
 		LOGGER.debug("Get customer by credentials  login:{}, password: {}", login, password);
 		CustomerCredentials customerCredentials = customerCredentialsRepository.findByLoginAndPassword(login, password);
 		if (customerCredentials != null) {
@@ -59,6 +60,7 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 		}
 		return customer.getCustomerCredentials();
 	}
+
 	@Override
 	public Customer registerCustomer(Customer customer, CustomerCredentials customerCredentials) {
 		boolean exist = checkExistUser(customerCredentials.getLogin(), customer.getEmail());
@@ -116,23 +118,38 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 
 	@Override
 	public Boolean loginIsAvailable(String login) {
-		if (customerCredentialsRepository.findByLogin(login)!=null) {
+		if (customerCredentialsRepository.findByLogin(login) != null) {
 			return false;
-			}
-			else{
-				return true;
-			
+		} else {
+			return true;
+
 		}
 	}
 
 	@Override
 	public Boolean emailIsAvailable(String email) {
-		if (repository.findByEmail(email)!=null) {
+		if (repository.findByEmail(email) != null) {
 			return false;
-			}
-			else{
-				return true;
-			
 		}
+		return true;
+
+	}
+
+	@Override
+	public List<Customer> findAll(Filter filter, Pageable page) {
+		if (filter.existCondition()) {
+			return repository.findAll(filter, page).getContent();
+		}
+		return repository.findAll(page).getContent();
+
+	}
+
+	@Override
+	public Long count(Filter filter) {
+		if (filter.existCondition()) {
+			return repository.count(filter);
+		}
+		return repository.count();
+
 	}
 }

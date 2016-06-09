@@ -5,9 +5,9 @@
 <body>
 
 	<wicket:extend>
-	
+
 		<table class="table" style="width: 900px";>
-			<thead class = "my-table-thead">
+			<thead class="my-table-thead">
 				<tr>
 					<th></th>
 					<th><a wicket:id="orderByManufacturer">Производитель</a></th>
@@ -15,7 +15,6 @@
 					<th><a wicket:id="orderByPrice">Цена</a></th>
 					<th><a wicket:id="orderByRecomended">Рейтинг</a></th>
 					<th>Доступно</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,14 +25,19 @@
 					<td><span wicket:id="price">[price] </span> руб.</td>
 					<td><span wicket:id="recomended"> </span></td>
 					<td><span wicket:id="available"> </span></td>
-					<td>
 					<div id="wrapper-panel-frame" class="ui-corner-all">
-							<form wicket:id="form">
-								<button wicket:id="buyButton">Купить</button>
-								<div wicket:id="feedbackBuyItem" style="width: 130px;"></div>
-							</form>
-							</div>
-					</td>
+						<form wicket:id="form">
+							<wicket:enclosure child="buyButton">
+								<td style="border: none; width:60px">
+<input wicket:id="spinner" type="text" style="width: 45px;"></input><br/>
+									<button wicket:id="buyButton"><img wicket:id="imageToCart" style="width: 60px" /></button>
+									<div wicket:id="feedbackBuyItem" style="width: 130px;"></div>
+
+								</td>
+							</wicket:enclosure>
+						</form>
+					</div>
+
 				</tr>
 			</tbody>
 		</table>

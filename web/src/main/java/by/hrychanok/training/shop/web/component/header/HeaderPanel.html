@@ -4,11 +4,10 @@
 	<style>
 .form-login {
 	overflow: hidden;
-	width: 130px;
 	position: absolute;
-	left: 930px;
-	bottom: 10px;
-	font-size: 12px;
+	right: 0px;
+	    top: 138px;
+	font-size: 19px;
 }
 </style>
 </wicket:head>
@@ -20,23 +19,30 @@
 	<wicket:panel>
 		<header>
 
-			<div class="main wrap">
-				<h1>
-					<a wicket:id="toHomeForLogo"><img src="images/logo.png" alt=""></a>
-				</h1>
+			<div class="maina wrap">
+				<img src="images/avto73.jpg"  style = " z-index: 2; " alt="">
+
+				<form wicket:id="formFinderAndCart">
+
+					<button wicket:id="toCart"
+						style="position: absolute; top: 138px; right: 96px;
+	 font-size: 19px;">
+						<img wicket:id="cartImage" style="width: 33px;" />CART
+					</button>
+				</form>
+
 				<div class="form-login">
 					<form wicket:id="formLogin">
 
-						<button wicket:id="login">Login</button>
-						<button wicket:id="create">Create user</button>
+						<button wicket:id="login">SIGN IN</button>
 						<br />
 					</form>
-					
 				</div>
-<!-- 				<div wicket:id="modal" style="height: 500px"></div>
- -->				<p>
+				<p style="">
 					Belarus, Hrodno<span>+375 (29) 5402284</span>
 				</p>
+				<p>Автозапчасти "Car parts" Режим работы: пн.-пт.: 9.00-20.00,
+					сб.: 9.00-17.00, вс.: 9.00-15.00</p>
 			</div>
 			<wicket:child />
 			<nav>
@@ -48,13 +54,15 @@
 					<li><a wicket:id="toShipment">Доставка</a></li>
 					<li><a wicket:id="toPayment">Оплата</a></li>
 					<li><a wicket:id="toContact">Контакты</a></li>
-					<li><a wicket:id="toCart">Корзина</a> </li>
 					<li><a wicket:id="toAdminPage">AdminPage</a></li>
 
 				</ul>
 				<div class="clear"></div>
+
 			</nav>
 		</header>
+		<div wicket:id="modal" style="height: 500px"></div>
+
 	</wicket:panel>
 </body>
 </html>

@@ -40,7 +40,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Boolean addProductToCart(Long productId, Long customerId) {
+	public Boolean addProductToCart(Long productId, Long customerId, Integer amount) {
 
 		List<CartContent> contentCartCustomer = getCustomerCartContent(customerId);
 		
@@ -53,9 +53,9 @@ public class CartServiceImpl implements CartService {
 		}
 		cartContent.setProduct(product);
 		cartContent.setCustomer(customer);
-		cartContent.setAmount(1);
+		cartContent.setAmount(amount);
 		cartContent.setDateAdd(new Date());
-		cartContent.setPrice(product.getPrice() * 1);
+		cartContent.setPrice(product.getPrice() * amount);
 
 		for (CartContent temp : contentCartCustomer) {
 			boolean existItem = temp.getProduct().getId().equals(cartContent.getProduct().getId());
@@ -63,9 +63,9 @@ public class CartServiceImpl implements CartService {
 				if(temp.getAmount()>=product.getAvailable()){
 					return false;
 				}
-				temp.setAmount(temp.getAmount()+1);
+				temp.setAmount(temp.getAmount()+amount);
 				temp.setDateAdd(new Date());
-				temp.setPrice(temp.getPrice()+product.getPrice());
+				temp.setPrice(temp.getPrice()+product.getPrice()*amount);
 				cartContent = repository.save(temp);
 				LOGGER.info("Amount of items {} was changed for customer {} cart", product.getId(), customer.getId());
 			}

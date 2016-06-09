@@ -24,7 +24,6 @@
 					<th>Цена</th>
 					<th>Количество</th>
 					<th><a wicket:id="orderByPriceTotal">Стоимость</a></th>
-					<th>Удалить</th>
 
 				</tr>
 			</thead>
@@ -40,7 +39,7 @@
 						</form>
 					</td>
 					<td><span wicket:id="priceTotal"></span></td>
-					<td><form wicket:id="formDeleteItem">
+					<td style = "border:none;     width: 50px;"><form wicket:id="formDeleteItem">
 							<button wicket:id="deleteItem">Удалить</button>
 						</form></td>
 				</tr>
@@ -102,7 +101,7 @@
 		
 			<form wicket:id="formOrder">
 			
-			<h4>Выберите способ доставки. Курьерская доставка стоить 50 000 бел.руб. При заказа на сумму свыше 1 000 000 руб доставка бесплатна.</h4>
+			<h5>Выберите способ доставки. Курьерская доставка стоить 50 000 бел.руб. При заказа на сумму свыше 1 000 000 руб доставка бесплатна.</h5>
 			<div wicket:id="shippingMethod">
 			<input type="radio"> </input>
 		    <input type="radio"> </input>

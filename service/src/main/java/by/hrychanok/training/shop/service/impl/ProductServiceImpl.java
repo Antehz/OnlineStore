@@ -1,5 +1,6 @@
 package by.hrychanok.training.shop.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import by.hrychanok.training.shop.repository.CustomerRepository;
 import by.hrychanok.training.shop.repository.GenericProductRepository;
 import by.hrychanok.training.shop.repository.ProductCommentRepository;
 import by.hrychanok.training.shop.repository.ProductRepository;
+import by.hrychanok.training.shop.repository.filter.Comparison;
+import by.hrychanok.training.shop.repository.filter.Condition;
 import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.ProductService;
 
@@ -80,17 +83,17 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 
 	@Override
 	public List<ProductComment> getCommentByCustomerId(Long id) {
-	      List<ProductComment> listComment = productCommentRepository.getByCustomerId(id);
-	      if(listComment.isEmpty()){
-	    	  LOGGER.debug(String.format("Customer id: %s doesn't have comments for any products", id));
-	      }
+		List<ProductComment> listComment = productCommentRepository.getByCustomerId(id);
+		if (listComment.isEmpty()) {
+			LOGGER.debug(String.format("Customer id: %s doesn't have comments for any products", id));
+		}
 		return listComment;
 	}
 
 	@Override
 	public void deleteCommentById(Long id) {
 		productCommentRepository.delete(id);
-		
+
 	}
 
 	@Override
@@ -104,10 +107,14 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 	}
 
 	@Override
-	public List<Product> findAll(Pageable page) {
-		
-		return repository.findAll(page).getContent();
+	public List<Product> findAll(Filter filter) {
+		if (filter.existCondition()) {
+			return repository.findAll(filter);
+		} else {
+			return repository.findAll();
+		}
 	}
+
 	@Override
 	public Long count(Filter filter) {
 		if (filter.existCondition()) {
@@ -115,5 +122,26 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 		} else {
 			return repository.count();
 		}
+	}
+
+	@Override
+	public List<String> getListModelsAndManufacturers(Long categoryId, String property) {
+		Filter filter = new Filter();
+		filter.addCondition(
+				new Condition.Builder().setComparison(Comparison.eq).setField("category").setValue(categoryId).build());
+		List<Product> productList = repository.findAll(filter);
+		List<String> resultList = new ArrayList<>();
+		for (Product product : productList) {
+			if ("manufacturer".equals(property)) {
+				if (!resultList.contains(product.getManufacturer())) {
+					resultList.add(product.getManufacturer());
+				}
+			} else if ("model".equals(property)) {
+				if (!resultList.contains(product.getModel())) {
+					resultList.add(product.getModel());
+				}
+			}
+		}
+		return resultList;
 	}
 }

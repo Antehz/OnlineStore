@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -20,6 +21,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.form.spinner.AjaxSpinner;
 import com.googlecode.wicket.kendo.ui.form.button.IndicatingAjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
@@ -31,11 +33,12 @@ import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.ProductService;
 import by.hrychanok.training.shop.web.app.AuthorizedSession;
+import by.hrychanok.training.shop.web.app.MySession;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.StaticImage;
 import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
 import by.hrychanok.training.shop.web.page.home.HomePage;
-import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPage;
+import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPanel;
 
 public class ProductPage extends AbstractPage {
 
@@ -44,9 +47,11 @@ public class ProductPage extends AbstractPage {
 
 	@SpringBean
 	CartService cartService;
+	private boolean visibleForUser = AuthorizedSession.get().isSignedIn();
 
 	private Product product;
 	private CustomerCredentials customer;
+	private Integer amount = 1;
 
 	public ProductPage(PageParameters parametrs) {
 		StringValue productId = parametrs.get("id");
@@ -67,13 +72,31 @@ public class ProductPage extends AbstractPage {
 		add(new Label("countOrder", Model.of(product.getCountOrder())));
 		add(new Label("countRecommended", Model.of(product.getCountRecommended())));
 		add(new Label("available", Model.of(product.getAvailable())));
-		final Form<Void> form = new Form<Void>("form");
-		this.add(form);
+
+		// Spiner amount and buyButton
+		final Form<Integer> form = new Form<Integer>("form", Model.of(1));
+		add(form);
 
 		// FeedbackPanel //
 		final KendoFeedbackPanel feedbackBuyItem = new KendoFeedbackPanel("feedbackBuyItem");
 		form.add(feedbackBuyItem.setOutputMarkupId(true));
 
+		// Spinner //
+		final AjaxSpinner<Integer> spinner = new AjaxSpinner<Integer>("spinner", form.getModel(), Integer.class) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSpin(AjaxRequestTarget target, Integer value) {
+				amount = value;
+			}
+		};
+		spinner.setMin(1);
+		spinner.setEnabled(product.getAvailable() > 0);
+		spinner.setMax(product.getAvailable());
+		form.add(spinner);
+
+		ContextImage imageToCart = new ContextImage("imageToCart", "images/toCart.png");
 		IndicatingAjaxButton buyButton = new IndicatingAjaxButton("buyButton") {
 
 			private static final long serialVersionUID = 1L;
@@ -85,22 +108,26 @@ public class ProductPage extends AbstractPage {
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				if (cartService.addProductToCart(product.getId(), customer.getId())) {
-					ProductPage.this.addedInfo(form);
-					target.add(feedbackBuyItem);
+				if (visibleForUser) {
+					if (cartService.addProductToCart(product.getId(), customer.getId(), amount)) {
+						ProductPage.this.addedInfo(form);
+						target.add(feedbackBuyItem);
+					} else {
+						ProductPage.this.notAddedInfo(form);
+						target.add(feedbackBuyItem);
+					}
 				} else {
-					ProductPage.this.notAddedInfo(form);
-					target.add(feedbackBuyItem);
+					if (MySession.get().addToCart(product, amount)) {
+						ProductPage.this.addedInfo(form);
+						target.add(feedbackBuyItem);
+					} else {
+						ProductPage.this.notAddedInfo(form);
+						target.add(feedbackBuyItem);
+					}
 				}
-				try {
-					Thread.sleep(2000);
-
-				} catch (InterruptedException e) {
-				}
-
-				target.add(feedbackBuyItem);
 			}
 		};
+		buyButton.add(imageToCart);
 		form.add(buyButton);
 
 		// add tabs
@@ -128,7 +155,7 @@ public class ProductPage extends AbstractPage {
 				return new ProductCombinePanel(panelId, product.getId());
 			}
 		});
-		
+
 		tabs.add(new AjaxTab(Model.of("Îòçûâû")) {
 
 			private static final long serialVersionUID = 1L;
@@ -142,10 +169,9 @@ public class ProductPage extends AbstractPage {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				return new ProductCombinePanel(panelId, product.getId());
+				return new ReviewPanel(panelId, product.getId());
 			}
 		});
-
 
 		return tabs;
 	}

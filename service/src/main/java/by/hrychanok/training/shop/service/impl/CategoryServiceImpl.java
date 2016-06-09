@@ -1,5 +1,6 @@
 package by.hrychanok.training.shop.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Category findRoot() {
 		Category root = repository.findByParentIsNull();
-		if (root==null) {
+		if (root == null) {
 			LOGGER.debug("No found any rootes");
 		}
 		return root;
@@ -74,6 +75,16 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> findAll() {
 		return repository.findAll();
+	}
+
+	@Override
+	public List<String> findAllName() {
+		List<String> listCategoryName = new ArrayList<>();
+		List<Category> categoryList = repository.findAll();
+		for (Category category : categoryList) {
+			listCategoryName.add(category.getName());
+		}
+		return listCategoryName;
 	}
 
 }

@@ -40,5 +40,5 @@ public enum Comparison {
 	 *
 	 * @return or predicate
 	 */
-    or
+     or
 }

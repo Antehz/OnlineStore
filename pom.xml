@@ -215,12 +215,13 @@
 
 			<dependency>
 				<groupId>com.googlecode.wicket-jquery-ui</groupId>
-				<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
+				<artifactId>wicket-jquery-ui-theme-smoothness</artifactId>
 				<version>7.2.1</version>
 			</dependency>
+			
 			<dependency>
 				<groupId>com.googlecode.wicket-jquery-ui</groupId>
-				<artifactId>wicket-kendo-ui-theme-bootstrap</artifactId>
+				<artifactId>wicket-kendo-ui-theme-uniform</artifactId>
 				<version>7.2.1</version>
 			</dependency>
 

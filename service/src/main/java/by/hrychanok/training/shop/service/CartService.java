@@ -12,7 +12,7 @@ import by.hrychanok.training.shop.repository.filter.Filter;
 public interface CartService {
 	List<CartContent> getCustomerCartContent(Long customerId);
 
-	Boolean addProductToCart(Long productId, Long customerId);
+	Boolean addProductToCart(Long productId, Long customerId, Integer amount);
 
 	void deleteProductFromCart(Long id);
 

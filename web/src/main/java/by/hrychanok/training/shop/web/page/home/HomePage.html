@@ -1,3 +1,175 @@
+<wicket:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+/* Tooltip container */
+.tooltip {
+	position: relative;
+	display: inline-block;
+	border-bottom: 1px dotted black;
+	/* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 6px;
+	/* Position the tooltip text - see examples below! */
+	position: absolute;
+	z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+</style>
+</wicket:head>
+
+
 <wicket:extend>
-	<h2>Home</h2>
+	<div id="accordion" style = "margin-right: 10px;">
+		<h3>О нас</h3>
+		<p>
+			<span style="font-size: 16px;">Наш магазин автозапчастей специализируется по продаже автозапчастей для иномарок. Всегда в
+				наличии на складе широкий ассортимент необходимых деталей, а с
+				помощью мощного интеренет-каталога поиск и приобретение нужной
+				запчасти стали ещё доступней и быстрее.
+			<br /> 
+			Наш интернет-магазин предоставляет гарантию на все проданные
+				автозапчасти. Мы сотрудничаем исключительно с надежными поставщиками
+				и потому уверены в качестве их продукции.</span>
+		</p>
+		
+		
+		<h3>С нами выгодно работать!</h3>
+		<h4>
+			<p>Наш интернет-магазин предлагает широкий выбор аккумуляторов,
+				автомобильных масел, ламп, технических жидостей, автомобильных
+				дисков и шин.</p>
+
+			<p>Покупать запчасти у нас выгодно!</p>
+			<ul>
+				<li>•Большой ассортимент оригинальных автозапчастей и аналогов</li>
+				<br />
+				<li>•Гибкая ценовая политика и лояльная система скидок</li>
+				<br />
+				<li>•Честные сроки поставки (в календарных днях)</li>
+				<br />
+				<li>•Курьерская доставка по Гродно</li>
+			</ul>
+		</h4>
+		
+		<h3>Наши преимущества:</h3>
+		<ol
+			style="margin: 0px; padding-right: 0px; padding-left: 0px; list-style: none; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px;">
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Актуальные&nbsp;цены и наличие
+					на более чем 60 млн. ассортимент автозапчастей.</span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Мы максимально открыты и
+					лояльны к каждому покупателю и стараемся решить любой спорный
+					вопрос в пользу нашего клиента.</span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Мы постоянно работаем над тем,
+					чтобы наши цены Вас приятно удивляли. Если Вы знаете, что где-то
+					есть товар сопоставимого качества по более низкой цене, &ndash;
+					звоните. Мы готовы обсудить дополнительную скидку лично для Вас.</span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Каждому нашему клиенту при
+					регистрации на нашем сайте &nbsp;мы сразу предоставляем&nbsp;<strong
+					style="margin: 0px; padding: 0px;">3%-ную скидку</strong>.
+			</span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Для постоянных оптовых
+					клиентов мы предлагаем специальные условия.</span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Каждому нашему клиенту
+					обеспечена поддержка персонального менеджера.</span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Вы можете&nbsp;оформить&nbsp;и
+					получить Ваш заказ буквально не поднимаясь с кресла. Понятный
+					интерфейс и упрощенная навигация по сайту помогут Вам найти нужную
+					деталь по марке, модели, году выпуска автомобиля, а также по
+					каталожному номеру запчасти. Оформление заявки займет считанные
+					минуты. Вы можете заказать в нашем интернет-магазине любые
+					автозапчасти и сопутствующие товары, в том числе шины, диски,
+					автомасла, аккумуляторы, автопринадлежности,&nbsp;автохимию и
+					автокосметику.&nbsp;</span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;"><span
+					style="margin: 0px; padding: 0px;">Оплатить за приобретенные
+						автозапчасти можно в ближайшем банкомате, инфокиоске, кассе банка,
+						а также с помощью интернет-банкинга или электронных денег в
+						которых внедрена система &quot;Расчёт&quot;.</span></span>
+			</li>
+			<li
+				style="margin: 0px; padding: 0px 0px 0px 20px; list-style: inside; text-align: justify;">
+				<span style="font-size: 16px;">Работаем с юридическими лицами
+					всех форм собственности. Отпуск товара со всеми
+					товаросопроводительными документами.&nbsp;Работаем без НДС.</span>
+			</li>
+		</ol>
+		<h3
+			style="margin: 0px; padding: 0px; font-size: 18px; font-weight: normal; font-family: PTSansNarrowBold; line-height: 18px; text-align: justify;">
+			&nbsp;</h3>
+
+	</div>
+
+	<table>
+		<thead>
+			<h4>Выберите интересующую Вас категорию товара:</h4>
+		</thead>
+		<tr style="border: none;">
+			<td style="border: none;"><a wicket:id="wheelCategoryLink"><img
+					wicket:id="wheelImage" style="width: 90%" /></a></td>
+			<td style="border: none;"><a wicket:id="tireCategoryLink"><img
+					wicket:id="tireImage" style="width: 65%" /></a></td>
+			<td style="border: none;"><a wicket:id="lampCategoryLink"><img
+					wicket:id="lampImage" style="width: 65%" /></a></td>
+			<td style="border: none;"><a wicket:id="batteryCategoryLink"><img
+					wicket:id="batteryImage" /></a></td>
+		</tr>
+		<tr style="border: none;">
+			<td style="border: none; text-align: center">Диски</td>
+			<td style="border: none; text-align: center">Шины</td>
+			<td style="border: none; text-align: center">Лампы</td>
+			<td style="border: none; text-align: center">Аккумуляторные
+				батареи</td>
+		</tr>
+		<tr style="border: none;">
+			<td style="border: none;"><a wicket:id="oilCategoryLink"><img
+					wicket:id="oilImage" style="width: 85%" /></a></td>
+			<td style="border: none;"><a wicket:id="coolantCategoryLink"><img
+					wicket:id="coolantImage" style="width: 72%" /></a></td>
+			<td style="border: none;"><a wicket:id="screenWashCategoryLink"><img
+					wicket:id="washerImage" style="width: 72%" /></a></td>
+			<td style="border: none;"></td>
+		</tr>
+		<tr style="border: none;">
+			<td style="border: none; text-align: center">Масла</td>
+			<td style="border: none; text-align: center">Антифриз</td>
+			<td style="border: none; text-align: center">Охлаждающая
+				жидкость</td>
+			<td style="border: none; text-align: center"></td>
+		</tr>
+	</table>
 </wicket:extend>

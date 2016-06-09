@@ -58,7 +58,7 @@ public class CustomerOrderPage extends AbstractPage {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				return new OrderHistoryPage(panelId);
+				return new OrderHistoryPanel(panelId);
 			}
 		});
 
@@ -79,7 +79,7 @@ public class CustomerOrderPage extends AbstractPage {
 				Condition condition = new Condition.Builder().setComparison(Comparison.eq).setField("status")
 						.setValue(StatusOrder.Pending).build();
 				conditionsList.add(condition);
-				return new OrderHistoryPage(panelId, conditionsList);
+				return new OrderHistoryPanel(panelId, conditionsList);
 			}
 		});
 
@@ -100,7 +100,7 @@ public class CustomerOrderPage extends AbstractPage {
 				Condition condition = new Condition.Builder().setComparison(Comparison.eq).setField("status")
 						.setValue(StatusOrder.Done).build();
 				conditionsList.add(condition);
-				return new OrderHistoryPage(panelId, conditionsList);
+				return new OrderHistoryPanel(panelId, conditionsList);
 			}
 		});
 

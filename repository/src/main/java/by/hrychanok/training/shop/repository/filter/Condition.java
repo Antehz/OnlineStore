@@ -19,19 +19,20 @@ public class Condition implements Serializable{
 	 * field - name of row in the table
 	 */
 	public String field;
+	public String field2;
 
-	public Condition(Type type, Comparison comparison, Object value, Object limitValue, String field) {
+	public Condition(Type type, Comparison comparison, Object value, Object limitValue, String field, String field2) {
 		super();
 		this.limitValue=limitValue;
 		this.type = type;
 		this.comparison = comparison;
 		this.value = value;
 		this.field = field;
+		this.field2 = field2;
 	}
 
 	public Condition() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	 public static class Builder {
@@ -40,6 +41,7 @@ public class Condition implements Serializable{
 	        private Object value;
 	        private Object limitValue;
 	        private String field;
+	        private String field2;
 
 	        public Builder setType(Type type) {
 	            this.type = type;
@@ -65,9 +67,12 @@ public class Condition implements Serializable{
 	            this.field = field;
 	            return this;
 	        }
-
+	        public Builder setField2(String field2) {
+	            this.field2 = field2;
+	            return this;
+	        }
 	        public Condition build() {
-	            return new Condition(type, comparison, value, limitValue, field);
+	            return new Condition(type, comparison, value, limitValue, field, field2);
 	        }
 	    }
 }

@@ -14,4 +14,5 @@ public interface CategoryService {
 	Category save(Category category);
 	Category findOne(Long id);
 	List<Category> findAll();
+	List<String> findAllName();
 }

@@ -10,6 +10,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -26,6 +27,23 @@ public class Filter implements Specification, Serializable {
 
 	public void addCondition(Condition condition) {
 		this.conditions.add(condition);
+	}
+
+	public void removeCondition(String field) {
+		for (int i = 0; i < conditions.size(); i++) {
+			if (field.equals(conditions.get(i).field)) {
+				conditions.remove(i);
+			}
+		}
+	}
+
+	public Condition getConditionByField(String field) {
+		for (int i = 0; i < conditions.size(); i++) {
+			if (field.equals(conditions.get(i).field)) {
+				return conditions.get(i);
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -55,15 +73,14 @@ public class Filter implements Specification, Serializable {
 			return buildNotEqualsPredicateToCriteria(condition, root, criteriaQuery, criteriaBuilder);
 		case isnull:
 			return buildIsNullPredicateToCriteria(condition, root, criteriaQuery, criteriaBuilder);
-		case in:
-			break;
+		case or:
+			return buildOrPredicateToCriteria(condition, root, criteriaQuery, criteriaBuilder);
 		case between:
 			return buildBeetwenPredicateToCriteria(condition, root, criteriaQuery, criteriaBuilder);
 		default:
 			return buildEqualsPredicateToCriteria(condition, root, criteriaQuery, criteriaBuilder);
 
 		}
-		throw new RuntimeException();
 	}
 
 	private Predicate buildEqualsPredicateToCriteria(Condition condition, Root root, CriteriaQuery criteriaQuery,
@@ -95,5 +112,13 @@ public class Filter implements Specification, Serializable {
 	private Predicate buildLowerThanPredicateToCriteria(Condition condition, Root root, CriteriaQuery criteriaQuery,
 			CriteriaBuilder criteriaBuilder) {
 		return criteriaBuilder.lt(root.<Integer> get(condition.field), (Integer) condition.value);
+	}
+
+	private Predicate buildOrPredicateToCriteria(Condition condition, Root root, CriteriaQuery criteriaQuery,
+			CriteriaBuilder criteriaBuilder) {
+
+		Predicate condition1 = criteriaBuilder.like(root.get(condition.field), (String) condition.value);
+		Predicate condition2 = criteriaBuilder.like(root.get(condition.field2), (String) condition.value);
+		return criteriaBuilder.or(condition1, condition2);
 	}
 }

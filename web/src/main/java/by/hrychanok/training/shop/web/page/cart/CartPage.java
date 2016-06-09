@@ -4,6 +4,7 @@ import java.awt.print.Printable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
@@ -46,10 +47,11 @@ import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.GenericProductService;
 import by.hrychanok.training.shop.service.OrderService;
 import by.hrychanok.training.shop.web.app.AuthorizedSession;
+import by.hrychanok.training.shop.web.app.MySession;
 import by.hrychanok.training.shop.web.page.BasePageForTable;
 import by.hrychanok.training.shop.web.page.GenericSortableTypeDataProvider;
 import by.hrychanok.training.shop.web.page.personalCabinet.CustomerOrderPage;
-import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPage;
+import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPanel;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
 
 import com.googlecode.wicket.kendo.ui.form.Check;
@@ -95,6 +97,9 @@ public class CartPage extends BasePageForTable {
 	@SuppressWarnings("unchecked")
 	public CartPage() {
 		customer = AuthorizedSession.get().getLoggedUser().getCustomer();
+		if (!MySession.get().getCartList().isEmpty()) {
+			transferGuestCartContentToGeneralCart();
+		}
 		filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("customer")
 				.setValue(customer.getId()).build());
 		GenericSortableTypeDataProvider<CartContent> dp = new GenericSortableTypeDataProvider<CartContent>(
@@ -156,8 +161,8 @@ public class CartPage extends BasePageForTable {
 				Label priceTotalOneProduct = new Label("priceTotal", priceTotalOneProductModel);
 				priceTotalOneProduct.setOutputMarkupId(true);
 
-				formTable.add(
-						createSpinner(totalPriceModel, cartContent, product, formTable, priceTotalOneProductModel, priceTotalOneProduct));
+				formTable.add(createSpinner(totalPriceModel, cartContent, product, formTable, priceTotalOneProductModel,
+						priceTotalOneProduct));
 
 				item.add(formTable);
 				item.add(priceTotalOneProduct);
@@ -188,6 +193,15 @@ public class CartPage extends BasePageForTable {
 		createFormOrder(totalPriceModel);
 
 		add(new PagingNavigator("navigator", dataView));
+
+	}
+
+	private void transferGuestCartContentToGeneralCart() {
+		List<CartContent> guestCart = MySession.get().getCartList();
+		for (CartContent cartContent : guestCart) {
+			cartService.addProductToCart(cartContent.getProduct().getId(), customer.getId(), cartContent.getAmount());
+		}
+		MySession.get().setCartList(new ArrayList<CartContent>());
 
 	}
 
@@ -316,12 +330,6 @@ public class CartPage extends BasePageForTable {
 
 			@Override
 			protected boolean isDisabledOnClick() {
-				/*
-				 * Warning: if true the button will not be send as part of the
-				 * post because of its disabled state. Therefore
-				 * Button.onSubmit() will not be reached, Form.onSubmit() should
-				 * be used instead.
-				 */
 				return false; // default value
 			}
 
