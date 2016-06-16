@@ -5,40 +5,29 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.image.ContextImage;
-import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.form.spinner.AjaxSpinner;
 import com.googlecode.wicket.kendo.ui.form.button.IndicatingAjaxButton;
-import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.kendo.ui.widget.tabs.TabbedPanel;
 
 import by.hrychanok.training.shop.model.CustomerCredentials;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.service.CartService;
-import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.ProductService;
 import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.app.MySession;
 import by.hrychanok.training.shop.web.page.AbstractPage;
-import by.hrychanok.training.shop.web.page.StaticImage;
-import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
-import by.hrychanok.training.shop.web.page.home.HomePage;
-import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPanel;
 
 public class ProductPage extends AbstractPage {
 
@@ -77,10 +66,6 @@ public class ProductPage extends AbstractPage {
 		final Form<Integer> form = new Form<Integer>("form", Model.of(1));
 		add(form);
 
-		// FeedbackPanel //
-		final KendoFeedbackPanel feedbackBuyItem = new KendoFeedbackPanel("feedbackBuyItem");
-		form.add(feedbackBuyItem.setOutputMarkupId(true));
-
 		// Spinner //
 		final AjaxSpinner<Integer> spinner = new AjaxSpinner<Integer>("spinner", form.getModel(), Integer.class) {
 
@@ -110,19 +95,19 @@ public class ProductPage extends AbstractPage {
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				if (visibleForUser) {
 					if (cartService.addProductToCart(product.getId(), customer.getId(), amount)) {
-						ProductPage.this.addedInfo(form);
-						target.add(feedbackBuyItem);
+						addedInfo(form);
+						target.add(ProductPage.this.feedback);
 					} else {
-						ProductPage.this.notAddedInfo(form);
-						target.add(feedbackBuyItem);
+						notAddedInfo(form);
+						target.add(ProductPage.this.feedback);
 					}
 				} else {
 					if (MySession.get().addToCart(product, amount)) {
-						ProductPage.this.addedInfo(form);
-						target.add(feedbackBuyItem);
+						addedInfo(form);
+						target.add(ProductPage.this.feedback);
 					} else {
-						ProductPage.this.notAddedInfo(form);
-						target.add(feedbackBuyItem);
+						notAddedInfo(form);
+						target.add(ProductPage.this.feedback);
 					}
 				}
 			}
@@ -139,7 +124,8 @@ public class ProductPage extends AbstractPage {
 
 	private List<ITab> newTabList() {
 		List<ITab> tabs = new ArrayList<ITab>();
-		tabs.add(new AjaxTab(Model.of("Описание")) {
+		String description = getString("description");
+		tabs.add(new AjaxTab(Model.of(description)) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -155,8 +141,8 @@ public class ProductPage extends AbstractPage {
 				return new ProductCombinePanel(panelId, product.getId());
 			}
 		});
-
-		tabs.add(new AjaxTab(Model.of("Отзывы")) {
+		String review = getString("review");
+		tabs.add(new AjaxTab(Model.of(review)) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -177,10 +163,12 @@ public class ProductPage extends AbstractPage {
 	}
 
 	private void addedInfo(Component component) {
-		this.success("Добавлено");
+		String productAdded = getString("productAdded");
+		this.success(productAdded);
 	}
 
 	private void notAddedInfo(Component component) {
-		this.error("Ошибка");
+		String productNotAdded = getString("productNotAdded");
+		this.error(productNotAdded);
 	}
 }

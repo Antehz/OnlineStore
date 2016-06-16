@@ -1,0 +1,62 @@
+<meta charset="utf-8" />
+
+<wicket:panel>
+	<table>
+		<caption>Описание</caption>
+
+		<tbody>
+
+			<wicket:enclosure child="imageURL">
+				<tr>
+					<td style="width: 200px";><wicket:message key="nameItem" /></td>
+					<td><input type="text" wicket:id="name" /></td>
+				</tr>
+			</wicket:enclosure>
+			<wicket:enclosure child="category">
+
+				<tr>
+					<td><wicket:message key="category" /></td>
+					<td><select wicket:id="category" /></td>
+				</tr>
+			</wicket:enclosure>
+			<tr>
+				<td style="width: 200px;"><wicket:message key="manufacturer" /></td>
+				<td><input type="text" wicket:id="manufacturer" /></td>
+			</tr>
+			<tr>
+				<td><wicket:message key="model" /></td>
+				<td><input type="text" wicket:id="model" /></td>
+			</tr>
+			<tr>
+				<td><wicket:message key="price" /></td>
+				<td><input type="text" wicket:id="price" /> руб.</td>
+			</tr>
+			<tr>
+				<td><wicket:message key="description" /></td>
+				<td><textarea wicket:id="description" rows="5" cols="40"></textarea></td>
+			</tr>
+			<wicket:enclosure child="imageURL">
+				<tr>
+					<td><wicket:message key="image" /></td>
+					<td><input type="text" wicket:id="imageURL" /></td>
+				</tr>
+			</wicket:enclosure>
+			<tr>
+				<td><wicket:message key="orderCount" /></td>
+				<td><input type="text" wicket:id="countOrder" /></td>
+			</tr>
+			<tr>
+				<td><wicket:message key="rating" /></td>
+				<td><input type="text" wicket:id="countRecommended" /></td>
+			</tr>
+			<tr>
+				<td><wicket:message key="available" /></td>
+				<td><input type="text" wicket:id="available" /></td>
+
+			</tr>
+
+		</tbody>
+	</table>
+	<wicket:child />
+	<div wicket:id="feedback" style="width: 360px;"></div>
+</wicket:panel>

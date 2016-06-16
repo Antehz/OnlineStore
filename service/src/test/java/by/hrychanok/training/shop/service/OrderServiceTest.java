@@ -65,9 +65,9 @@ public class OrderServiceTest {
 	Order order;
 	List<Order> orderList;
 
-	/*@Before*/
+	@Before
 	public void preparation() {
-		
+
 		orderService.deleteAll();
 		productService.deleteAll();
 		customerService.deleteAll();
@@ -82,7 +82,7 @@ public class OrderServiceTest {
 			tire.setDescription("description product Product");
 			tire.setCountRecommended(i);
 			tire.setAvailable(i + 10);
-			Category category = categoryService.findByName("Зимние");
+			Category category = categoryService.findOne(3L);
 			tire.setCategory(category);
 			tire.setCountOrder(3 * i);
 			tire.setPrice(5000000 * i);
@@ -98,10 +98,10 @@ public class OrderServiceTest {
 			customer = new Customer();
 			customerCredentials.setLogin(String.format(i + "testUser"));
 			customerCredentials.setPassword("testPassword");
-			customerCredentials.setRole(UserRole.Customer);
+			customerCredentials.setRole(UserRole.customer);
 			customer.setFirstName(i + "testFirstName");
 			customer.setLastName(i + "testLastName");
-			customer.setEmail(String.format(i + "testEmail@ya.ru"));
+			customer.setEmail(String.format("Emfail%s@ya.ru", i));
 			customer.setAddress("Gorkogo" + 50 + i);
 			customer.setCity("Hrodno");
 			customer.setCountry("Belarus");
@@ -113,8 +113,13 @@ public class OrderServiceTest {
 
 			CartContent cart = new CartContent();
 			int amount = i;
-			cartService.addProductToCart(product.getId(), customer.getId());
-			order = orderService.createOrder(customer.getId(), ShippingMethod.Courier, "Test additional information");
+			cartService.addProductToCart(product.getId(), customer.getId(), i);
+			Order order = new Order();
+			order.setCustomer(customer);
+			order.setShippingMethod(ShippingMethod.Courier);
+			order.setAdditionalInfo("Test additional information");
+			order = orderService.createOrder(order);
+
 		}
 		orderList = orderService.findAll();
 	}
@@ -155,7 +160,8 @@ public class OrderServiceTest {
 		int randomIndex = random.nextInt(7);
 		Order order = orderList.get(randomIndex);
 		StatusOrder statusOrderBefore = order.getStatus();
-		orderService.changeStatusOrder(order.getId(), StatusOrder.Cancelled);
+		order.setStatus(StatusOrder.Cancelled);
+		orderService.save(order);
 		StatusOrder statusOrderAfter = orderService.findOne(order.getId()).getStatus();
 		Assert.assertNotEquals(statusOrderBefore, statusOrderAfter);
 	}
@@ -163,34 +169,18 @@ public class OrderServiceTest {
 	@Test
 	public void filterOrder() {
 		Filter filter = new Filter();
-	    PageRequest page1 = new PageRequest(0, 4, Direction.DESC, "totalPrice");
-	    
-		Page<Order> orderPages = orderService.findAllPage(filter, new PageRequest(0, 5, Direction.DESC, "totalPrice"));
-		for (Order order : orderPages) {
+		PageRequest page1 = new PageRequest(0, 4, Direction.DESC, "totalPrice");
+
+		List<Order> orderList = orderService.findAll(filter, new PageRequest(0, 5, Direction.DESC, "totalPrice"));
+		for (Order order : orderList) {
 			System.out.println(order);
 		}
-		/*int countFirstFilter = orderPages.size();
-		Assert.assertFalse(orderPages.isEmpty());
+		int countFirstFilter = orderList.size();
+		Assert.assertFalse(orderList.isEmpty());
 		filter.addCondition(new Condition.Builder().setComparison(Comparison.between).setField("totalPrice")
 				.setValue(10000000).setLimitValue(40000000).build());
-		orderPages = orderService.findAll(filter, page1);
-		int countSecondFilter = orderPages.size();
-		Assert.assertTrue(countFirstFilter > countSecondFilter);*/
+		orderList = orderService.findAll(filter, page1);
+		int countSecondFilter = orderList.size();
+		Assert.assertTrue(countFirstFilter > countSecondFilter);
 	}
-
-	@Test
-	public void getOrdersByStatus() {
-		List<Order> list = orderService.getByStatus(StatusOrder.Pending);
-		for (Order order : list) {
-			System.out.println(order);
-		}
-	}
-
-	public void clearAll() {
-		orderService.deleteAll();
-		productService.deleteAll();
-		customerService.deleteAll();
-		orderService.deleteAll();
-	}
-
 }

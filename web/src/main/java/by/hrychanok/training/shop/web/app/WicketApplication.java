@@ -8,16 +8,12 @@ import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSessio
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
 import org.apache.wicket.injection.Injector;
-import org.apache.wicket.markup.html.IPackageResourceGuard;
-import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-
 import by.hrychanok.training.shop.model.CustomerCredentials;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.web.component.login.LoginPage;
@@ -26,14 +22,17 @@ import de.agilecoders.wicket.core.Bootstrap;
 
 @Component
 public class WicketApplication extends AuthenticatedWebApplication {
+	
+	public static final int REMEMBER_ME_DURATION_IN_DAYS = 15;
+	public static final String REMEMBER_ME_LOGIN_COOKIE = "loginCookie";
+	public static final String REMEMBER_ME_PASSWORD_COOKIE = "passwordCookie";
+	
 	private CustomerCredentials loggedUser;
+
 	public void setLoggedUser(CustomerCredentials loggedUser) {
 		this.loggedUser = loggedUser;
 	}
 
-	public static final int REMEMBER_ME_DURATION_IN_DAYS = 15;
-	public static final String REMEMBER_ME_LOGIN_COOKIE = "loginCookie";
-	public static final String REMEMBER_ME_PASSWORD_COOKIE = "passwordCookie";
 	@Inject
 	private CustomerService userService;
 
@@ -85,22 +84,11 @@ public class WicketApplication extends AuthenticatedWebApplication {
 	@Override
 	public void init() {
 		super.init();
-
 		Bootstrap.install(this);
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfigForWeb.class);
-
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this, ctx));
-
 		getMarkupSettings().setStripWicketTags(true);
-
 		getSecuritySettings().setAuthorizationStrategy(new AnnotationsRoleAuthorizationStrategy(this));
 		Injector.get().inject(this);
-		IPackageResourceGuard packageResourceGuard = this.getResourceSettings().getPackageResourceGuard();
-		if (packageResourceGuard instanceof SecurePackageResourceGuard) {
-			SecurePackageResourceGuard guard = (SecurePackageResourceGuard) packageResourceGuard;
-			// Allow to access only to pdf files placed in the “public”
-			// directory.
-			guard.addPattern("+*.jpg");
-		}
 	}
 }

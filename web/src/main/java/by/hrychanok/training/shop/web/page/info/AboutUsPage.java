@@ -4,5 +4,4 @@ import by.hrychanok.training.shop.web.page.AbstractPage;
 
 public class AboutUsPage extends AbstractPage {
 
-	
 }

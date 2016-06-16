@@ -21,10 +21,11 @@ public class Category extends AbstractModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private Category parent;
 	private List<Category> children = new ArrayList<Category>();
 	private String name;
+	private String nameEng;
 	private String description;
 
 	public Category(Category parent, String name, String description) {
@@ -86,6 +87,14 @@ public class Category extends AbstractModel {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public String getNameEng() {
+		return nameEng;
+	}
+
+	public void setNameEng(String nameEng) {
+		this.nameEng = nameEng;
 	}
 
 }

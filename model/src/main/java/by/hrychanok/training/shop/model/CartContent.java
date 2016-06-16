@@ -8,18 +8,21 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 public class CartContent extends AbstractModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Customer customer;
 	private Product product;
 	private Integer amount;
 	private Date dateAdd;
 	private Integer price;
 
-	@ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY, cascade =CascadeType.REFRESH)
+	@ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "customer_id")
 	public Customer getCustomer() {
 		return customer;

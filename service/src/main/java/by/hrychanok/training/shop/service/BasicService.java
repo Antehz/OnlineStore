@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
+import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.repository.filter.Filter;
 
 public interface BasicService<T, ID extends Serializable> {
@@ -79,6 +79,7 @@ public interface BasicService<T, ID extends Serializable> {
 	 * Deletes all entities managed by the repository.
 	 */
 	void deleteAll();
+
 	/**
 	 * Flushes all pending changes to the database.
 	 */

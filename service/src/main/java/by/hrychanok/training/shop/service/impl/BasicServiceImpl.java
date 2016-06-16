@@ -6,17 +6,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
-
-import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.service.BasicService;
 
-/**
- * T -target DTO type DAO - DaoImpl class ID - primary key value
- * (id)
- */
 public class BasicServiceImpl<T, REPOSITORY extends JpaRepository<T, ID>, ID extends Serializable>
 		implements BasicService<T, ID> {
 
@@ -27,14 +20,14 @@ public class BasicServiceImpl<T, REPOSITORY extends JpaRepository<T, ID>, ID ext
 	@Override
 	@Transactional
 	public T save(T entity) {
-		LOGGER.debug("Save entity "+entity);
+		LOGGER.debug("Save entity " + entity);
 		return (T) repository.save(entity);
 	}
 
 	@Override
 	@Transactional
 	public T findOne(ID id) {
-		LOGGER.debug("Find entity by id "+id);
+		LOGGER.debug("Find entity by id " + id);
 		return (T) repository.findOne(id);
 	}
 
@@ -60,12 +53,14 @@ public class BasicServiceImpl<T, REPOSITORY extends JpaRepository<T, ID>, ID ext
 	@Override
 	@Transactional
 	public void delete(ID id) {
+		LOGGER.debug("Delete entity by ID " + id);
 		repository.delete(id);
 	}
 
 	@Override
 	@Transactional
 	public void delete(T entity) {
+		LOGGER.debug("Delete entity " + entity.getClass());
 		repository.delete(entity);
 	}
 
@@ -77,8 +72,9 @@ public class BasicServiceImpl<T, REPOSITORY extends JpaRepository<T, ID>, ID ext
 	}
 
 	@Override
-	public
-	<S extends T> S saveAndFlush(S entity){
+	@Transactional
+	public <S extends T> S saveAndFlush(S entity) {
+		LOGGER.debug("Save entity " + entity.getClass());
 		return repository.saveAndFlush(entity);
 	}
 

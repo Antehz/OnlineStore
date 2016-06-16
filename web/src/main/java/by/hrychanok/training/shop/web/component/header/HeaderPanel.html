@@ -6,7 +6,7 @@
 	overflow: hidden;
 	position: absolute;
 	right: 0px;
-	    top: 138px;
+	top: 138px;
 	font-size: 19px;
 }
 </style>
@@ -20,41 +20,50 @@
 		<header>
 
 			<div class="maina wrap">
-				<img src="images/avto73.jpg"  style = " z-index: 2; " alt="">
+				<img src="images/avto73.jpg" style="z-index: 2;" alt="">
 
 				<form wicket:id="formFinderAndCart">
 
 					<button wicket:id="toCart"
-						style="position: absolute; top: 138px; right: 96px;
-	 font-size: 19px;">
-						<img wicket:id="cartImage" style="width: 33px;" />CART
+						style="position: absolute; top: 138px; right: 73px; font-size: 19px;">
+						<img wicket:id="cartImage" style="width: 33px;" />
+						<wicket:message key="cart" />
 					</button>
 				</form>
 
 				<div class="form-login">
 					<form wicket:id="formLogin">
-
-						<button wicket:id="login">SIGN IN</button>
+						<button wicket:id="login">
+							<wicket:message key="login" />
+						</button>
 						<br />
 					</form>
 				</div>
-				<p style="">
-					Belarus, Hrodno<span>+375 (29) 5402284</span>
+				<p
+					style="position: absolute; top: 20px; right: -84px; color: #676767;">
+					<wicket:message key="contactHeader" />
+					<span>+375 (29) 5402284</span>
 				</p>
-				<p>Автозапчасти "Car parts" Режим работы: пн.-пт.: 9.00-20.00,
-					сб.: 9.00-17.00, вс.: 9.00-15.00</p>
+				<p style="top: 21px; position: absolute; left: 87px; color: #333;">
+					<wicket:message key="workingHours" />
+				</p>
 			</div>
 			<wicket:child />
 			<nav>
 				<ul class="menu">
 					<li><a wicket:id="toHome" class="home"><img
 							src="images/home.jpg"></a></li>
-					<li><a wicket:id="toNews">Новости</a></li>
-					<li><a wicket:id="toAboutUs">О компании</a></li>
-					<li><a wicket:id="toShipment">Доставка</a></li>
-					<li><a wicket:id="toPayment">Оплата</a></li>
-					<li><a wicket:id="toContact">Контакты</a></li>
-					<li><a wicket:id="toAdminPage">AdminPage</a></li>
+					<li><a wicket:id="toNews"><wicket:message key="menu.news" /></a></li>
+					<li><a wicket:id="toAboutUs"><wicket:message
+								key="menu.about" /></a></li>
+					<li><a wicket:id="toShipment"><wicket:message
+								key="menu.shipment" /></a></li>
+					<li><a wicket:id="toPayment"><wicket:message
+								key="menu.payment" /></a></li>
+					<li><a wicket:id="toContact"><wicket:message
+								key="menu.contact" /></a></li>
+					<li><a wicket:id="toCustomerManagerPage"><wicket:message
+								key="menu.users" /></a></li>
 
 				</ul>
 				<div class="clear"></div>

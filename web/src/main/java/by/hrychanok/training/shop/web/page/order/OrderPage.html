@@ -3,26 +3,29 @@
 
 
 	<table class="table table-condensed">
-		<caption>Order information</caption>
+
+		<caption>
+			<wicket:message key="orderInfo" />
+		</caption>
 		<tbody>
 			<tr>
 				<td>id</td>
 				<td><span wicket:id="orderId" /></td>
 			</tr>
 			<tr>
-				<td>Метод отправки</td>
+				<td><wicket:message key="shippingMethod" /></td>
 				<td><span wicket:id="shippingMethod" /></td>
 			</tr>
 			<tr>
-				<td>Стоимость</td>
+				<td><wicket:message key="price" /></td>
 				<td><span wicket:id="summaryOrderCostLabel" /> руб.</td>
 			</tr>
 			<tr wicket:id="trStyle">
-				<td>Статус</td>
+				<td><wicket:message key="status" /></td>
 				<td><span wicket:id="status" /></td>
 			</tr>
 			<tr>
-				<td>Коментарий</td>
+				<td><wicket:message key="price" /></td>
 				<td><span wicket:id="additionalInfo" /></td>
 			</tr>
 		</tbody>
@@ -34,9 +37,9 @@
 		<thead class="my-table-thead">
 			<tr>
 				<th>№</th>
-				<th>Продукт</th>
-				<th>Стоимость</th>
-				<th>Количество</th>
+				<th><wicket:message key="item" /></th>
+				<th><wicket:message key="price" /></th>
+				<th><wicket:message key="amount" /></th>
 
 				<th></th>
 			</tr>

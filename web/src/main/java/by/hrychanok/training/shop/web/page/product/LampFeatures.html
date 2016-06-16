@@ -1,0 +1,41 @@
+<meta charset="utf-8" />
+
+<wicket:extend>
+
+	<table class="table table-condensed">
+		<caption>Характеристики лампы</caption>
+		<tbody>
+			<tr>
+				<td style="width: 250px;">Тип</td>
+				<td><select wicket:id="lampType" /></td>
+			</tr>
+
+			<tr>
+				<td style="width: 250px;">Страна производства</td>
+				<td><input type="text" wicket:id="countryManufacturer" /></td>
+			</tr>
+
+			<tr>
+				<td>Цоколь</td>
+				<td><input type="text" wicket:id="cap" />мм</td>
+			</tr>
+			<tr>
+				<td>Мощность, Вт</td>
+				<td><input type="text" wicket:id="power" /></td>
+			</tr>
+			<tr>
+				<td>Температура, K</td>
+				<td><input type="text" wicket:id="temperature" />"</td>
+			</tr>
+
+			<tr>
+				<td>Световой поток, Лм</td>
+				<td><input type="text" wicket:id="luminousFlux" />"</td>
+			</tr>
+			<tr>
+				<td>Комплектация, шт</td>
+				<td><input type="text" wicket:id="packageContents" />"</td>
+			</tr>
+		</tbody>
+	</table>
+</wicket:extend>

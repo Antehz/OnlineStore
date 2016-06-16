@@ -1,19 +1,15 @@
 package by.hrychanok.training.shop.model;
 
-import java.net.URL;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.InheritanceType;
 
 @Entity
@@ -30,6 +26,27 @@ public class Product extends AbstractModel {
 	private Integer countRecommended;
 	private Category category;
 	private Integer available;
+	private List<OrderContent> orderContent;
+	private List<ProductComment> productComment;
+	
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	public List<ProductComment> getProductComment() {
+		return productComment;
+	}
+
+	public void setProductComment(List<ProductComment> productComment) {
+		this.productComment = productComment;
+	}
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	public List<OrderContent> getOrderContent() {
+		return orderContent;
+	}
+
+	public void setOrderContent(List<OrderContent> orderContent) {
+		this.orderContent = orderContent;
+	}
 
 	@Column
 	public String getName() {
@@ -111,6 +128,7 @@ public class Product extends AbstractModel {
 	public void setAvailable(Integer available) {
 		this.available = available;
 	}
+
 	@ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	public Category getCategory() {

@@ -6,11 +6,11 @@
 
 <wicket:panel>
 <wicket:extend>
-<li><div class = "text-3">Личный кабинет</div></li>
-  <li><a wicket:id="toPersonalData">Персональные данные</a></li>
-  <li><a wicket:id="toCustomerOrder">Заказы</a></li>
+<li><div class = "text-3"><wicket:message key="leftMenu.personalCabinet" /></div></li>
+  <li><a wicket:id="toPersonalData"><wicket:message key="leftMenu.personalData" /></a></li>
+  <li><a wicket:id="toCustomerOrder"><wicket:message key="leftMenu.order" /></a></li>
   <li><a wicket:id="toCart"></a> </li>
-  <li><a wicket:id="toLogout">Выйти</a></li>
+  <li><a wicket:id="toLogout"><wicket:message key="leftMenu.logout" /></a></li>
  </wicket:extend>
  
 </wicket:panel>

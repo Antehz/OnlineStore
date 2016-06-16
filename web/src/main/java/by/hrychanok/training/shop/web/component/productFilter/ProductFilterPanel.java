@@ -103,7 +103,8 @@ public class ProductFilterPanel extends Panel {
 		this.add(this.formCheck);
 		
 		CheckBox checkbox = new CheckBox("check", this.formCheck.getModel());
-		Label labelCheck = new Label("labelCheck", "Есть в наличии", checkbox);
+		 String availableMessage = getString("filter.available");
+		Label labelCheck = new Label("labelCheck", availableMessage, checkbox);
 		this.formCheck.add(checkbox, labelCheck);
 
 		// buttons //

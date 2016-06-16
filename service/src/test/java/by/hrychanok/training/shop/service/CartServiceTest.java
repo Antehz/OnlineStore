@@ -6,7 +6,6 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class CartServiceTest {
 
 	@Resource
 	private CustomerService customerService;
-	
+
 	@Autowired
 	CategoryService categoryService;
 
@@ -50,12 +49,12 @@ public class CartServiceTest {
 		Tire tire = new Tire();
 		tire.setName("Product");
 		tire.setManufacturer("manufacturerProduct");
-		tire.setModel( "modelProduct");
+		tire.setModel("modelProduct");
 		tire.setImageURL("imageProduct ");
 		tire.setDescription("description product Product");
 		tire.setCountRecommended(777);
 		tire.setAvailable(10);
-		Category category =categoryService.findByName("Летние");
+		Category category = categoryService.findOne(3L);
 		tire.setCategory(category);
 		tire.setCountOrder(34);
 		tire.setPrice(2000000);
@@ -73,7 +72,7 @@ public class CartServiceTest {
 		Customer customer = new Customer();
 		customerCredentials.setLogin(String.format("testUser"));
 		customerCredentials.setPassword("testPassword");
-		customerCredentials.setRole(UserRole.Customer);
+		customerCredentials.setRole(UserRole.customer);
 		customer.setFirstName("testFirstName");
 		customer.setLastName("testLastName");
 		customer.setEmail(String.format("testEmail@ya.ru"));
@@ -95,7 +94,13 @@ public class CartServiceTest {
 		Long customerId = customer.getId();
 		Random random = new Random();
 		int amount = random.nextInt(10);
-		CartContent cartContent = cartService.addProductToCart(productId, customerId, amount);
+		CartContent cartContent = new CartContent();
+		cartContent.setCustomer(customer);
+		cartContent.setProduct(product);
+		cartContent.setAmount(0);
+		cartContent.setDateAdd(new Date());
+		cartContent.setPrice(0);
+		cartContent = cartService.save(cartContent);
 		return cartContent;
 	}
 
@@ -105,9 +110,10 @@ public class CartServiceTest {
 		Long productId = cartContent.getProduct().getId();
 		Long customerId = cartContent.getCustomer().getId();
 		Assert.assertNotNull(cartContent);
-		CartContent cartContentUpd = cartService.addProductToCart(productId, customerId, 3);
+		cartService.addProductToCart(productId, customerId, 3);
+		CartContent cartContentUpd = cartService.findOne(cartContent.getId());
 		Assert.assertEquals(3, (int) cartContentUpd.getAmount());
-		cartService.deleteProductFromCart(cartContent.getId());
+		cartService.delete(cartContent.getId());
 		customerService.delete(customerId);
 	}
 
@@ -134,8 +140,8 @@ public class CartServiceTest {
 		Long productId = cartContent.getProduct().getId();
 		Long customerId = cartContent.getCustomer().getId();
 		Long cartId = cartContent.getId();
-		cartService.deleteProductFromCart(cartId);
-		Assert.assertNull(cartService.findById(cartId));
+		cartService.delete(cartId);
+		Assert.assertNull(cartService.findOne(cartId));
 		productService.delete(productId);
 		customerService.delete(customerId);
 

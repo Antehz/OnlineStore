@@ -1,0 +1,19 @@
+<meta charset="utf-8" />
+
+<wicket:extend>
+<h4>Создать новый продукт</h4>
+<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="form" >
+			<select wicket:id="select" style = "width:220px"></select>
+			<br/><br/>
+		</form>
+	</div>
+	<!-- Create new Product -->
+	<div wicket:id="modal" style="height: 500px"></div>
+	<a wicket:id = "toCustomerManager"><h4>Список пользователей</h4></a>
+
+	<!--------------------------------------------  -->
+	<button wicket:id="createCategoryButton">Создать категорию</button>
+	<br/>
+	<button wicket:id="deleteCategoryButton">Удалить категорию</button>
+</wicket:extend>

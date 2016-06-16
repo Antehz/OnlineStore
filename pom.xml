@@ -241,6 +241,14 @@
 				<artifactId>wicket-bootstrap-themes</artifactId>
 				<version>0.10.6</version>
 			</dependency>
+			
+			
+			<dependency>
+				<groupId>com.googlecode.wicket-jquery-ui</groupId>
+				<artifactId>wicket-jquery-ui-plugins</artifactId>
+				<version>7.2.1</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 

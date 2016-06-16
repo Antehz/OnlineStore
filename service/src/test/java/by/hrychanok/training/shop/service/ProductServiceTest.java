@@ -64,12 +64,12 @@ public class ProductServiceTest {
 		Assert.assertNotNull(productService);
 	}
 
-	
+	@Before
 	public void createProduct() {
 		productService.deleteAllComment();
 		customerService.deleteAll();
 		productService.deleteAll();
-		int count = 20;
+		int count = 10;
 		for (int i = 0; i < count; i++) {
 			Tire tire = new Tire();
 			tire.setName(i + "Product");
@@ -79,12 +79,12 @@ public class ProductServiceTest {
 			tire.setDescription("description product Product");
 			tire.setCountRecommended(i);
 			tire.setAvailable(i + 10);
-			Category category =categoryService.findByName("Шины");
+			Category category =categoryService.findOne(3L);
 			tire.setCategory(category);
 			tire.setCountOrder(3 * i);
 			tire.setPrice(100000 * i);
 			tire.setProfileHeight(22 + i * 2);
-			tire.setProfileWidth(20 + i * 4);
+			tire.setProfileWidth(10 + i * 4);
 			tire.setRimSize(4);
 			tire.setSpikes(false);
 			tire.setTireDestination(TireDestination.car);
@@ -98,13 +98,13 @@ public class ProductServiceTest {
 	public void getProductWithFilter() {
 		Filter filter = new Filter();
 		filter.addCondition(
-				new Condition.Builder().setComparison(Comparison.gt).setField("price").setValue(600000).build());
+				new Condition.Builder().setComparison(Comparison.gt).setField("price").setValue(10000).build());
 		final PageRequest page1 = new PageRequest(0, 22, Direction.DESC, "price");
 		List<Product> productPages = productService.findAll(filter, page1);
 		int countFirstFilter = productPages.size();
 		Assert.assertFalse(productPages.isEmpty());
 		filter.addCondition(
-				new Condition.Builder().setComparison(Comparison.lt).setField("price").setValue(1500000).build());
+				new Condition.Builder().setComparison(Comparison.lt).setField("price").setValue(800000).build());
 		productPages = productService.findAll(filter, page1);
 		int countSecondFilter = productPages.size();
 		Assert.assertTrue(countFirstFilter > countSecondFilter);
@@ -124,13 +124,13 @@ public class ProductServiceTest {
 		cTest.setAddress("Gorkogo 89");
 		cTest.setCity("Hrodno");
 		cTest.setCountry("Belarus");
-		cTest.setDateBirth(new Date(12 - 12 - 2002));
+		cTest.setDateBirth(new Date(12 - 12 - 1002));
 		cTest.setCreated(new Date());
 		cTest.setGender(Gender.MALE);
-		cTest.setZipCode("230020");
+		cTest.setZipCode("230010");
 		cTest = customerService.registerCustomer(cTest, cCredentials);
 		Random random = new Random();
-		int index = random.nextInt(20);
+		int index = random.nextInt(10);
 		Product product = productService.findOne(productList.get(index).getId());
 		ProductComment prComment = productService.addCommentForProduct(product.getId(), cTest.getId(),
 				"Nice! comment test");
@@ -150,13 +150,13 @@ public class ProductServiceTest {
 		cTest.setAddress("Gorkogo 89");
 		cTest.setCity("Hrodno");
 		cTest.setCountry("Belarus");
-		cTest.setDateBirth(new Date(12 - 12 - 2002));
+		cTest.setDateBirth(new Date(12 - 12 - 1002));
 		cTest.setCreated(new Date());
 		cTest.setGender(Gender.MALE);
-		cTest.setZipCode("230020");
+		cTest.setZipCode("230010");
 		cTest = customerService.registerCustomer(cTest, cCredentials);
 		Random random = new Random();
-		int index = random.nextInt(20);
+		int index = random.nextInt(10);
 		Product product = productService.findOne(productList.get(index).getId());
 		ProductComment prComment = productService.addCommentForProduct(product.getId(), cTest.getId(),
 				"Nice! comment test");
@@ -177,13 +177,13 @@ public class ProductServiceTest {
 		cTest.setAddress("Gorkogo 89");
 		cTest.setCity("Hrodno");
 		cTest.setCountry("Belarus");
-		cTest.setDateBirth(new Date(12 - 12 - 2002));
+		cTest.setDateBirth(new Date(12 - 12 - 1002));
 		cTest.setCreated(new Date());
 		cTest.setGender(Gender.MALE);
-		cTest.setZipCode("230020");
+		cTest.setZipCode("230010");
 		cTest = customerService.registerCustomer(cTest, cCredentials);
 		Random random = new Random();
-		int index = random.nextInt(20);
+		int index = random.nextInt(10);
 		Product product = productService.findOne(productList.get(index).getId());
 		ProductComment prComment = productService.addCommentForProduct(product.getId(), cTest.getId(),
 				"Nice! comment test");
@@ -206,13 +206,13 @@ public class ProductServiceTest {
 		cTest.setAddress("Gorkogo 89");
 		cTest.setCity("Hrodno");
 		cTest.setCountry("Belarus");
-		cTest.setDateBirth(new Date(12 - 12 - 2002));
+		cTest.setDateBirth(new Date(12 - 12 - 1002));
 		cTest.setCreated(new Date());
 		cTest.setGender(Gender.MALE);
-		cTest.setZipCode("230020");
+		cTest.setZipCode("230010");
 		cTest = customerService.registerCustomer(cTest, cCredentials);
 		Random random = new Random();
-		int index = random.nextInt(20);
+		int index = random.nextInt(10);
 		Product product = productService.findOne(productList.get(index).getId());
 		ProductComment prComment = productService.addCommentForProduct(product.getId(), cTest.getId(),
 				"Nice! comment test");
@@ -223,7 +223,7 @@ public class ProductServiceTest {
 	@Test
 	public void deleteProductById(){
 		Random random = new Random();
-		int index = random.nextInt(20);
+		int index = random.nextInt(10);
 		Long id = productList.get(index).getId();
 		Product product = productService.findOne(id);
 		productService.delete(id);
@@ -235,14 +235,14 @@ public class ProductServiceTest {
 	public void getProductByCategory() {
 		Filter filter = new Filter();
 		filter.addCondition(
-				new Condition.Builder().setComparison(Comparison.eq).setField("category").setValue(categoryService.findByName("Шины")).build());
+				new Condition.Builder().setComparison(Comparison.eq).setField("category").setValue(categoryService.findOne(3L)).build());
 		final PageRequest page1 = new PageRequest(0, 22, Direction.DESC, "price");
 		List<Product> productPages = productService.findAll(filter, page1);
 	}
 	
 	@Test
 	public void getProductByCategoryId(){
-	    Category category  = categoryService.findByName("Шины");
+	    Category category  = categoryService.findOne(3L);
 		List<Product> productList = productService.findProductByCategoryId(category.getId());
 		Assert.assertFalse(productList.isEmpty());
 		

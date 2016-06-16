@@ -1,0 +1,30 @@
+<meta charset="utf-8" />
+
+<wicket:extend>
+
+		<table class="table table-condensed">
+			<caption>Характеристики АКБ</caption>
+			<tbody>
+				<tr>
+					<td style="width: 250px;">Тип</td>
+					<td><select wicket:id="batteryType" /></td>
+				</tr>
+				<tr>
+					<td>Напряжение, В</td>
+					<td><input type="text" wicket:id="voltage" /></td>
+				</tr>
+				<tr>
+					<td>Емкость, А·ч</td>
+					<td><input type="text" wicket:id="capacity" />мм</td>
+				</tr>
+				<tr>
+					<td>Ток холодной прокрутки (EN), А</td>
+					<td><input type="text" wicket:id="cca" /></td>
+				</tr>
+				<tr>
+					<td>Полярность</td>
+					<td><select wicket:id="polarity" /></td>
+				</tr>
+			</tbody>
+		</table>
+</wicket:extend>

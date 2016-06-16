@@ -2,27 +2,17 @@ package by.hrychanok.training.shop.web.page.personalCabinet;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
-import com.googlecode.wicket.kendo.ui.widget.tabs.SimpleTab;
 import com.googlecode.wicket.kendo.ui.widget.tabs.TabbedPanel;
-
 import by.hrychanok.training.shop.model.StatusOrder;
 import by.hrychanok.training.shop.repository.filter.Comparison;
 import by.hrychanok.training.shop.repository.filter.Condition;
-import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.web.page.AbstractPage;
-import by.hrychanok.training.shop.web.page.home.HomePage;
 
 public class CustomerOrderPage extends AbstractPage {
 
@@ -45,7 +35,8 @@ public class CustomerOrderPage extends AbstractPage {
 
 	private List<ITab> newTabList() {
 		List<ITab> tabs = new ArrayList<ITab>();
-		tabs.add(new AjaxTab(Model.of("Все заказы")) {
+		String allOrder = getString("allOrder");
+		tabs.add(new AjaxTab(Model.of(allOrder)) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -61,8 +52,8 @@ public class CustomerOrderPage extends AbstractPage {
 				return new OrderHistoryPanel(panelId);
 			}
 		});
-
-		tabs.add(new AjaxTab(Model.of("Текущие заказы")) {
+		String currentOrder = getString("currentOrder");
+		tabs.add(new AjaxTab(Model.of(currentOrder)) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -82,8 +73,8 @@ public class CustomerOrderPage extends AbstractPage {
 				return new OrderHistoryPanel(panelId, conditionsList);
 			}
 		});
-
-		tabs.add(new AjaxTab(Model.of("Выполненные заказы")) {
+		String doneOrder = getString("doneOrder");
+		tabs.add(new AjaxTab(Model.of(doneOrder)) {
 
 			private static final long serialVersionUID = 1L;
 

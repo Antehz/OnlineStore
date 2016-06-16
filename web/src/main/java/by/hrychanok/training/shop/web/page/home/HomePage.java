@@ -1,35 +1,14 @@
 package by.hrychanok.training.shop.web.page.home;
 
-import java.util.List;
-
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ajax.AjaxEventBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.injection.Injector;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
-import com.googlecode.wicket.kendo.ui.widget.tooltip.TooltipBehavior;
-
 import by.hrychanok.training.shop.model.Category;
-import by.hrychanok.training.shop.model.Customer;
-import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CategoryService;
-import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
-import by.hrychanok.training.shop.web.page.catalog.InputRangeSliderPanel;
-import by.hrychanok.training.shop.web.page.product.ProductPage;
 
 public class HomePage extends AbstractPage {
 
@@ -59,34 +38,7 @@ public class HomePage extends AbstractPage {
 		wheelCategoryLink.setOutputMarkupId(true);
 		wheelImage.setOutputMarkupId(true);
 
-		/*wheelCategoryLink.add(new AjaxEventBehavior("mouseout") {
-	            @Override
-	            protected void onEvent(AjaxRequestTarget target) {
-	            	//wheelImage.add(AttributeModifier.replace("style", "width:" + 90 + "%"));
-	                target.add(wheelImage);
-	            }
-	        });
-		wheelCategoryLink.add(new AjaxEventBehavior("mouseover") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-            	//wheelImage.add(AttributeModifier.replace("style", "width:" + 100 + "%"));
-            	wheelCategoryLink.add(AttributeModifier.replace("style", ""));
-                target.add(wheelImage);
-            }
-        });
-		wheelCategoryLink.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-            	PageParameters parameters = new PageParameters();
-				parameters.add("id", 7L);
-				setResponsePage(new CatalogPage(parameters));
-            }
-        });*/
 		add(wheelCategoryLink);
-		
-		
-		
-		
 		
 		Link tireCategoryLink = new Link("tireCategoryLink") {
 			@Override

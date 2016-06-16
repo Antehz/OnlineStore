@@ -44,19 +44,19 @@ public class CustomerServiceTest {
 	Customer customer;
 	List<Customer> customerList = new ArrayList();;
 
-	/*@Before*/
+	@Before
 	public void createCustomer() {
 		customerService.deleteAll();
-		int count = 20;
+		int count = 10;
 		for (int i = 0; i < count; i++) {
 			Customer cTest = new Customer();
 			CustomerCredentials cCredentials = new CustomerCredentials();
-			cCredentials.setLogin(String.format("%s testUser", i));
+			cCredentials.setLogin(String.format("%stestUser", i));
 			cCredentials.setPassword("testPassword");
-			cCredentials.setRole(UserRole.Customer);
+			cCredentials.setRole(UserRole.customer);
 			cTest.setFirstName(i + "testFirstName");
 			cTest.setLastName("testLastName");
-			cTest.setEmail(String.format("%s testEmail@ya.ru", i));
+			cTest.setEmail(String.format("%stestEmail@ya.ru", i));
 			Random x = new Random();
 			int s = x.nextInt(6);
 			cTest.setAddress("Gorkogo " + s);
@@ -74,7 +74,7 @@ public class CustomerServiceTest {
 	@Test
 	public void getCustomer() {
 		Random random = new Random();
-		int randomIndex = random.nextInt(20);
+		int randomIndex = random.nextInt(10);
 		customer = customerList.get(randomIndex);
 		customer = (customerService.findOne(customer.getId()));
 	}
@@ -84,7 +84,7 @@ public class CustomerServiceTest {
 		String firstNameUpd = "testUserUpdateName";
 		String loginUpd = "testLoginUPDATE";
 		Random random = new Random();
-		int randomIndex = random.nextInt(20);
+		int randomIndex = random.nextInt(10);
 		customer = customerList.get(randomIndex);
 		customer.getCustomerCredentials().setLogin(loginUpd);
 		customer.setFirstName(firstNameUpd);
@@ -95,18 +95,14 @@ public class CustomerServiceTest {
 
 	@Test
 	public void getCustomerByCredentials() {
-		/*Random random = new Random();
-		int randomIndex = random.nextInt(20);
-		customer = customerList.get(randomIndex);
-		customer = customerService.findOne(customer.getId());*/
 		CustomerCredentials getCustomer = customerService.getCustomerByCredentials("3testUser", "testPassword");
-		System.out.println(getCustomer);
+		Assert.assertNotNull(getCustomer);
 	}
 
 	@Test
 	public void deleteCustomer() {
 		Random random = new Random();
-		int randomIndex = random.nextInt(20);
+		int randomIndex = random.nextInt(10);
 		customer = customerList.get(randomIndex);
 		customerService.delete(customer.getId());
 		Assert.assertNull(customerService.findOne(customer.getId()));
@@ -141,7 +137,7 @@ public class CustomerServiceTest {
 
 		CustomerFilter cFilter = new CustomerFilter();
 		List<Customer> list = customerService.find(cFilter);
-		Assert.assertEquals(20, list.size());
+		Assert.assertEquals(10, list.size());
 		int limit = 3;
 		cFilter.setLimit(limit);
 		int offset = 0;
@@ -153,7 +149,7 @@ public class CustomerServiceTest {
 		cFilter.setSortOrder(true);
 		cFilter.setSortProperty(Customer_.email);
 		list = customerService.find(cFilter);
-		Assert.assertEquals(20, list.size());
+		Assert.assertEquals(10, list.size());
 	}
 
 }

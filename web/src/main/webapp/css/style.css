@@ -122,7 +122,6 @@ a:hover {
 	line-height: 22px;
 	color: #000;
 	font-weight: bold;
-	text-transform: uppercase;
 }
 
 .text-3 {
@@ -130,7 +129,6 @@ a:hover {
 	line-height: 22px;
 	color: #e2e2e4;
 	font-weight: bold;
-	text-transform: uppercase;
 }
 
 h2 {
@@ -756,7 +754,6 @@ white
 	padding: 18px 20px 18px 29px;
 	color: #9f9fa6;
 	font-style: italic;
-	text-transform: uppercase;
 }
 
 .box-2>div>div .comments-corner {
@@ -882,7 +879,6 @@ white
 
 table {
 	background: #fafafa;
-	text-transform: uppercase;
 }
 
 table td, table th {
@@ -901,9 +897,7 @@ table td {
 	padding: 9px 10px 8px 20px;
 }
 
-table td:first-child {
-	font-weight: bold;
-}
+
 
 /****************************footer************************/
 footer {

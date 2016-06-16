@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.StatusOrder;
 

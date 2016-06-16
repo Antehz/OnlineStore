@@ -1,71 +1,55 @@
 package by.hrychanok.training.shop.web.page.cart;
 
-import java.awt.print.Printable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
 import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RadioChoice;
-import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.markup.repeater.data.DataView;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.data.domain.PageRequest;
-
 import com.googlecode.wicket.jquery.ui.form.spinner.AjaxSpinner;
 import by.hrychanok.training.shop.model.CartContent;
 import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Order;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.model.ShippingMethod;
-import by.hrychanok.training.shop.model.Tire;
 import by.hrychanok.training.shop.repository.filter.Comparison;
 import by.hrychanok.training.shop.repository.filter.Condition;
 import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
-import by.hrychanok.training.shop.service.GenericProductService;
 import by.hrychanok.training.shop.service.OrderService;
+import by.hrychanok.training.shop.service.exeption.ServiceException;
 import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.app.MySession;
-import by.hrychanok.training.shop.web.page.BasePageForTable;
+import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.GenericSortableTypeDataProvider;
 import by.hrychanok.training.shop.web.page.personalCabinet.CustomerOrderPage;
-import by.hrychanok.training.shop.web.page.personalCabinet.OrderHistoryPanel;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
-
-import com.googlecode.wicket.kendo.ui.form.Check;
-import com.googlecode.wicket.kendo.ui.form.Radio;
 import com.googlecode.wicket.kendo.ui.form.TextArea;
 import com.googlecode.wicket.kendo.ui.form.TextField;
-import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.button.IndicatingAjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.IndicatingButton;
 import com.googlecode.wicket.kendo.ui.markup.html.link.SubmitLink;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class CartPage extends BasePageForTable {
+public class CartPage extends AbstractPage {
 
 	private static final long serialVersionUID = 1L;
 
@@ -82,14 +66,7 @@ public class CartPage extends BasePageForTable {
 	private Order order = new Order();
 
 	public static final Integer SHIPCOST = 50_000;
-	Integer totalPrice;
-	private Integer summaryPrice;
 	private Label shipPriceLabel = new Label("shipPriceLabel", Model.of(""));
-
-	public Integer getSummaryPrice() {
-		return cartService.getTotalPriceCart(customer.getId());
-	}
-
 	public ShippingMethod shipMethod;
 	public Label totalPriceLabel = null;
 	private Customer customer;
@@ -97,13 +74,18 @@ public class CartPage extends BasePageForTable {
 	@SuppressWarnings("unchecked")
 	public CartPage() {
 		customer = AuthorizedSession.get().getLoggedUser().getCustomer();
+		// Check cart for unlogged user. If isn't empty -> transfer his cart to
+		// DB
 		if (!MySession.get().getCartList().isEmpty()) {
 			transferGuestCartContentToGeneralCart();
 		}
+
 		filterState.addCondition(new Condition.Builder().setComparison(Comparison.eq).setField("customer")
 				.setValue(customer.getId()).build());
 		GenericSortableTypeDataProvider<CartContent> dp = new GenericSortableTypeDataProvider<CartContent>(
 				filterState) {
+
+			private static final long serialVersionUID = 1L;
 
 			public Iterator<? extends CartContent> returnIterator(PageRequest pageRequest) {
 
@@ -117,12 +99,11 @@ public class CartPage extends BasePageForTable {
 			}
 
 		};
-
+		order.setShippingMethod(ShippingMethod.Pickup);
 		Model<Integer> totalPriceModel = Model.of(getSummaryPrice());
 		totalPriceLabel = new Label("totalPrice", totalPriceModel);
 		totalPriceLabel.setOutputMarkupId(true);
 		add(totalPriceLabel);
-
 		shipPriceLabel.setOutputMarkupId(true);
 		shipPriceLabel.setDefaultModelObject("0");
 		add(shipPriceLabel);
@@ -202,13 +183,11 @@ public class CartPage extends BasePageForTable {
 			cartService.addProductToCart(cartContent.getProduct().getId(), customer.getId(), cartContent.getAmount());
 		}
 		MySession.get().setCartList(new ArrayList<CartContent>());
-
 	}
 
 	private void createFormOrder(Model<Integer> totalPriceModel) {
 
 		Form<Order> formOrder = new Form<Order>("formOrder", new CompoundPropertyModel<Order>(order));
-
 		RadioChoice<ShippingMethod> methods = new RadioChoice<>("shippingMethod",
 				Arrays.asList(ShippingMethod.values()));
 		methods.add(new AjaxFormChoiceComponentUpdatingBehavior() {
@@ -223,7 +202,6 @@ public class CartPage extends BasePageForTable {
 					totalPriceModel.setObject(getSummaryPrice() + SHIPCOST);
 					shipPriceLabel.setDefaultModelObject("50000");
 					shipPriceLabel.setVisible(true);
-
 				}
 				target.add(totalPriceLabel);
 				target.add(shipPriceLabel);
@@ -248,24 +226,29 @@ public class CartPage extends BasePageForTable {
 			}
 
 			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+
+				super.onError(target, form);
+				CartPage.this.emptyCartWarn(this);
+				target.add(feedbackCreateOrder);
+			}
+
+			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-
-				if (cartService.getCustomerCartContent(customer.getId()).isEmpty()) {
-					CartPage.this.emptyCartWarn(this);
+				try {
+					order.setCustomer(customer);
+					order.setTotalPrice(totalPriceModel.getObject());
+					orderService.createOrder(order);
+					CartPage.this.successOrderInfo(this);
 					target.add(feedbackCreateOrder);
-				} else {
-					try {
-						order.setCustomer(customer);
-						order.setTotalPrice(totalPriceModel.getObject());
-						orderService.createOrder(order);
-						Thread.sleep(1500);
-						CartPage.this.successOrderInfo(this);
-						target.add(feedbackCreateOrder);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
+					Thread.sleep(1500);
 					setResponsePage(CustomerOrderPage.class);
+				} catch (ServiceException e) {
+					onError(target, formOrder);
+				} catch (Exception e) {
+					String failCreateOrder = getString("orderCreateFail");
+					error(failCreateOrder);
+					target.add(feedbackCreateOrder);
 				}
 			}
 		});
@@ -310,17 +293,17 @@ public class CartPage extends BasePageForTable {
 		} else {
 			shipMethod = ShippingMethod.Courier;
 			return false;
-
 		}
-
 	}
 
 	private final void successOrderInfo(Component component) {
-		this.success("Заказ оформлен!");
+		String successCreateOrder = getString("successCreateOrder");
+		this.success(successCreateOrder);
 	}
 
 	private final void emptyCartWarn(Component component) {
-		this.error("Корзина пуста! Заказ не может быть оформлен!");
+		String failCreateOrder = getString("failCreateOrder");
+		this.error(failCreateOrder);
 	}
 
 	private Button addDeleteButton(CartContent cartContent) {
@@ -336,7 +319,7 @@ public class CartPage extends BasePageForTable {
 			@Override
 			public void onSubmit() {
 				try {
-					cartService.deleteProductFromCart(cartContent.getId());
+					cartService.delete(cartContent.getId());
 					Thread.sleep(1000);
 
 				} catch (InterruptedException e) {
@@ -378,4 +361,9 @@ public class CartPage extends BasePageForTable {
 		spinner.setMax(product.getAvailable());
 		return spinner;
 	};
+
+	public Integer getSummaryPrice() {
+		return cartService.getTotalPriceCart(customer.getId());
+	}
+
 }

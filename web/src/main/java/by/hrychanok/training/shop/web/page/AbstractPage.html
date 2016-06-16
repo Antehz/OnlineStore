@@ -15,20 +15,57 @@
 
 </head>
 <body>
-	<div wicket:id="feedback" 
+	<div wicket:id="language-select" class="language-comp"
+		style="position: absolute; right: 10px;"></div>
+	<form wicket:id="formAdd"
+		style="position: absolute; right: 73px; top: 103px;">
+		<button wicket:id="addButton">
+			<wicket:message key="addText" />
+		</button>
+	</form>
+	<div wicket:id="feedback"
 		style="position: absolute; top: 110px; left: 84px;"></div>
 	<wicket:container wicket:id="headerPanel"></wicket:container>
+
 	<div class="main">
 		<section id="menu-vertical">
 			<wicket:container wicket:id="leftMenuPanel"></wicket:container>
 		</section>
-		<h4 style="color: white; position: absolute; top: 140px;">Поиск:</h4>
+		<h4 style="color: white; position: absolute; top: 140px;">
+			<wicket:message key="find" />
+			:
+		</h4>
 		<wicket:container wicket:id="searchProduct"></wicket:container>
 		<!-- CONTENT -->
 		<section id="contentpage">
 			<div class="sub-page">
 				<div id="bd">
+					<div wicket:id="wmc">
+						<table class="table table-hover";>
+							<tr wicket:id="simple" style="border: none">
+								
+								<td style="border: none">
+								<i><span wicket:id="date" style="font-weight: normal">[added]</span></i>
+								<br />
+								
+								<span wicket:id="text"
+									style="font-weight: normal;">[text]</span></td>
 
+								<td style="width: 100px; border: none">
+									<form wicket:id="formEdit">
+										<button wicket:id="deleteButton">
+											<wicket:message key="delete" />
+										</button>
+										<button wicket:id="editButton">
+											<wicket:message key=edit />
+										</button>
+									</form>
+								</td>
+							</tr>
+						</table>
+
+					</div>
+					<div wicket:id="modal" />
 					<wicket:child />
 				</div>
 			</div>

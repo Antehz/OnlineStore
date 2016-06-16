@@ -39,7 +39,6 @@ import by.hrychanok.training.shop.web.app.AuthorizedSession;
 import by.hrychanok.training.shop.web.page.AbstractPage;
 import by.hrychanok.training.shop.web.page.GenericSortableTypeDataProvider;
 import by.hrychanok.training.shop.web.page.product.ProductPage;
-@AuthorizeAction(roles = { "admin" }, action = "ENABLE")
 public class OrderPage extends AbstractPage {
 
 	@SpringBean
@@ -146,6 +145,9 @@ public class OrderPage extends AbstractPage {
 
 					}
 				};
+				if(order.getStatus().equals(StatusOrder.Accepted) || order.getStatus().equals(StatusOrder.Done)){
+					deleteButton.setEnabled(false);
+				}
 				deleteButton.setVisible(visibleForOnlyAdmin);
 				// FeedbackPanel //
 				final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
@@ -201,6 +203,10 @@ public class OrderPage extends AbstractPage {
 		};
 		spinner.setMin(1);
 		spinner.setMax(orderContent.getAmount() + product.getAvailable());
+		spinner.setEnabled(visibleForOnlyAdmin);
+		if(order.getStatus().equals(StatusOrder.Accepted) || order.getStatus().equals(StatusOrder.Done)){
+			spinner.setEnabled(false);
+		}
 		return spinner;
 	};
 

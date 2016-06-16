@@ -1,0 +1,38 @@
+<meta charset="utf-8" />
+
+<wicket:extend>
+
+	<table class="table table-condensed">
+		<caption>Характеристики диска</caption>
+		<tbody>
+			<tr>
+				<td style="width: 250px;">Тип</td>
+				<td><select wicket:id="wheelType" /></td>
+			</tr>
+			<tr>
+				<td>Посадочный диаметр, "</td>
+				<td><input type="text" wicket:id="rimSize" /></td>
+			</tr>
+			<tr>
+				<td>Ширина обода, "</td>
+				<td><input type="text" wicket:id="rimWidth" />мм</td>
+			</tr>
+			<tr>
+				<td>Количество крепежных отверстий</td>
+				<td><input type="text" wicket:id="numberHole" /></td>
+			</tr>
+			<tr>
+				<td>Диаметр расположения отверстий (PCD), мм</td>
+				<td><input type="text" wicket:id="pcd" />"</td>
+			</tr>
+			<tr>
+				<td>Диаметр центрального отверстия (DIA), мм</td>
+				<td><input type="text" wicket:id="dia" />"</td>
+			</tr>
+			<tr>
+				<td>Вылет (ET), мм</td>
+				<td><input type="text" wicket:id="et" />"</td>
+			</tr>
+		</tbody>
+	</table>
+</wicket:extend>

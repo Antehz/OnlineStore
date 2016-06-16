@@ -31,16 +31,6 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 		implements CustomerService {
 	private static Logger LOGGER = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
-	public String text = "This;s TEST";
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
 	@Autowired
 	CustomerCredentialsRepository customerCredentialsRepository;
 
@@ -64,13 +54,12 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 	@Override
 	public Customer registerCustomer(Customer customer, CustomerCredentials customerCredentials) {
 		boolean exist = checkExistUser(customerCredentials.getLogin(), customer.getEmail());
-		System.out.println(exist);
 		if (!exist) {
 			customer.setCustomerCredentials(customerCredentials);
 			customer = repository.save(customer);
 			if (customer != null) {
 				LOGGER.info("Customer succesfully registred : {}", customer);
-				// mail.sendRegistrationNotificationMail(customer);
+				mail.sendRegistrationNotificationMail(customer);
 			}
 		} else {
 			throw new ServiceException(String.format("Customer with login: %s, or EMail: %s already exist!",
@@ -98,11 +87,6 @@ public class CustomerServiceImpl extends BasicServiceImpl<Customer, CustomerRepo
 		} else {
 			return true;
 		}
-	}
-
-	@Override
-	public CustomerCredentials getCredentials(Long id) {
-		return repository.findOne(id).getCustomerCredentials();
 	}
 
 	@Override

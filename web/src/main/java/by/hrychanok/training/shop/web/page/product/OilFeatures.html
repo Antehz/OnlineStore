@@ -1,0 +1,34 @@
+<meta charset="utf-8" />
+
+<wicket:extend>
+
+	<table class="table table-condensed">
+		<caption>Характеристики масла</caption>
+		<tbody>
+			<tr>
+				<td style="width: 250px;">Тип</td>
+				<td><select wicket:id="oilType" /></td>
+			</tr>
+
+			<tr>
+				<td style="width: 250px;">Состав масла</td>
+				<td><select wicket:id="oilComposition" /></td>
+			</tr>
+
+			<tr>
+				<td style="width: 250px;">Вязкость</td>
+				<td><input type="text" wicket:id="viscosity" /></td>
+			</tr>
+
+			<tr>
+				<td style="width: 250px;">Назначение</td>
+				<td><select wicket:id="oilDestination" /></td>
+			</tr>
+
+			<tr>
+				<td>Объем , л</td>
+				<td><input type="text" wicket:id="volume" />"</td>
+			</tr>
+		</tbody>
+	</table>
+</wicket:extend>

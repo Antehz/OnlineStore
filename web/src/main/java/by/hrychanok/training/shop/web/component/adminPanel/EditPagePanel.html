@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<style type="text/css">
+.wysiwyg-editor {
+	height: 400px;
+	max-height: 500px;
+}
+</style>
+</head>
+<body>
+	<wicket:panel>
+		<span wicket:id="htmlLabel"></span>
+		<br />
+		<form wicket:id="form">
+			<div wicket:id="toolbar"></div>
+			<div wicket:id="wysiwyg"></div>
+
+			<div wicket:id="feedback"></div>
+			<br />
+		</form>
+		<button type="button" wicket:id="display">
+			<wicket:message key="save" />
+		</button>
+		<a href="javascript:;" wicket:id="disable">disable</a>
+	</wicket:panel>
+</body>
+</html>

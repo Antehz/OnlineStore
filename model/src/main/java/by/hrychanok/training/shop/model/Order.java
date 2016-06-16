@@ -1,10 +1,7 @@
 package by.hrychanok.training.shop.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +16,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "order", schema = "public")
 public class Order extends AbstractModel  {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2166099976993999228L;
 	private Customer customer;
 	private Date startDate;
 	private ShippingMethod shippingMethod;

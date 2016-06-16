@@ -2,32 +2,26 @@ package by.hrychanok.training.shop.service.impl;
 
 import java.util.Date;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import by.hrychanok.training.shop.model.CartContent;
 import by.hrychanok.training.shop.model.Customer;
 import by.hrychanok.training.shop.model.Product;
 import by.hrychanok.training.shop.repository.CartContentRepository;
-import by.hrychanok.training.shop.repository.CustomerRepository;
 import by.hrychanok.training.shop.repository.filter.Filter;
 import by.hrychanok.training.shop.service.CartService;
 import by.hrychanok.training.shop.service.CustomerService;
 import by.hrychanok.training.shop.service.ProductService;
-import by.hrychanok.training.shop.service.exeption.ServiceException;
 
 @Service
 @Transactional
-public class CartServiceImpl implements CartService {
+public class CartServiceImpl extends BasicServiceImpl<CartContent, CartContentRepository, Long> implements CartService {
 	private static Logger LOGGER = LoggerFactory.getLogger(CartServiceImpl.class);
 
-	@Autowired
-	CartContentRepository repository;
 	@Autowired
 	ProductService productService;
 	@Autowired
@@ -43,7 +37,7 @@ public class CartServiceImpl implements CartService {
 	public Boolean addProductToCart(Long productId, Long customerId, Integer amount) {
 
 		List<CartContent> contentCartCustomer = getCustomerCartContent(customerId);
-		
+
 		CartContent cartContent = new CartContent();
 		Product product = productService.findOne(productId);
 		Customer customer = customerService.findOne(customerId);
@@ -60,12 +54,12 @@ public class CartServiceImpl implements CartService {
 		for (CartContent temp : contentCartCustomer) {
 			boolean existItem = temp.getProduct().getId().equals(cartContent.getProduct().getId());
 			if (existItem) {
-				if(temp.getAmount()>=product.getAvailable()){
+				if (temp.getAmount() >= product.getAvailable()) {
 					return false;
 				}
-				temp.setAmount(temp.getAmount()+amount);
+				temp.setAmount(temp.getAmount() + amount);
 				temp.setDateAdd(new Date());
-				temp.setPrice(temp.getPrice()+product.getPrice()*amount);
+				temp.setPrice(temp.getPrice() + product.getPrice() * amount);
 				cartContent = repository.save(temp);
 				LOGGER.info("Amount of items {} was changed for customer {} cart", product.getId(), customer.getId());
 			}
@@ -74,16 +68,7 @@ public class CartServiceImpl implements CartService {
 		LOGGER.info("Item {} has been added to cart customer id:", product.getId(), customer.getId());
 		return true;
 	}
-	@Override
-	public void deleteProductFromCart(Long id) {
-		repository.delete(id);
-	}
-	@Override
-	public CartContent findById(Long id) {
-		return repository.findOne(id);
-	}
-	
-	
+
 	@Override
 	public List<CartContent> findAll(Filter filter, Pageable page) {
 		if (filter.existCondition()) {
@@ -92,7 +77,7 @@ public class CartServiceImpl implements CartService {
 			return repository.findAll(page).getContent();
 		}
 	}
-	
+
 	@Override
 	public Long count(Filter filter) {
 		if (filter.existCondition()) {
@@ -104,14 +89,14 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public List<CartContent> getCustomerCartContent(Long customerId) {
-		
+
 		return repository.getCartContentByCustomerId(customerId);
 	}
 
 	@Override
-	public void save(CartContent cart) {
-		repository.saveAndFlush(cart);
-		
+	public CartContent save(CartContent cart) {
+		return repository.saveAndFlush(cart);
+
 	}
 
 	@Override
@@ -119,11 +104,8 @@ public class CartServiceImpl implements CartService {
 		List<CartContent> contentCartCustomer = getCustomerCartContent(customerId);
 		Integer total = 0;
 		for (CartContent cartContent : contentCartCustomer) {
-			total=total+cartContent.getPrice();
+			total = total + cartContent.getPrice();
 		}
 		return total;
 	}
-
 }
-
-

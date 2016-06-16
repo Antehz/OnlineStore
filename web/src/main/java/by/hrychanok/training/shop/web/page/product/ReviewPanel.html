@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title><wicket:message key="review" /></title>
+</wicket:head>
+</head>
+<body>
+	<wicket:panel>
+		<table class="table table-hover";>
+			<tr wicket:id="simple">
+				<td><span wicket:id="customerName">[Name]</span>, <span
+					wicket:id="added">[added]</span> <br /> <span wicket:id="comment">[message]
+				</span></td>
+				<td style="width: 100px">
+					<form wicket:id="formDelete">
+						<button wicket:id="deleteButton">
+							<wicket:message key="delete" />
+						</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+
+		<div wicket:id="navigator"></div>
+
+		<div id="wrapper-panel-frame" class="ui-corner-all">
+			<form wicket:id="formAdd">
+				<input wicket:id="message" style="size: 200px;"></input>
+				<button wicket:id="button">
+					<wicket:message key="addToCart" />
+				</button>
+			</form>
+			<br />
+			<div wicket:id="console" style="height: 100px;"></div>
+		</div>
+	</wicket:panel>
+</body>
+</html>

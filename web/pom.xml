@@ -98,6 +98,19 @@
 			<artifactId>wicket-bootstrap-themes</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-jquery-ui-plugins</artifactId>
+		</dependency>
+
+<!-- http://mvnrepository.com/artifact/org.springframework/spring-orm -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-orm</artifactId>
+    			<version>4.3.0.RELEASE</version>
+    
+</dependency>
+
 
 	</dependencies>
 

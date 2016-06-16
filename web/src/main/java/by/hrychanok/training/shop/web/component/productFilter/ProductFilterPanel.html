@@ -10,25 +10,28 @@
 		<div id="wrapper-panel-frame" class="ui-corner-all"
 			style="font-size: 0.8em;">
 			<form wicket:id="generalForm">
-				<h4>Выбрать по производителю:</h4>
+				<h4>
+					<wicket:message key="filter.manufacturer" />
+				</h4>
 				<input type="text" wicket:id="comboboxManufacturer" />
 				<button wicket:id="confirmManufacturerChoice">Ok</button>
 			</form>
-		<form wicket:id="formCheck">
-			<br/>
-			<input wicket:id="check" type="checkbox"/>
-			<label  wicket:id="labelCheck">[label]</label>
-			<button wicket:id="checkAvailable">Ok</button>
-		</form>
-		
-	</div>
-			
-			<br/>
-			
-			
-			<div wicket:id="modalPrice"></div>
-			<button wicket:id="openModalPrice">Диапазон цен</button>
-			<div wicket:id="feedback" style="width: 180px;"></div>
+			<form wicket:id="formCheck">
+				<br /> <input wicket:id="check" type="checkbox" /> <label
+					wicket:id="labelCheck">[label]</label>
+				<button wicket:id="checkAvailable">Ok</button>
+			</form>
+
+		</div>
+
+		<br />
+
+
+		<div wicket:id="modalPrice"></div>
+		<button wicket:id="openModalPrice">
+			<wicket:message key="filter.rangePrice" />
+		</button>
+		<div wicket:id="feedback" style="width: 180px;"></div>
 	</wicket:panel>
 
 </body>

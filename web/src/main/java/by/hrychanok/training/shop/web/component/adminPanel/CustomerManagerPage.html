@@ -1,0 +1,41 @@
+<meta charset="utf-8" />
+
+<wicket:extend>
+
+
+<table class="table table-bordered" style="width: 870px">
+		<thead class="my-table-thead">
+			<tr>
+				<th wicket:id="orderById">ID</th>
+				<th><wicket:message key="login" /></th>
+				<th wicket:id="orderByEmail">Email</th>
+				<th wicket:id="orderByFirstName"><wicket:message key="firstName" /></th>
+				<th wicket:id="orderByLastName"><wicket:message key="lastName" /></th>
+				<th wicket:id="orderByCreated"><wicket:message key="created" /></th>
+				<th><wicket:message key="role" /></th>
+				<th><wicket:message key="changeRole" /></th>
+				<th><wicket:message key="delete" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr wicket:id="customerTable">
+				<td><a wicket:id="linkId">[orderId]</a></td>
+				<td><span wicket:id="login">[login]</span></td>
+				<td><span wicket:id="email">[email]</span></td>
+				<td><span wicket:id="firstName">[firstName]</span></td>
+				<td><span wicket:id="lastName">[lastName]</span></td>
+				<td><span wicket:id="created">[created]</span></td>
+				<td><span wicket:id="role">[role]</span></td>
+				<div id="wrapper-panel-frame" class="ui-corner-all">
+					<form wicket:id="formManageCustomerList">
+				<td><select wicket:id="select" style = "width:105px"></select> <br /> <br />
+					</td>
+					<td><span wicket:id="deleteButton"></span><br /></td>
+				</form>
+				</div>
+			</tr>
+		</tbody>
+	</table>
+	<span wicket:id="navigator">[dataview navigator]</span>
+
+</wicket:extend>

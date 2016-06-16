@@ -1,0 +1,32 @@
+<meta charset="utf-8" />
+<wicket:panel>
+
+	<form wicket:id="generalForm">
+		<table>
+			<thead>
+				<wicket:message key="createCategory" />
+			</thead>
+			<tr>
+				<td><wicket:message key="nameItem" /></td>
+				<td><input type="text" wicket:id="name" /></td>
+			</tr>
+			<tr>
+				<td><wicket:message key="nameEng" /></td>
+				<td><input type="text" wicket:id="nameEng" /></td>
+			</tr>
+			<tr>
+				<td><wicket:message key="parent" /></td>
+				<td><select wicket:id="parent" /></td>
+			</tr>
+			<tr>
+				<td><wicket:message key="description" /></td>
+				<td><textarea wicket:id="description" rows="5" cols="40"></textarea></td>
+			</tr>
+		</table>
+		<button wicket:id="createCategory">
+			<wicket:message key="save" />
+		</button>
+	</form>
+	<div wicket:id="feedback"></div>
+
+</wicket:panel>

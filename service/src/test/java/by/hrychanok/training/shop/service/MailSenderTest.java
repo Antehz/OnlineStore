@@ -45,35 +45,37 @@ public class MailSenderTest {
 	Customer customer;
 	Product product;
 	Order order;
-	@Test
-	public void registerCustomer(){
+
+	@Before
+	public void createCustomer() {
+		orderService.deleteAll();
+		productService.deleteAll();
 		customerService.deleteAll();
 		Customer cTest = new Customer();
 		CustomerCredentials cCredentials = new CustomerCredentials();
 		cCredentials.setLogin(String.format("ASnte"));
 		cCredentials.setPassword("mts5402283");
-		cCredentials.setRole(UserRole.Customer);
+		cCredentials.setRole(UserRole.customer);
 		cTest.setFirstName("Anton");
 		cTest.setLastName("Hrychanok");
 		cTest.setEmail(String.format("ardasss@ya.ru"));
-		Random x = new Random();
-		int s = x.nextInt(6);
-		cTest.setAddress("Gorkogo " + s);
+		cTest.setAddress("Gorkogo  32");
 		cTest.setCity("Hrodno");
-		cTest.setCountry("Belarus " + s);
+		cTest.setCountry("Belarus ");
 		cTest.setDateBirth(new Date(12 - 12 - 2000));
 		cTest.setCreated(new Date());
 		cTest.setGender(Gender.UNKNOWN);
 		cTest.setZipCode("230020");
 		customer = customerService.registerCustomer(cTest, cCredentials);
 	}
+
 	@Test
-	public void orderCreateNotification(){
-		orderService.deleteAll();
-		productService.deleteAll();
-		customerService.deleteAll();
-		orderService.deleteAll();
-		
+	public void registerCustomer() {
+
+	}
+
+	@Test
+	public void orderCreateNotification() {
 		product = new Product();
 		product.setName("name");
 		product.setManufacturer("manufacturer");
@@ -83,36 +85,23 @@ public class MailSenderTest {
 		product.setCountRecommended(0);
 		product.setAvailable(5);
 		Category cat = new Category();
+		cat.setId(3L);
 		product.setCategory(cat);
 		product.setCountOrder(7);
 		product.setPrice(100000);
 		productService.save(product);
-
-		CustomerCredentials customerCredentials = new CustomerCredentials();
-		customer = new Customer();
-		customerCredentials.setLogin(String.format("Antehz"));
-		customerCredentials.setPassword("testPassword");
-		customerCredentials.setRole(UserRole.Customer);
-		customer.setFirstName("Anton");
-		customer.setLastName("Lastname");
-		customer.setEmail(String.format("ardasss@ya.ru"));
-		customer.setAddress("Gorkogo 75");
-		customer.setCity("Hrodno");
-		customer.setCountry("Belarus");
-		customer.setDateBirth(new Date(1970, 1, 1));
-		customer.setCreated(new Date());
-		customer.setGender(Gender.UNKNOWN);
-		customer.setZipCode("230020");
-		customerService.registerCustomer(customer, customerCredentials);
-
-		CartContent cart = new CartContent();
-		int amount =5;
+		int amount = 5;
 		cartService.addProductToCart(product.getId(), customer.getId(), amount);
-		order = orderService.createOrder(customer.getId(), ShippingMethod.Courier, "Test additional information");
-		
+		Order order = new Order();
+		order.setCustomer(customer);
+		order.setShippingMethod(ShippingMethod.Courier);
+		order.setAdditionalInfo("Test additional information");
+		order = orderService.createOrder(order);
+
 	}
+
 	@Test
-	public void mailTest(){
-		mailService.sendMail("ardasss@ya.ru", "Hello", "This's the body of message"); 
+	public void mailTest() {
+		mailService.sendMail("ardasss@ya.ru", "Hello", "This's the body of message");
 	}
 }

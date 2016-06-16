@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
+	<head>
+<meta charset="UTF-8">
+<title>Login form using HTML5 and CSS3</title>
+<link rel="stylesheet" href="loginwindow/css/stylelogin.css">
+	</head>
+
+
+	<body>
+	<body div class="bodylogin">
+		<div class="container">
+			<section id="content">
+				<form action="" wicket:id="form">
+					<h1>
+						<wicket:message key="loginPageMessage" />
+					</h1>
+
+					<div>
+						<input type="text" placeholder="Username" required=""
+							id="username" wicket:id="username" />
+					</div>
+					<div>
+						<input type="password" placeholder="Password" required=""
+							id="password" wicket:id="password" />
+					</div>
+					<div>
+						<button wicket:id="submit-btn">
+							<wicket:message key="login" />
+						</button>
+						 <a
+							wicket:id="createUserLink"><wicket:message key="registration" /></a>
+					</div>
+					<div wicket:id="feedbackpanel"
+						style="width: 360px; height: 20px; margin-top: 53px;"></div>
+				</form>
+				<!-- form -->
+			</section>
+			<!-- content -->
+		</div>
+		<!-- container -->
+	</body>
+
+
+
+
+	</body>
+
+</wicket:panel>
+</html>
+

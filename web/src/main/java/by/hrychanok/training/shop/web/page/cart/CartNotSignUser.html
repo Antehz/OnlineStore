@@ -1,0 +1,79 @@
+<wicket:head>
+	<style>
+.great_btn {
+	background: linear-gradient(to bottom, #0bc408 0%, #09a206 100%);
+	color: #fff;
+	font-size: 16px;
+	text-shadow: 0 1px 0 #757575;
+	padding: 4px 0 5px 0;
+	margin: 0;
+	cursor: pointer;
+	border: 0;
+	border-top: 1px solid #87c286;
+	border-right: 1px solid #0e780c;
+	border-left: 1px solid #0e780c;
+	border-bottom: 1px solid #0e780c;
+	box-shadow: 0 -1px 0 #0e780c, 0 1px 0 #fff;
+	width: 150px;
+	border-radius: 2px;
+}
+</style>
+	<meta charset="utf-8" />
+</wicket:head>
+<wicket:panel>
+	<div wicket:id="wmc">
+
+		<table class="table table-hover";>
+			<thead class="my-table-thead">
+				<tr>
+					<th></th>
+					<th><wicket:message key="nameItem" /></th>
+					<th><wicket:message key="manufacturer" /></th>
+					<th><wicket:message key="model" /></th>
+					<th><wicket:message key="amount" /></th>
+					<th><wicket:message key="price" /></th>
+					<th><wicket:message key="delete" /></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr wicket:id=simple>
+					<td><a wicket:id="productLink"> <img wicket:id="itemImage"
+							style="width: 60px;" /></a></td>
+					<td><span wicket:id="nameProduct">[name] </span></td>
+					<td><span wicket:id="manufacturerProduct">[created]</span></td>
+					<td><span wicket:id="modelProduct">[status]</span></td>
+					<td><span wicket:id="amount"> </span></td>
+					<td><span wicket:id="price">[price] </span> руб.</td>
+					<td>
+						<form wicket:id="form">
+							<button wicket:id="deleteButton">
+								<wicket:message key="delete" />
+							</button>
+						</form>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><wicket:message key="totalPrice" /></td>
+					<td></td>
+					<td></td>
+					<td><span wicket:id="totalPrice" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<div wicket:id="navigator"></div>
+	</div>
+	<div wicket:id="modal"></div>
+	<h4>
+		<wicket:message key="messageForUnlogedUser" />
+	</h4>
+	<form wicket:id="formToLogin" style="position: absolute; left: 270px;">
+		<button class='great_btn' wicket:id="toLogin">
+			<wicket:message key="autorization" />
+		</button>
+	</form>
+</wicket:panel>

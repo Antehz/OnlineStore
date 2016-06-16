@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Выбрать диапазон цены</title>
+	<style type="text/css">
+		th, td { padding: 5px; }
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:panel>
+	<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="form">
+			<table>
+				<tr>
+					<td width="100" align="center">
+						<input wicket:id="lower" type="text" size="4" />
+					</td>
+					<td width="240">
+						<div wicket:id="slider"></div>
+					</td>
+					<td width="100" align="center">
+						<input wicket:id="upper" type="text" size="4" />
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<button wicket:id="button">Ok</button>
+			<br/><br/>
+			<div wicket:id="feedback" style="width: 360px;"></div>
+		</form>
+	</div>
+</wicket:panel>
+</body>
+</html>

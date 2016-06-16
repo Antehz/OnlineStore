@@ -2,7 +2,7 @@
 
 <wicket:extend>
 
-	<h3 style="float: right; margin-right: 340px;">
+	<h3 style="margin-right: 340px;">
 
 		<span wicket:id="name" /> <span wicket:id="manufacturer" /> <span
 			wicket:id="model" />
@@ -14,10 +14,10 @@
 		style="position: absolute; width: 550px; left: 300px; top: 50px;">
 		<thead class="my-table-thead">
 			<tr>
-				<th>Артикул</th>
-				<th>Заказы</th>
-				<th>Рейтинг</th>
-				<th>Наличие</th>
+				<th><wicket:message key="article" /></th>
+				<th><wicket:message key="orderCount" /></th>
+				<th><wicket:message key="rating" /></th>
+				<th><wicket:message key="available" /></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,14 +39,13 @@
 	<div id="wrapper-panel-frame" class="ui-corner-all">
 		<form wicket:id="form"
 			style="position: absolute;
-	/* float: right; */ top: 150px; right: 0px;">
+	 top: 150px; right: 50px;">
 	<input wicket:id="spinner" type="text" style="width: 35px; "></input><br/>
 	
 			<button wicket:id="buyButton">
 				<img wicket:id="imageToCart" style="width: 130px" />
 			</button>
 			<br /> <br />
-			<div wicket:id="feedbackBuyItem" style="width: 200px;"></div>
 		</form>
 
 	</div>

@@ -7,9 +7,13 @@
 <body>
 	<wicket:panel>
 
-			<li><div class="text-3">Продукция</div></li>
+		<li><div class="text-3"><wicket:message key="leftMenu.product" /></div></li>
+		<form wicket:id="form">
 			<div wicket:id="tree">[tree]</div>
-			<wicket:child />
+		</form>
+		<div wicket:id="contextMenu" style="width: 200px;"></div>
+		<div wicket:id="modal" style="height: 500px"></div>
+		<wicket:child />
 
 	</wicket:panel>
 

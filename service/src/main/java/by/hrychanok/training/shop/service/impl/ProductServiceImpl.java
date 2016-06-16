@@ -58,6 +58,7 @@ public class ProductServiceImpl extends BasicServiceImpl<Product, ProductReposit
 
 	@Override
 	public ProductComment addCommentForProduct(Long productId, Long customerId, String message) {
+		LOGGER.debug(String.format("Add Commentary  customer id: %s", customerId));
 		Customer customer = customerRepository.findOne(customerId);
 		Product product = repository.findOne(productId);
 		ProductComment productComment = new ProductComment();

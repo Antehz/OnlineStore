@@ -1,35 +1,24 @@
 package by.hrychanok.training.shop.web.page;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import by.hrychanok.training.shop.model.AbstractModel;
-import by.hrychanok.training.shop.model.Product;
-import by.hrychanok.training.shop.service.ProductService;
-import by.hrychanok.training.shop.web.page.catalog.CatalogPage;
-import by.hrychanok.training.shop.web.page.product.ProductPage;
 
 public class BasePageForTable<T extends AbstractModel>  extends AbstractPage  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public T selected;
 	
 
 	public BasePageForTable(PageParameters parameters) {
 		super(parameters);
-		// TODO Auto-generated constructor stub
 	}
 
 	public BasePageForTable() {
-		/*super(id);*/
 
 	}
 
@@ -53,6 +42,11 @@ public class BasePageForTable<T extends AbstractModel>  extends AbstractPage  {
 	 * 
 	 */
 	public class ActionPanel extends Panel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		public void createLink(IModel<T> model) {
 			

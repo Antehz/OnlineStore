@@ -16,14 +16,15 @@
 <body>
 	<wicket:extend>
 		<table class="table table-hover">
-			<thead class = "my-table-thead">
+			<thead class="my-table-thead">
 				<tr>
-					<th>Товар</th>
-					<th>Наименование</th>
-					<th>Добавлен</th>
-					<th>Цена</th>
-					<th>Количество</th>
-					<th><a wicket:id="orderByPriceTotal">Стоимость</a></th>
+					<th><wicket:message key="item" /></th>
+					<th><wicket:message key="nameItem" /></th>
+					<th><wicket:message key="addedDate" /></th>
+					<th><wicket:message key="price" /></th>
+					<th><wicket:message key="amount" /></th>
+					<th><a wicket:id="orderByPriceTotal"><wicket:message
+								key="cost" /></a></th>
 
 				</tr>
 			</thead>
@@ -39,8 +40,11 @@
 						</form>
 					</td>
 					<td><span wicket:id="priceTotal"></span></td>
-					<td style = "border:none;     width: 50px;"><form wicket:id="formDeleteItem">
-							<button wicket:id="deleteItem">Удалить</button>
+					<td style="border: none; width: 50px;"><form
+							wicket:id="formDeleteItem">
+							<button wicket:id="deleteItem">
+								<wicket:message key="delete" />
+							</button>
 						</form></td>
 				</tr>
 				<tr>
@@ -48,7 +52,7 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td>Доставка</td>
+					<td><wicket:message key="menu.shipment" /></td>
 					<td><span wicket:id="shipPriceLabel"></span></td>
 				</tr>
 				<tr>
@@ -56,7 +60,7 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td>Итого</td>
+					<td><wicket:message key="totalPrice" /></td>
 					<td><span wicket:id="totalPrice"></span></td>
 				</tr>
 			</tbody>
@@ -64,18 +68,21 @@
 		</table>
 		<span wicket:id="navigator">[dataview navigator]</span>
 		<br></br>
-		<h2>Контактные данные</h2>
+
+		<h2>
+			<wicket:message key="contactData" />
+		</h2>
 
 		<div id="wrapper-panel-frame" class="ui-corner-all">
 			<form wicket:id="formCustomerUpdateData">
 				<table width="50%" , border="1" , cellspacing="0" , cellpadding="4">
 
 					<tr>
-						<td align="right" width="150">Имя</td>
+						<td align="right" width="150"><wicket:message key="firstName" /></td>
 						<td><input type="text" wicket:id="firstName" /></td>
 					</tr>
 					<tr>
-						<td align="right">Фамилия</td>
+						<td align="right"><wicket:message key="lastName" /></td>
 						<td><input type="text" wicket:id="lastName" /></td>
 					</tr>
 					<tr>
@@ -83,13 +90,15 @@
 						<td><input type="text" wicket:id="email" /></td>
 					</tr>
 					<tr>
-						<td align="right" width="100">Адрес</td>
+						<td align="right" width="100"><wicket:message key="address" /></td>
 						<td><input type="text" wicket:id="address" /></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td>
-							<button type="submit" wicket:id="save">Сохранить</button>
+							<button type="submit" wicket:id="save">
+								<wicket:message key="accept" />
+							</button>
 						</td>
 					</tr>
 
@@ -98,19 +107,23 @@
 		</div>
 
 		<div id="wrapper-panel-frame" class="ui-corner-all">
-		
+
 			<form wicket:id="formOrder">
-			
-			<h5>Выберите способ доставки. Курьерская доставка стоить 50 000 бел.руб. При заказа на сумму свыше 1 000 000 руб доставка бесплатна.</h5>
-			<div wicket:id="shippingMethod">
-			<input type="radio"> </input>
-		    <input type="radio"> </input>
-			</div>
-			
-				<br /> Коментарий к заказу :
+
+				<h5>
+					<wicket:message key="shipmentInfo" />
+				</h5>
+				<div wicket:id="shippingMethod">
+					<input type="radio"> </input> <input type="radio"> </input>
+				</div>
+
+				<br />
+				<wicket:message key="commentaryOrder" />
 				<textarea wicket:id="additionalInfo" rows="5" cols="40"></textarea>
 				<br />
-				<button wicket:id="createOrderButton">Create order</button>
+				<button wicket:id="createOrderButton">
+					<wicket:message key="createOrder" />
+				</button>
 				<br /> <br />
 				<div wicket:id="feedbackCreateOrder" style="width: 360px;"></div>
 			</form>

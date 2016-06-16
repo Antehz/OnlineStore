@@ -1,0 +1,32 @@
+<meta charset="utf-8" />
+
+<wicket:extend>
+
+	<table class="table table-condensed">
+		<caption>Характеристики омывающей жидкости</caption>
+		<tbody>
+			<tr>
+				<td style="width: 250px;">Тип</td>
+				<td><select wicket:id="fluidState" /></td>
+			</tr>
+			<tr>
+				<td>Сезон</td>
+				<td><select wicket:id="washSeason" /></td>
+			</tr>
+			<tr>
+				<td>Температура, C</td>
+				<td><input type="text" wicket:id="temperature" />мм</td>
+			</tr>
+
+			<tr>
+				<td style="width: 250px;">Страна производства</td>
+				<td><input type="text" wicket:id="countryManufacturer" /></td>
+			</tr>
+
+			<tr>
+				<td>Обьем</td>
+				<td><input type="text" wicket:id="volume" /></td>
+			</tr>
+		</tbody>
+	</table>
+</wicket:extend>

@@ -1,0 +1,36 @@
+<meta charset="utf-8" />
+
+<wicket:panel>
+
+	<table class="table table-bordered" style="width: 870px">
+		<thead class="my-table-thead">
+			<tr>
+				<th wicket:id="orderById"><wicket:message key="order" /></th>
+				<th><wicket:message key="customer" /></th>
+				<th wicket:id="orderByCreated"><wicket:message key="date" /></th>
+				<th wicket:id="orderByStatus"><wicket:message key="status" /></th>
+				<th wicket:id="orderByPrice"><wicket:message key="price" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr wicket:id="oir">
+				<td><a wicket:id="linkId">[orderId]</a></td>
+				<td><span wicket:id="customerId">[customerId]</span></td>
+				<td><span wicket:id="created">[created]</span></td>
+				<td><span wicket:id="status">[status]</span></td>
+				<td><span wicket:id="price">[price]</span> руб.</td>
+				<wicket:enclosure child="formManageOrder">
+
+					<div id="wrapper-panel-frame" class="ui-corner-all">
+						<form wicket:id="formManageOrder">
+							<td><select wicket:id="select"></select> <br /> <br />
+								</td>
+							<td><span wicket:id="deleteButton"></span><br /></td>
+						</form>
+					</div>
+				</wicket:enclosure>
+			</tr>
+		</tbody>
+	</table>
+	<span wicket:id="navigator">[dataview navigator]</span>
+</wicket:panel>

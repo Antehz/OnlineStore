@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="US">English</entry>
+	<entry key="RU">Russian</entry>
+	<entry key="accept">Accept</entry>
+	<entry key="delete">Delete</entry>
+	<entry key="totalPrice">Total</entry>
+	<entry key="find">Search</entry>
+	<entry key="update">Data succesfully updated</entry>
+	<entry key="notUpdate">Data not update</entry>
+	<entry key="customer">Customer</entry>
+	<entry key="order">Order </entry>
+	<entry key="date">Date </entry>
+	<entry key="status">Status </entry>
+	<entry key="created">Created </entry>
+	<entry key="available">Available </entry>
+	<entry key="save">Save </entry>
+	<entry key="edit">Edit</entry>
+	<entry key="addText">Add entry</entry>
+
+	<!-- *********************************admin ******************************* -->
+	<entry key="role">Role </entry>
+	<entry key="changeRole">Role </entry>
+	<entry key="changeRoleSuc">Role changed </entry>
+	<entry key="userDeleteFail">Customer couldn't be deleted</entry>
+	<entry key="userDeleteSuc">Customer deleted</entry>
+	<entry key="confirm">Please confirm</entry>
+	<entry key="confirmMessage">You confirms to delete this user?</entry>
+	<entry key="createCategory">Create category</entry>
+	<entry key="editCategory">Edit category</entry>
+	<entry key="deleteCategory">Delete category</entry>
+	<entry key="createCategorySuc">Category has been created</entry>
+	<entry key="nameEng">name on English</entry>
+	<entry key="parent">Parent branch</entry>
+	<!-- *********************************header ******************************* -->
+
+	<entry key="menu.news">News</entry>
+	<entry key="menu.about">About us</entry>
+	<entry key="menu.shipment">Shipment</entry>
+	<entry key="menu.payment">Payment</entry>
+	<entry key="menu.contact">Contact</entry>
+	<entry key="menu.users">Users</entry>
+	<entry key="menu.logout">Logout</entry>
+	<entry key="login">Login</entry>
+	<entry key="cart">Cart</entry>
+	<entry key="contactHeader">Belarus, Hrodno</entry>
+	<entry key="workingHours">AutoParts Shop "Car parts" Working hours:
+		monday-friday: 9.00-20.00,
+		Saturday: 9.00-17.00, on Sunday: 9.00-15.00</entry>
+
+	<!-- ****************************************left Menu ************************************ -->
+	<entry key="leftMenu.product">Product</entry>
+	<entry key="createCategory">Сreate Category</entry>
+	<entry key="deleteCategory">Delete Category</entry>
+	<entry key="createProduct">Create Product</entry>
+	<entry key="forCustomer">Info customer</entry>
+
+	<entry key="leftMenu.personalCabinet">Personal cabinet</entry>
+	<entry key="leftMenu.personalData">Personal data</entry>
+	<entry key="leftMenu.order">Orders</entry>
+	<entry key="leftMenu.cart">Cart</entry>
+	<entry key="leftMenu.logout">Logout</entry>
+
+	<!-- ****************************************login ************************************ -->
+
+	<entry key="loginPageMessage">Login to our site</entry>
+	<entry key="errorAutorization">Error autorization</entry>
+	<entry key="lostPassword">Lost your password?</entry>
+	<entry key="registration">Registration</entry>
+	<entry key="username">Username</entry>
+	<entry key="password">Password</entry>
+
+
+	<!-- ****************************************Registration ************************************ -->
+	<entry key="registration.message">Registration new customer</entry>
+	<entry key="registration.confirmPassword">Confirm password</entry>
+	<entry key="firstName">First name</entry>
+	<entry key="lastName">Last name</entry>
+	<entry key="birth">Date of Birth</entry>
+	<entry key="gender">Choose gender</entry>
+	<entry key="country">Country</entry>
+	<entry key="city">City</entry>
+	<entry key="address">Address</entry>
+	<entry key="zipcode">ZipCode</entry>
+	<entry key="loginAvailable">Login available</entry>
+	<entry key="loginNotAvailable">Login not available</entry>
+	<entry key="female">Female</entry>
+	<entry key="male">Male</entry>
+	<entry key="successReg">You've successfully registred!</entry>
+	<entry key="emailExist">This email isn't available</entry>
+	<entry key="failedReg">Registration failed</entry>
+	<entry key="submitRegistration">Registration</entry>
+
+	<!-- ****************************************Catalog ************************************ -->
+	<entry key="manufacturer">Manufacturer</entry>
+	<entry key="model">Model</entry>
+	<entry key="price">Price</entry>
+	<entry key="rating">Rating</entry>
+	<entry key="added">Item added to your cart</entry>
+	<entry key="notAdded">Item couldn't be added to the cart</entry>
+	<entry key="filter.manufacturer">Filter by manufacturer</entry>
+	<entry key="filter.rangePrice">Price range</entry>
+	<entry key="filter.available">Show only available</entry>
+
+
+	<!-- ****************************************Cart ************************************ -->
+	<entry key="item">Item</entry>
+	<entry key="nameItem">Name</entry>
+	<entry key="addedDate">Added</entry>
+	<entry key="amount">Amount</entry>
+	<entry key="cost">The cost</entry>
+	<entry key="contactData">Contact Data</entry>
+	<entry key="shipmentInfo">
+		Select a delivery method. Courier delivery cost 50 000
+		BYR. When an order worth more than 1 million rubles delivery
+		free of
+		charge.</entry>
+	<entry key="commentaryOrder">Order commentary</entry>
+	<entry key="createOrder">Create order</entry>
+	<entry key="successCreateOrder">Thank You! Your Order Has Been successfully completed.</entry>
+	<entry key="failCreateOrder">Your cart's empty. Order couldn't be completed</entry>
+	<entry key="messageForUnlogedUser">To place an order, you need to register or login</entry>
+	<entry key="autorization">Autorization</entry>
+	<entry key="deleteItem">Item was deleted</entry>
+
+
+	<!-- ****************************************Home ************************************ -->
+	<entry key="home.chooseCategory">Select a product category</entry>
+	<entry key="wheel">Wheel</entry>
+	<entry key="tire">Tire</entry>
+	<entry key="lamp">Lamp</entry>
+	<entry key="battery">Battery</entry>
+	<entry key="coolant">Coolant</entry>
+	<entry key="wash">Screen wash</entry>
+	<entry key="oil">Oil</entry>
+
+	<!-- ****************************************Order ************************************ -->
+	<entry key="allOrder">All orders</entry>
+	<entry key="currentOrder">Current orders</entry>
+	<entry key="doneOrder">Done orders</entry>
+	<entry key="orderDeleteFail">Order could't be deleted</entry>
+	<entry key="orderDeleteSuccess">Order was successfully deleted</entry>
+	<entry key="orderInfo">Order information</entry>
+	<entry key="shippingMethod">Shipping method</entry>
+	<entry key="orderCreateFail">Fail! Order couldn't be created</entry>
+
+	<!-- ****************************************Product ************************************ -->
+	<entry key="article">Article</entry>
+	<entry key="orderCount">Count orders</entry>
+	<entry key="description">Description</entry>
+	<entry key="review">Reviews</entry>
+	<entry key="productAdded">Product added</entry>
+	<entry key="productNotAdded">Product not added</entry>
+	<entry key="category">Category</entry>
+	<entry key="image">Image</entry>
+	<entry key="addToCart">Add comment</entry>
+	<entry key="enterMessage">Add comment here...</entry>
+	<entry key="deleteProductError">It is impossible to remove</entry>
+
+	<!-- ****************************************HomePage ************************************ -->
+	<entry key="accordion1">Our auto parts store specializing in the sale of spare
+		parts for cars. Always in stock a wide range of essential items, and
+		with help of the powerful internet-catalog searching and purchasing
+		the necessary parts have become more accessible and faster. Our online
+		magazinpredostavlyaet guarantee on all spare parts sold.
+		Mysotrudnichaem only with reliable suppliers and so confident in the
+		quality of their products</entry>
+	<entry key="profitableWork">Profitable to work with us!</entry>
+
+</properties>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="US">Английский</entry>
+	<entry key="RU">Русский</entry>
+	<entry key="accept">Применить</entry>
+	<entry key="delete">Удалить</entry>
+	<entry key="totalPrice">Итого</entry>
+	<entry key="find">Поиск</entry>
+	<entry key="update">Данные успешно сохранены</entry>
+	<entry key="notUpdate">Данные не обновлены</entry>
+	<entry key="customer">Пользователь</entry>
+	<entry key="order">Заказ </entry>
+	<entry key="date">Дата </entry>
+	<entry key="status">Статус </entry>
+	<entry key="created">Создан </entry>
+	<entry key="available">Доступно </entry>
+	<entry key="save">Сохранить </entry>
+	<entry key="edit">Редактировать</entry>
+	<entry key="addText">Добавить запись</entry>
+
+
+	<!-- *********************************admin ******************************* -->
+	<entry key="role">Доступ </entry>
+	<entry key="changeRole">Изменить роль </entry>
+	<entry key="changeRoleSuc">Роль изменена</entry>
+	<entry key="userDeleteFail">Пользователь не может быть удален</entry>
+	<entry key="userDeleteSuc">Пользователь удален</entry>
+	<entry key="confirm">Пожалуйста потвердите</entry>
+	<entry key="confirmMessage">Вы потверждаете удаление пользователя?</entry>
+	<entry key="createCategory">Создать категорию</entry>
+	<entry key="editCategory">Редактировать категорию</entry>
+	<entry key="deleteCategory">Удалить категорию</entry>
+	<entry key="createCategorySuc">Категория была создана</entry>
+	<entry key="nameEng">Название на англ.</entry>
+	<entry key="parent">Ветвь</entry>
+
+	<!-- *********************************header ******************************* -->
+	<entry key="menu.news">Новости</entry>
+	<entry key="menu.about">О компании</entry>
+	<entry key="menu.shipment">Доставка</entry>
+	<entry key="menu.payment">Оплата</entry>
+	<entry key="menu.contact">Контакты</entry>
+	<entry key="menu.users">Пользователи</entry>
+	<entry key="menu.logout">Выход</entry>
+	<entry key="login">Логин</entry>
+	<entry key="cart">Корзина</entry>
+	<entry key="contactHeader">Беларусь, Гродно</entry>
+	<entry key="workingHours">Автозапчасти "Car parts" Режим работы: пн.-пт.:
+		9.00-20.00,
+		сб.: 9.00-17.00, вс.: 9.00-15.00</entry>
+
+	<!-- ****************************************left Menu ************************************ -->
+	<entry key="leftMenu.product">Продукция</entry>
+	<entry key="createCategory">Создать категорию</entry>
+	<entry key="deleteCategory">Удалить категорию</entry>
+	<entry key="createProduct">Создать продукт</entry>
+	<entry key="forCustomer">Покупателям</entry>
+
+	<entry key="leftMenu.personalCabinet">Личный кабинет</entry>
+	<entry key="leftMenu.personalData">Персональные данные</entry>
+	<entry key="leftMenu.order">Заказы</entry>
+	<entry key="leftMenu.cart">Корзина</entry>
+	<entry key="leftMenu.logout">Выход</entry>
+
+	<!-- ****************************************login ************************************ -->
+	<entry key="loginPageMessage">Авторизация на сайте</entry>
+
+	<entry key="errorAutorization">Ошибка авторизации</entry>
+	<entry key="lostPassword">Забыли пароль?</entry>
+	<entry key="registration">Регистрация</entry>
+	<entry key="username">Имя пользователя</entry>
+	<entry key="password">Пароль</entry>
+
+	<!-- ****************************************Registration ************************************ -->
+	<entry key="registration.message">Регистрация новго пользователя</entry>
+	<entry key="registration.confirmPassword">Потвердите пароль</entry>
+	<entry key="firstName">Имя</entry>
+	<entry key="lastName">Фамилия</entry>
+	<entry key="birth">Дата рождения</entry>
+	<entry key="gender">Выберите пол</entry>
+	<entry key="country">Страна</entry>
+	<entry key="city">Город</entry>
+	<entry key="address">Адрес</entry>
+	<entry key="zipcode">Почтовый индекс</entry>
+	<entry key="loginAvailable">Логин доступен</entry>
+	<entry key="loginNotAvailable">Логин не доступен</entry>
+	<entry key="female">Женский</entry>
+	<entry key="male">Мужской</entry>
+	<entry key="successReg">Вы успешно зарегестрированы!</entry>
+	<entry key="emailExist">Указанный адрес email занят!</entry>
+	<entry key="failedReg">Ошибка регистрации</entry>
+	<entry key="submitRegistration">Регистрация</entry>
+
+	<!-- ****************************************Catalog ************************************ -->
+	<entry key="manufacturer">Производитель</entry>
+	<entry key="model">Модель</entry>
+	<entry key="price">Стоимость</entry>
+	<entry key="rating">Рейтинг</entry>
+	<entry key="added">Товар добавлен в корзину</entry>
+	<entry key="notAdded">Товар не может быть добавлен в корзину</entry>
+	<entry key="filter.manufacturer">Выбор по производителю</entry>
+	<entry key="filter.rangePrice">Диапазон цен</entry>
+	<entry key="filter.available">В наличии</entry>
+
+
+	<!-- ****************************************Cart ************************************ -->
+	<entry key="item">Товар</entry>
+	<entry key="nameItem">Наименование</entry>
+	<entry key="addedDate">Добавлен</entry>
+	<entry key="amount">Количество</entry>
+	<entry key="cost">Стоимость</entry>
+	<entry key="contactData">Контактные данные</entry>
+	<entry key="shipmentInfo">
+		Выберите способ доставки. Курьерская доставка стоить
+		50 000
+		бел.руб. При заказа на сумму свыше 1 000 000 руб доставка
+		бесплатна.</entry>
+	<entry key="commentaryOrder">Комментарий к заказу</entry>
+	<entry key="createOrder">Оформить заказ</entry>
+	<entry key="successCreateOrder">Спасибо! Ваш заказ был оформлен.</entry>
+	<entry key="failCreateOrder">Ваша корзина пуста. Заказ невозможно оформить</entry>
+	<entry key="messageForUnlogedUser">Для оформления заказа Вы должны авторизироваться</entry>
+	<entry key="autorization">Авторизация</entry>
+	<entry key="deleteItem">Продукт удален</entry>
+	<entry key="orderCreateFail">Ошибка! Заказ не может быть создан.</entry>
+
+	<!-- ****************************************Home ************************************ -->
+	<entry key="home.chooseCategory">Выберите интересующую Вас категорию товара</entry>
+	<entry key="wheel">Диски</entry>
+	<entry key="tire">Шины</entry>
+	<entry key="lamp">Лампы</entry>
+	<entry key="battery">Аккумуляторные батареи</entry>
+	<entry key="coolant">Охлаждающая жидкость</entry>
+	<entry key="wash">Стеклоомывающая жидкость</entry>
+	<entry key="oil">Масла</entry>
+
+	<!-- ****************************************Order ************************************ -->
+	<entry key="allOrder">Все заказы</entry>
+	<entry key="currentOrder">Текущие заказы</entry>
+	<entry key="doneOrder">Выполненные заказы</entry>
+	<entry key="orderDeleteFail">Заказ не может быть удален</entry>
+	<entry key="orderDeleteSuccess">Заказ был успешно удален</entry>
+	<entry key="orderInfo">Информация о заказе</entry>
+	<entry key="shippingMethod">Метод доставки</entry>
+
+	<!-- ****************************************Product ************************************ -->
+	<entry key="article">Артикул</entry>
+	<entry key="orderCount">Количество заказов</entry>
+	<entry key="description">Описание</entry>
+	<entry key="review">Отзывы</entry>
+	<entry key="productAdded">Продукт добавлен</entry>
+	<entry key="productNotAdded">Продукт не добавлен</entry>
+	<entry key="category">Категория</entry>
+	<entry key="image">Изображение</entry>
+	<entry key="addToCart">Добавить комментарий</entry>
+	<entry key="enterMessage">Оставьте Ваш комментарий здесь...</entry>
+	<entry key="deleteProductError">Невозможно удалить</entry>
+
+
+	<!-- ****************************************HomePage ************************************ -->
+	<entry key="accordion1">Наш магазин автозапчастей специализируется по продаже
+		автозапчастей для иномарок. Всегда в наличии на складе широкий
+		ассортимент необходимых деталей, а спомощью мощного интеренет-каталога
+		поиск и приобретение нужной запчасти стали ещё доступней и быстрее.
+		Наш интернет-магазинпредоставляет гарантию на все проданные
+		автозапчасти. Мысотрудничаем исключительно с надежными поставщиками и
+		потому уверены в качестве их продукции</entry>
+	<entry key="profitableWork">С нами выгодно работать!</entry>
+
+</properties>

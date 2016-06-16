@@ -1,10 +1,7 @@
 package by.hrychanok.training.shop.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,17 +9,13 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
-
 import by.hrychanok.training.shop.model.Order;
 
 @Entity
-public class Customer extends AbstractModel implements Serializable {
+public class Customer extends AbstractModel{
 
 	private String firstName;
 	private String lastName;
@@ -148,7 +141,7 @@ public class Customer extends AbstractModel implements Serializable {
 		this.order = order;
 	}
 
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<ProductComment> getProductComment() {
 		return productComment;
 	}
@@ -157,7 +150,7 @@ public class Customer extends AbstractModel implements Serializable {
 		this.productComment = productComment;
 	}
 
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<CartContent> getCartContent() {
 		return cartContent;
 	}

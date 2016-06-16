@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -53,10 +52,8 @@ public class MailConfig {
 	@Bean
 	public SimpleMailMessage registrationNotify() {
 		String from = env.getProperty("login");
-		String subject = "Registration was succesfull";
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 		simpleMailMessage.setFrom(from);
-		simpleMailMessage.setSubject(subject);
 		return simpleMailMessage;
 	}
 

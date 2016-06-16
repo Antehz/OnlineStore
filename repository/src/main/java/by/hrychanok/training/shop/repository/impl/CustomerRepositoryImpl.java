@@ -20,6 +20,7 @@ import by.hrychanok.training.shop.repository.CustomerRepositoryCustom;
 import by.hrychanok.training.shop.repository.filter.CustomerFilter;
 
 public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 
